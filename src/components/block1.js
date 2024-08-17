@@ -6,6 +6,7 @@ import Robux from '../assets/img/RobuxIcon.svg';
 import Sign from '../assets/img/Sign.svg';
 import ArrowIcon from '../assets/img/ArrowIcon.svg'; // Import the arrow icon
 
+
 // Define keyframes for the fade-in and move-up animation
 const fadeInUp = keyframes`
     0% {
@@ -387,6 +388,8 @@ const PurchaseComponent = () => {
             <MainChar src={DragonImage} alt="Dragon Character" />
         </BannerArea>
     );
+
 };
+
 
 export default PurchaseComponent;
