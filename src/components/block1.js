@@ -1,105 +1,239 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 import tw from 'twin.macro';
-import DragonImage from '../assets/img/char2.png'; // Import the image
+import DragonImage from '../assets/img/char2.png';
+import Robux from '../assets/img/RobuxIcon.svg';
+import Sign from '../assets/img/Sign.svg';
+import ArrowIcon from '../assets/img/ArrowIcon.svg'; // Import the arrow icon
+
+// Define keyframes for the fade-in and move-up animation
+const fadeInUp = keyframes`
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+`;
 
 const BannerArea = styled.div`
     ${tw`relative`}
+    background: rgb(19, 17, 27);
     padding-left: 50px;
     padding-right: 30px;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 `;
 
 const MainChar = styled.img`
     ${tw`absolute`}
     height: 600px;
-    z-index: -1;
+    right: 0;
+    z-index: 1;
     margin-top: 70px;
 `;
 
 const TitleArea = styled.div`
-    ${tw`w-full text-center`}
+    ${tw`w-full text-center mb-8`}
+    animation: ${fadeInUp} 1.2s ease-out;
 `;
 
 const Title = styled.h2`
-    ${tw`text-4xl font-bold`}
-    opacity: 1;
+    ${tw`text-4xl font-bold text-white`}
+    margin-bottom: 10px !important;
+    font-size: 54px;
+    animation: ${fadeInUp} 1.2s ease-out;
+`;
+
+const Exchange = styled.h2`
+    ${tw`text-2xl text-white`}
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 1px;
+    font-weight: 600;
+    line-height: 1.2;
+    font-size: 30px;
+    animation: ${fadeInUp} 1.2s ease-out;
+`;
+
+const Subtitle = styled.h2`
+    ${tw`text-3xl font-bold text-white`}
     margin-bottom: 0px !important;
+    animation: ${fadeInUp} 1.2s ease-out;
 `;
 
 const TitleLine = styled.div`
-    ${tw`inline-block relative w-full text-center`}
+    ${tw`inline-block relative w-full text-center flex items-center justify-center`}
 `;
 
 const Word = styled.div`
-    ${tw`inline-block`}
+    ${tw`ml-2 inline-block text-4xl font-bold`}
     transform: translate(0px, 0%);
+    font-size: 54px;
+    animation: ${fadeInUp} 1.2s ease-out;
 `;
 
 const GreenText = styled(Word)`
+    ${tw`text-4xl font-bold`}
     color: #77d241;
+    font-size: 54px;
+    animation: ${fadeInUp} 1.2s ease-out;
 `;
 
-const CurrencyIcon = styled.svg`
-    margin-bottom: 5px;
+const CurrencyIcon = styled.img`
+    margin-left: 8px;
+    width: 35px;
+    height: 35px;
 `;
 
 const SubTitle = styled.h4`
-    ${tw`text-lg font-semibold block`}
+    ${tw`text-lg font-semibold block text-white`}
     font-family: Manrope;
     letter-spacing: 1px;
 `;
 
 const InfoButton = styled.div`
-    ${tw`relative`}
+    ${tw`relative inline-block ml-2`}
 `;
 
 const InfoTooltip = styled.div`
-    ${tw`absolute`}
+    ${tw`absolute hidden text-4xl`}
+    letter-spacing: 1px;
 `;
 
-const Nav = styled.nav`
-    ${tw`flex justify-center mt-4`}
+const InfoIcon = styled.img`
+    ${tw`ml-2 mt-4`}
+    width: 18px;
+    height: 18px;
 `;
 
-const NavButton = styled.div`
-    ${tw`px-4 py-2 m-2 bg-green-500 text-white rounded`}
-    &.active {
-        background-color: initial;
-    }
+const NavContainer = styled.div`
+    ${tw`mt-4 flex justify-center `}
+    background-color: #2A263B !important;
+    border-radius: 16px;
+    margin-bottom: 20px;
+`;
+
+const NavButton = styled.button`
+    ${tw`py-3 m-1 w-full text-white rounded-lg font-semibold`}
+    background: ${({ active }) => (active ? '#1f1b2c' : '#2A263B')};
+    cursor: pointer;
+    border: none;
+    border-radius: 16px;
+    color: #9aa7b9;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
 `;
 
 const SaleContainer = styled.div`
-    padding-left: 20px;
-    padding-right: 20px;
+    ${tw`relative z-10`}
+    max-width: 450px;
+    width: 100%;
 `;
 
 const PricingArea = styled.div`
-    ${tw`bg-gray-800 p-4 rounded-lg shadow-lg`}
+    ${tw`bg-gray-800 p-6 rounded-lg shadow-lg`}
     background: #252335;
     border: none;
+    border-radius: 24px;
+    min-height: 450px; /* Ensure the form maintains a static height */
 `;
 
 const StepCaption = styled.div`
-    ${tw`mt-3`}
+    ${tw`mt-3 text-white flex justify-between items-center`}
+    font-size: 1.1em;
+`;
+
+const AvailabilityText = styled.span`
+    ${tw`text-green-500 ml-2 mb-6`}
+    margin-left: 15px;
 `;
 
 const BuyForm = styled.div`
-    ${tw`flex flex-col space-y-4`}
+    ${tw`flex flex-col space-y-8`}
 `;
 
 const InputBlock = styled.div`
-    ${tw`flex flex-col space-y-2`}
-    margin-top: ${({ mt }) => mt || '0'};
+    ${tw`flex flex-col space-y-4`} /* Increased spacing between label and input */
+    margin-bottom: 24px;
 `;
 
 const InputWrapper = styled.div`
     ${tw`w-full`}
 `;
 
+const StyledLabel = styled.label`
+    ${tw`text-white font-semibold mb-2`}
+    font-size: 1.1em;
+`;
+
+const SecondStyledLabel = styled.label`
+    ${tw`text-white font-semibold mb-4`}
+    font-size: 1.1em;
+    padding-bottom: 10px;
+    font-size: 20px;
+    font-weight: 500;
+`;
+
+const StyledInput = styled.input`
+    ${tw`w-full p-4 rounded bg-gray-700 text-white border-none`}
+    font-size: 1.1em;
+    width: 90%;
+    border-radius: 12px;
+    background-color: #2A263B !important;
+    filter: brightness(115%);
+    padding-right: 20px;
+    appearance: none;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    -moz-appearance: textfield;
+`;
+
+
+const SecondStyledInput = styled.input`
+    ${tw`w-full p-4 rounded bg-gray-700 text-white border-none mt-4`}
+    font-size: 1.1em;
+    width: 90%;
+    border-radius: 12px;
+    background-color: #2A263B !important;
+    filter: brightness(115%);
+    padding-right: 20px;
+    appearance: none;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    -moz-appearance: textfield;
+`;
+
+const BackButtonContainer = styled.div`
+    ${tw`flex items-center mb-4 cursor-pointer`}
+`;
+
+const BackButtonIcon = styled.img`
+    ${tw`mr-2`}
+    width: 24px;
+    height: 24px;
+`;
+
+const BackButtonText = styled.span`
+    ${tw`text-white text-lg`}
+`;
+
 const BuyButton = styled.button`
-    ${tw`bg-green-500 text-white py-2 rounded`}
+    ${tw`bg-purple-500 text-white rounded py-3 rounded`}
+    font-size: 1.1em;
     border: none;
+    background-color: #5B73E8;
+    border-radius: 12px;
     &:disabled {
         opacity: 0.5;
         cursor: not-allowed;
@@ -107,68 +241,150 @@ const BuyButton = styled.button`
 `;
 
 const PromoLink = styled.a`
-  ${tw`mt-3 text-green-300 text-center cursor-pointer`}
+    ${tw`mt-3 text-green-300 text-center cursor-pointer`}
+    font-size: 1.1em;
+`;
+
+const PurpleLineContainer = styled.div`
+    ${tw`mx-auto my-4 cursor-pointer`}
+    width: 100%;
+    max-width: 50px;
+`;
+
+const PurpleLine = styled.div`
+    ${tw`h-1 bg-purple-500`}
+`;
+
+const TelegramContainer = styled.div`
+    max-height: ${({ isVisible }) => (isVisible ? '60px' : '0')};
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+`;
+
+const TelegramLink = styled.a`
+    ${tw`block text-center text-white mt-4`}
+    opacity: ${({ isVisible }) => (isVisible ? '1' : '0')};
+    transition: opacity 0.5s ease-in-out;
+    text-decoration: none;
+`;
+
+const MinRobuxText = styled.p`
+    ${tw`text-gray-500`}
+    font-size: 0.9em;
 `;
 
 const PurchaseComponent = () => {
+    const [activeButton, setActiveButton] = useState('standard');
+    const [rublesToPay, setRublesToPay] = useState('');
+    const [robuxesCount, setRobuxesCount] = useState('');
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const handlePurpleLineClick = () => {
+        setIsExpanded(!isExpanded);
+    };
+
+    const renderStandardForm = () => (
+        <>
+            <StepCaption>
+                <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#9aa8e5' }}>(R$)</span></StyledLabel>
+                <AvailabilityText id="instockGamePass">
+                    В наличии 13062
+                </AvailabilityText>
+            </StepCaption>
+            <BuyForm>
+                <InputBlock>
+                    <InputWrapper>
+                        <StyledInput
+                            placeholder="Получаете R$"
+                            id="robuxesCount"
+                            type="number"
+                            value={robuxesCount}
+                            onChange={(e) => setRobuxesCount(e.target.value)}
+                        />
+                    </InputWrapper>
+                </InputBlock>
+                <InputBlock>
+                    <StyledLabel htmlFor="rublesToPay">Заплачу (₽)</StyledLabel>
+                    <InputWrapper>
+                        <StyledInput
+                            placeholder="Отдаёте ₽"
+                            id="rublesToPay"
+                            type="number"
+                            value={rublesToPay}
+                            onChange={(e) => setRublesToPay(e.target.value)}
+                        />
+                    </InputWrapper>
+                </InputBlock>
+                <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
+                <BuyButton disabled>Купить</BuyButton>
+                <PromoLink id="open-modal-btn">Использовать промокод</PromoLink>
+            </BuyForm>
+        </>
+    );
+
+    const renderGiftForm = () => (
+        <>
+            <BackButtonContainer onClick={() => setActiveButton('standard')}>
+                <BackButtonIcon src={ArrowIcon} alt="Back" />
+                <BackButtonText>Подтвердите персонажа</BackButtonText>
+            </BackButtonContainer>
+            <SecondStyledLabel htmlFor="nickname">Введите свой никнейм</SecondStyledLabel>
+            <InputWrapper>
+                <SecondStyledInput
+                    placeholder="Введите никнейм"
+                    id="nickname"
+                    type="text"
+                />
+            </InputWrapper>
+        </>
+    );
+
     return (
         <BannerArea>
-            <MainChar src={DragonImage} alt="Dragon Character" />
-            <TitleArea>
-                <Title>
-                    <TitleLine>
-                        <Word>Покупай</Word>
-                        <GreenText>по курсу</GreenText>
-                        <Word>1.43</Word>
-                        <CurrencyIcon xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 50 50">
-                            <path d="M28.15625 0.871094C26.210938-0.289062 23.789062-0.289062 21.84375 0.871094L6.28125 10.121094C4.3125 11.3125 3.113281 13.449219 3.125 15.75L3.125 34.25C3.125 36.570312 4.328125 38.71875 6.28125 39.878906L21.84375 49.128906C23.789062 50.289062 26.210938 50.289062 28.15625 49.128906L43.71875 39.878906C45.6875 38.6875 46.886719 36.550781 46.875 34.25L46.875 15.75C46.875 13.429688 45.671875 11.28125 43.71875 10.121094ZM20.3125 17.1875C18.585938 17.1875 17.1875 18.585938 17.1875 20.3125L17.1875 29.6875C17.1875 31.414062 18.585938 32.8125 20.3125 32.8125L29.6875 32.8125C31.414062 32.8125 32.8125 31.414062 32.8125 29.6875L32.8125 20.3125C32.8125 18.585938 31.414062 17.1875 29.6875 17.1875ZM20.3125 17.1875"></path>
-                        </CurrencyIcon>
-                    </TitleLine>
-                </Title>
-                <SubTitle>
-                    Реальный курс
-                    <InfoButton>
-                        <InfoTooltip>Мы не меняем цену на момент оплаты, вы видите честный курс</InfoTooltip>
-                        <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 416.979 416.979">
-                            <path d="M356.004,61.156c-81.37-81.47-213.377-81.551-294.848-0.182c-81.47,81.371-81.552,213.379-0.181,294.85c81.369,81.47,213.378,81.551,294.849,0.181C437.293,274.636,437.375,142.626,356.004,61.156z M237.6,340.786c0,3.217-2.607,5.822-5.822,5.822h-46.576c-3.215,0-5.822-2.605-5.822-5.822V167.885c0-3.217,2.607-5.822,5.822-5.822h46.576c3.215,0,5.822,2.604,5.822,5.822V340.786z M208.49,137.901c-18.618,0-33.766-15.146-33.766-33.765c0-18.617,15.147-33.766,33.766-33.766c18.619,0,33.766,15.148,33.766,33.766C242.256,122.755,227.107,137.901,208.49,137.901z"></path>
-                        </svg>
-                    </InfoButton>
-                </SubTitle>
-            </TitleArea>
-            <Nav>
-                <NavButton className="robux-nav__button--active" data-method="standart">
-                    Стандартный трансфер
-                </NavButton>
-                <NavButton data-method="gift">
-                    Моментальный гифт
-                    <div className="robux-nav__button__chip">Скидка 5%</div>
-                </NavButton>
-            </Nav>
             <SaleContainer>
+                <TitleArea>
+                    <Title>Покупай</Title>
+                    <Subtitle>
+                        <TitleLine>
+                            <GreenText>по курсу</GreenText>
+                            <Word>1.43</Word>
+                            <CurrencyIcon src={Robux} alt="Robux Icon" />
+                        </TitleLine>
+                    </Subtitle>
+                    <SubTitle>
+                        <Exchange>
+                            Реальный курс
+                            <InfoIcon src={Sign} alt="Info Icon" />
+                        </Exchange>
+                        <PurpleLineContainer onClick={handlePurpleLineClick}>
+                            <PurpleLine />
+                        </PurpleLineContainer>
+                        <TelegramContainer isVisible={isExpanded}>
+                            <TelegramLink href="https://t.me/robuxio/27" isVisible={isExpanded}>
+                                https://t.me/robuxio/27
+                            </TelegramLink>
+                        </TelegramContainer>
+                    </SubTitle>
+                </TitleArea>
+                <NavContainer>
+                    <NavButton
+                        active={activeButton === 'standard'}
+                        onClick={() => setActiveButton('standard')}
+                    >
+                        Стандартный трансфер
+                    </NavButton>
+                    <NavButton
+                        active={activeButton === 'instant'}
+                        onClick={() => setActiveButton('instant')}
+                    >
+                        Моментальный гифт
+                    </NavButton>
+                </NavContainer>
                 <PricingArea>
-                    <StepCaption>
-                        <label htmlFor="robuxesCount">Получу (R$)</label>
-                        <div className="Buy_availability__xziDL">
-                            <span id="instockGamePass">В наличии</span>
-                        </div>
-                    </StepCaption>
-                    <BuyForm>
-                        <InputBlock>
-                            <InputWrapper>
-                                <input placeholder="Получаете R$" id="robuxesCount" type="number" value="1000" />
-                            </InputWrapper>
-                        </InputBlock>
-                        <InputBlock mt="3">
-                            <label htmlFor="rublesToPay">Заплачу (₽)</label>
-                            <InputWrapper>
-                                <input placeholder="Отдаёте ₽" id="rublesToPay" type="number" />
-                            </InputWrapper>
-                        </InputBlock>
-                        <BuyButton disabled>Купить</BuyButton>
-                        <PromoLink id="open-modal-btn">Использовать промокод</PromoLink>
-                    </BuyForm>
+                    {activeButton === 'standard' ? renderStandardForm() : renderGiftForm()}
                 </PricingArea>
             </SaleContainer>
+            <MainChar src={DragonImage} alt="Dragon Character" />
         </BannerArea>
     );
 };
