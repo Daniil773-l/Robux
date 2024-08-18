@@ -73,11 +73,8 @@ const SocialMediaSection = styled.div`
 `;
 
 const IconLink = styled.a`
-    ${tw`text-xl mr-4`} /* Reduced size of icons */
-    color: rgba(135, 146, 162, .9);
-    &:hover {
-        color: white;
-    }
+    ${tw`text-xl mr-4 text-white`} /* Reduced size of icons */
+    
 `;
 
 const Divider = styled.div`

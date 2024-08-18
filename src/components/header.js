@@ -50,9 +50,32 @@ const NavLink = styled.a`
 `;
 
 const SubMenu = styled.ul`
-    ${tw`absolute top-full mt-2 text-white list-none py-2 px-4 shadow-lg hidden`}
+    ${tw`absolute top-full rounded mt-8 text-white list-none py-3 px-4 shadow-lg hidden`}
     left: 0;
+    width: 200px;
+    border-radius: 10px;
+    padding: 15px;
+    flex-direction: column;
+    position: absolute;
+    align-items: flex-start;
+    transition: all 0.3s ease-in-out;
     background: #1d1b29;
+    box-shadow: 9px 9px 22px -1px rgba(0, 0, 0, 0.12);
+    
+`;
+
+const SecondSubMenu = styled.ul`
+    ${tw`absolute top-full rounded mt-8 text-white list-none py-3 px-4 shadow-lg hidden`}
+    left: 0;
+    width: 100px;
+    border-radius: 10px;
+    padding: 15px;
+    flex-direction: column;
+    position: absolute;
+    align-items: flex-start;
+    transition: all 0.3s ease-in-out;
+    background: #1d1b29;
+    box-shadow: 9px 9px 22px -1px rgba(0, 0, 0, 0.12);
     
 `;
 
@@ -63,6 +86,16 @@ const SubMenuItem = styled.li`
     text-align: left;
     font-size: 14px;
     font-weight: 600;
+    
+    a {
+        left: 0;
+        color: #7f859e;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    
 `;
 const IconArea = styled.div`
     ${tw`flex items-center space-x-3 text-lg`}
@@ -115,11 +148,11 @@ const Header = () => {
                                         <img src={Purchase} alt="Мои покупки" />
                                         Мои покупки
                                     </NavLink>
-                                    <SubMenu>
+                                    <SecondSubMenu>
                                         <SubMenuItem>
                                             <a href="#">Скоро</a>
                                         </SubMenuItem>
-                                    </SubMenu>
+                                    </SecondSubMenu>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink href="faq">
@@ -128,13 +161,13 @@ const Header = () => {
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="bonus.html">
+                                    <NavLink href="BonusPage">
                                         <img src={Bonus} alt="Бонусы" />
                                         Бонусы
                                     </NavLink>
                                     <SubMenu>
                                         <SubMenuItem>
-                                            <a href="bonus.html">Бесплатные робуксы</a>
+                                            <a href="/">Бесплатные робуксы</a>
                                         </SubMenuItem>
                                         <SubMenuItem onClick={() => copypromo()}>
                                             Промокод: ROBUX10
