@@ -4,8 +4,11 @@ import tw from 'twin.macro';
 import DragonImage from '../assets/img/char2.png';
 import Robux from '../assets/img/RobuxIcon.svg';
 import Sign from '../assets/img/Sign.svg';
+import sphere from '../assets/img/sphere-one.png';
+import coin from '../assets/img/04.png';
+import smallcoin from '../assets/img/05.png';
+import biggercoin from '../assets/img/BiggerCoin.png';
 import ArrowIcon from '../assets/img/ArrowIcon.svg'; // Import the arrow icon
-
 
 // Define keyframes for the fade-in and move-up animation
 const fadeInUp = keyframes`
@@ -19,12 +22,25 @@ const fadeInUp = keyframes`
     }
 `;
 
+// Define keyframes for the jumping animation
+const jumpAnimation = keyframes`
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+`;
+
 const BannerArea = styled.div`
     ${tw`relative`}
     background: rgb(19, 17, 27);
     padding-left: 50px;
     padding-right: 30px;
-    z-index: 1000;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -173,10 +189,11 @@ const StyledLabel = styled.label`
 `;
 
 const SecondStyledLabel = styled.label`
-    ${tw`text-white font-semibold mb-4`}
+    ${tw`font-semibold mb-4`}
     font-size: 1.1em;
     padding-bottom: 10px;
-    font-size: 20px;
+    color: #79889c;
+    font-size: 14px;
     font-weight: 500;
 `;
 
@@ -253,7 +270,7 @@ const PurpleLineContainer = styled.div`
 `;
 
 const PurpleLine = styled.div`
-    ${tw`h-1 bg-purple-500`}
+    ${tw`h-1 bg-purple-500 rounded`}
 `;
 
 const TelegramContainer = styled.div`
@@ -272,6 +289,35 @@ const TelegramLink = styled.a`
 const MinRobuxText = styled.p`
     ${tw`text-gray-500`}
     font-size: 0.9em;
+`;
+
+const Sphere = styled.img`
+    width: 4%;
+    position: absolute;
+    left: 14%;
+    bottom: 70%;
+    animation: ${jumpAnimation} 18s linear infinite;
+`;
+
+const RobuxCoin = styled.img`
+    position: absolute;
+    left: -24px;
+    top: 40%;
+    animation: jump-2 15s linear infinite;
+`;
+
+const SmallCoin = styled.img`
+    position: absolute;
+    top: 12%;
+    left: 27%;
+    animation: jump-1 18s linear infinite;
+`;
+
+const BiggerCoin = styled.img`
+    position: absolute;
+    right: -26px;
+    top: 10%;
+    animation: jump-2 15s linear infinite;
 `;
 
 const PurchaseComponent = () => {
@@ -342,6 +388,10 @@ const PurchaseComponent = () => {
 
     return (
         <BannerArea>
+            <Sphere src={sphere} alt="Floating Sphere" />
+            <RobuxCoin src={coin} alt="Floating Coin" />
+            <SmallCoin src={smallcoin} alt="Floating Coin" />
+            <BiggerCoin src={biggercoin} alt="Floating Coin" />
             <SaleContainer>
                 <TitleArea>
                     <Title>Покупай</Title>
@@ -390,6 +440,5 @@ const PurchaseComponent = () => {
     );
 
 };
-
 
 export default PurchaseComponent;

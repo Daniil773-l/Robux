@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import Cards from './components/Cards';
 import Stats from './components/Stats';
 import GiftCards from './components/GiftCards';
+import Why from './components/WhyUs';
+import Goal from './components/Goal';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import {Gi3dGlasses} from "react-icons/gi";
@@ -25,6 +27,8 @@ function App() {
             <Cards/>
             <Stats/>
             <GiftCards/>
+            <Why/>
+            <Goal/>
             <Footer />
         </AppContainer>
     );
