@@ -35,7 +35,7 @@ const TitleText = styled.p`
     margin-bottom: 40px;
 
     @media (max-width: 768px) {
-        display: none; /* Hide robuxtitle on mobile */
+        display: none; 
     }
 `;
 

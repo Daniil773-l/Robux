@@ -117,10 +117,10 @@ const Footer = () => {
                     <LinksSection>
                         <LinksTitle>Документы</LinksTitle>
                         <Link href="PrivacyPage">Политика конфиденциальности</Link>
-                        <Link href="#">Пользовательское соглашение</Link>
-                        <Link href="#">Политика возврата средств</Link>
-                        <Link href="#">Политика информационной безопасности</Link>
-                        <Link href="#">Перечень предоставляемых услуг</Link>
+                        <Link href="AgreementPage">Пользовательское соглашение</Link>
+                        <Link href="refund-policy.pdf">Политика возврата средств</Link>
+                        <Link href="security-policy.pdf">Политика информационной безопасности</Link>
+                        <Link href="services.pdf">Перечень предоставляемых услуг</Link>
                     </LinksSection>
                 </Column>
                 <Column small>

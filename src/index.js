@@ -7,6 +7,7 @@ import FAQ from './FAQPage'; // Assuming FAQ.js is in the same directory level
 import reportWebVitals from './reportWebVitals';
 import BonusPage from "./BonusPage";
 import PrivacyPage from "./PrivacyPage";
+import AgreementPage from "./AgreementPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/BonusPage" element={<BonusPage />} />
                 <Route path="/PrivacyPage" element={<PrivacyPage/>} />
+                <Route path="/AgreementPage" element={<AgreementPage/>} />
             </Routes>
         </Router>
     </React.StrictMode>
