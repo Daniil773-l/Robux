@@ -36,6 +36,7 @@ const GrayText = styled.p`
     font-weight: 600;
     font-size: 18px;
     font-family: Manrope;
+    padding-bottom: 0;
 `;
 
 const SubTitle = styled.h3`
@@ -56,7 +57,7 @@ const TaskCard = styled.div`
     ${tw`p-4 flex flex-col justify-between`}
     background-color: #1d1b29;
     width: 150px;
-    margin-top: 20px;
+    padding-left: 0;
     color: rgb(131, 143, 149);
     font-family: Manrope;
     font-weight: 700;
@@ -65,18 +66,32 @@ const TaskCard = styled.div`
 
 const BonusText1 = styled.div`
     font-weight: 700;
-    font-size: 20px;
+    font-size: 24px;
     color: white;
     display: flex;
     align-items: center;
+
+    img {
+        width: 20px;
+        height: 20px;
+        padding-left: 5px;
+    }
 `;
 
 const BonusText2 = styled.div`
     font-weight: 700;
-    font-size: 20px;
+    font-size: 24px;
     color: white;
     display: flex;
     align-items: center;
+    
+    img {
+        width: 20px;
+        height: 20px;
+        padding-left: 5px;
+    }
+    
+    
 `;
 
 const BonusLink = styled.a`
@@ -102,6 +117,8 @@ const BonusCard1 = styled.div`
     margin-top: 20px;
     height: 50px;
     color: white;
+    
+    line-height: 24px;
     background-color: #2A263B;
     font-family: Manrope;
     font-weight: 700;
@@ -113,6 +130,7 @@ const BonusCard2 = styled.div`
     background-color: #1d1b29;
     width: 150px;
     height: 50px;
+    
     margin-top: 20px;
     color: white;
     background-color: #2A263B;
@@ -134,6 +152,7 @@ const TaskLink = styled.a`
     font-family: Manrope;
     color: rgb(154, 168, 229);
     text-decoration: none;
+   
     font-weight: 600;
     font-size: 19px;
 

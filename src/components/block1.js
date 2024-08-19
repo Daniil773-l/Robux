@@ -315,7 +315,7 @@ const SmallCoin = styled.img`
 
 const BiggerCoin = styled.img`
     position: absolute;
-    right: -26px;
+    right: 26px;
     top: 10%;
     animation: jump-2 15s linear infinite;
 `;

@@ -116,7 +116,7 @@ const Footer = () => {
                 <Column>
                     <LinksSection>
                         <LinksTitle>Документы</LinksTitle>
-                        <Link href="#">Политика конфиденциальности</Link>
+                        <Link href="PrivacyPage">Политика конфиденциальности</Link>
                         <Link href="#">Пользовательское соглашение</Link>
                         <Link href="#">Политика возврата средств</Link>
                         <Link href="#">Политика информационной безопасности</Link>

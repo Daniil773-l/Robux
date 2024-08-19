@@ -161,9 +161,10 @@ const ArrowUpImage = styled.img`
 `;
 
 const RedSignImage = styled.img`
-    ${tw`ml-2 `}
+    ${tw`ml-2`}
     width: 24px;
     height: 24px;
+    
 `;
 
 const BonusCard = () => {
