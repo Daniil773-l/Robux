@@ -1,36 +1,36 @@
 import React from 'react';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import tw from 'twin.macro';
 import HalfSphere from '../assets/img/halfSphere.png';
 import TinySphere from '../assets/img/TinySphere.png';
 import TiniestSphere from '../assets/img/FuckingTinySphere.png';
 import Pzdz from '../assets/img/PzdzSmall.png';
 
-
 const PolicyContainer = styled.div`
     ${tw`bg-[#1d1b29] p-8 rounded-lg shadow-lg flex flex-col`}
     max-width: 1200px;
     width: 100%;
-    height: 80vh; /* Ограничиваем высоту формы */
+    height: 80vh;
     margin: 0 auto;
     margin-top: 20px;
     padding: 40px;
     border-radius: 24px;
     color: white;
-    overflow-y: auto; /* Добавляем скролл */
+    overflow-y: auto;
 
-    /* Стилизация скроллбара */
-    ::-webkit-scrollbar {
-        width: 8px !important; /* Уменьшаем ширину скроллбара */
+    /* Custom scrollbar styles */
+    &::-webkit-scrollbar {
+        width: 8px;
+       
     }
 
-    ::-webkit-scrollbar-thumb {
-        background-color: #4a4a4a !important; /* Серый цвет скроллбара */
-        border-radius: 10px !important; /* Скругляем скроллбар */
+    &::-webkit-scrollbar-thumb {
+        background-color: #4a4a4a;
+        border-radius: 10px;
     }
 
-    ::-webkit-scrollbar-track {
-        background-color: transparent !important; /* Делаем фон трека прозрачным */
+    &::-webkit-scrollbar-track {
+        background-color: transparent;
     }
 `;
 
@@ -91,7 +91,8 @@ const FAQTitleWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 20px;
+    z-index: 1;
 `;
 
 const FAQTitle = styled.div`
@@ -109,6 +110,7 @@ const FAQMainText = styled.h1`
     letter-spacing: -2.4px;
     color: white;
     white-space: nowrap;
+    z-index: 12;
 `;
 
 const FAQSubText = styled.span`
@@ -119,12 +121,14 @@ const FAQSubText = styled.span`
     line-height: 100%;
     margin-top: -40px;
     padding-bottom: 5%;
+    z-index: 2;
 `;
 
 const LetterWrapper = styled.span`
     display: inline-block;
     opacity: 0;
     animation: fadeIn 0.5s forwards;
+    z-index: 3;
 `;
 
 const renderTitle = (text) => {
@@ -166,9 +170,6 @@ const PolicyPage = () => {
                         <Text>1.1.7. «IP-АДРЕС» — УНИКАЛЬНЫЙ СЕТЕВОЙ АДРЕС УЗЛА В КОМПЬЮТЕРНОЙ СЕТИ, ПОСТРОЕННОЙ ПО ПРОТОКОЛУ IP.</Text>
                     </SubSection>
                 </Section>
-
-                {/* Добавление дополнительных разделов и текста */}
-
             </PolicyContainer>
         </AppContainer>
     );

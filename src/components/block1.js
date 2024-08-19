@@ -45,6 +45,14 @@ const BannerArea = styled.div`
     align-items: center;
     justify-content: center;
     height: 100vh;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        padding-left: 20px;
+        padding-right: 20px;
+        height: auto;
+        padding-top: 20px;
+    }
 `;
 
 const MainChar = styled.img`
@@ -53,11 +61,20 @@ const MainChar = styled.img`
     right: 0;
     z-index: 1;
     margin-top: 70px;
+
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+    }
 `;
 
 const TitleArea = styled.div`
     ${tw`w-full text-center mb-8`}
     animation: ${fadeInUp} 1.2s ease-out;
+
+    @media (max-width: 768px) {
+        margin-bottom: 20px;
+    }
 `;
 
 const Title = styled.h2`
@@ -65,6 +82,10 @@ const Title = styled.h2`
     margin-bottom: 10px !important;
     font-size: 54px;
     animation: ${fadeInUp} 1.2s ease-out;
+
+    @media (max-width: 768px) {
+        font-size: 36px;
+    }
 `;
 
 const Exchange = styled.h2`
@@ -75,16 +96,28 @@ const Exchange = styled.h2`
     line-height: 1.2;
     font-size: 30px;
     animation: ${fadeInUp} 1.2s ease-out;
+
+    @media (max-width: 768px) {
+        font-size: 18px;
+    }
 `;
 
 const Subtitle = styled.h2`
     ${tw`text-3xl font-bold text-white`}
     margin-bottom: 0px !important;
     animation: ${fadeInUp} 1.2s ease-out;
+
+    @media (max-width: 768px) {
+        font-size: 24px;
+    }
 `;
 
 const TitleLine = styled.div`
     ${tw`inline-block relative w-full text-center flex items-center justify-center`}
+
+    @media (max-width: 768px) {
+    flex-direction: column;
+}
 `;
 
 const Word = styled.div`
@@ -92,6 +125,11 @@ const Word = styled.div`
     transform: translate(0px, 0%);
     font-size: 54px;
     animation: ${fadeInUp} 1.2s ease-out;
+
+    @media (max-width: 768px) {
+        font-size: 28px;
+        margin: 0;
+    }
 `;
 
 const GreenText = styled(Word)`
@@ -99,18 +137,31 @@ const GreenText = styled(Word)`
     color: #77d241;
     font-size: 54px;
     animation: ${fadeInUp} 1.2s ease-out;
+
+    @media (max-width: 768px) {
+        font-size: 28px;
+    }
 `;
 
 const CurrencyIcon = styled.img`
     margin-left: 8px;
     width: 35px;
     height: 35px;
+
+    @media (max-width: 768px) {
+        margin-left: 0;
+        margin-top: 10px;
+    }
 `;
 
 const SubTitle = styled.h4`
     ${tw`text-lg font-semibold block text-white`}
     font-family: Manrope;
     letter-spacing: 1px;
+
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
 `;
 
 const InfoButton = styled.div`
@@ -133,6 +184,11 @@ const NavContainer = styled.div`
     background-color: #2A263B !important;
     border-radius: 16px;
     margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
 `;
 
 const NavButton = styled.button`
@@ -144,12 +200,23 @@ const NavButton = styled.button`
     color: #9aa7b9;
     font-size: 14px;
     transition: background-color 0.3s ease;
+
+    @media (max-width: 768px) {
+        margin: 5px 0;
+        padding: 10px;
+        font-size: 12px;
+    }
 `;
 
 const SaleContainer = styled.div`
     ${tw`relative z-10`}
     max-width: 450px;
     width: 100%;
+
+    @media (max-width: 768px) {
+        max-width: 100%;
+        padding: 0 20px;
+    }
 `;
 
 const PricingArea = styled.div`
@@ -158,25 +225,48 @@ const PricingArea = styled.div`
     border: none;
     border-radius: 24px;
     min-height: 450px; /* Ensure the form maintains a static height */
+
+    @media (max-width: 768px) {
+        padding: 20px;
+        min-height: auto;
+    }
 `;
 
 const StepCaption = styled.div`
     ${tw`mt-3 text-white flex justify-between items-center`}
     font-size: 1.1em;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `;
 
 const AvailabilityText = styled.span`
     ${tw`text-green-500 ml-2 mb-6`}
     margin-left: 15px;
+
+    @media (max-width: 768px) {
+        margin-left: 0;
+    }
 `;
 
 const BuyForm = styled.div`
     ${tw`flex flex-col space-y-8`}
+
+    @media (max-width: 768px) {
+    space-y-6;
+}
 `;
 
 const InputBlock = styled.div`
     ${tw`flex flex-col space-y-4`} /* Increased spacing between label and input */
     margin-bottom: 24px;
+
+    @media (max-width: 768px) {
+        margin-bottom: 20px;
+    }
 `;
 
 const InputWrapper = styled.div`
@@ -186,6 +276,10 @@ const InputWrapper = styled.div`
 const StyledLabel = styled.label`
     ${tw`text-white font-semibold mb-2`}
     font-size: 1.1em;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
 `;
 
 const SecondStyledLabel = styled.label`
@@ -195,6 +289,10 @@ const SecondStyledLabel = styled.label`
     color: #79889c;
     font-size: 14px;
     font-weight: 500;
+
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
 `;
 
 const StyledInput = styled.input`
@@ -212,6 +310,11 @@ const StyledInput = styled.input`
         margin: 0;
     }
     -moz-appearance: textfield;
+
+    @media (max-width: 768px) {
+        padding: 12px;
+        font-size: 14px;
+    }
 `;
 
 
@@ -230,20 +333,38 @@ const SecondStyledInput = styled.input`
         margin: 0;
     }
     -moz-appearance: textfield;
+
+    @media (max-width: 768px) {
+        padding: 12px;
+        font-size: 14px;
+    }
 `;
 
 const BackButtonContainer = styled.div`
     ${tw`flex items-center mb-4 cursor-pointer`}
+
+    @media (max-width: 768px) {
+    margin-bottom: 10px;
+}
 `;
 
 const BackButtonIcon = styled.img`
     ${tw`mr-2`}
     width: 24px;
     height: 24px;
+
+    @media (max-width: 768px) {
+        width: 20px;
+        height: 20px;
+    }
 `;
 
 const BackButtonText = styled.span`
     ${tw`text-white text-lg`}
+
+    @media (max-width: 768px) {
+    font-size: 14px;
+}
 `;
 
 const BuyButton = styled.button`
@@ -256,17 +377,31 @@ const BuyButton = styled.button`
         opacity: 0.5;
         cursor: not-allowed;
     }
+
+    @media (max-width: 768px) {
+        padding: 12px;
+        font-size: 14px;
+    }
 `;
 
 const PromoLink = styled.a`
     ${tw`mt-3 text-green-300 text-center cursor-pointer`}
     font-size: 1.1em;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+        margin-top: 10px;
+    }
 `;
 
 const PurpleLineContainer = styled.div`
     ${tw`mx-auto my-4 cursor-pointer`}
     width: 100%;
     max-width: 50px;
+
+    @media (max-width: 768px) {
+        margin: 10px auto;
+    }
 `;
 
 const PurpleLine = styled.div`
@@ -284,11 +419,20 @@ const TelegramLink = styled.a`
     opacity: ${({ isVisible }) => (isVisible ? '1' : '0')};
     transition: opacity 0.5s ease-in-out;
     text-decoration: none;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+        margin-top: 10px;
+    }
 `;
 
 const MinRobuxText = styled.p`
     ${tw`text-gray-500`}
     font-size: 0.9em;
+
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
 `;
 
 const Sphere = styled.img`
@@ -297,6 +441,11 @@ const Sphere = styled.img`
     left: 14%;
     bottom: 70%;
     animation: ${jumpAnimation} 18s linear infinite;
+
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+    }
 `;
 
 const RobuxCoin = styled.img`
@@ -304,6 +453,11 @@ const RobuxCoin = styled.img`
     left: -24px;
     top: 40%;
     animation: jump-2 15s linear infinite;
+
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+    }
 `;
 
 const SmallCoin = styled.img`
@@ -311,6 +465,11 @@ const SmallCoin = styled.img`
     top: 12%;
     left: 27%;
     animation: jump-1 18s linear infinite;
+
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+    }
 `;
 
 const BiggerCoin = styled.img`
@@ -318,6 +477,11 @@ const BiggerCoin = styled.img`
     right: 26px;
     top: 10%;
     animation: jump-2 15s linear infinite;
+
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+    }
 `;
 
 const PurchaseComponent = () => {

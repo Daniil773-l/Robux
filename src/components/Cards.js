@@ -10,6 +10,11 @@ const CardsContainer = styled.div`
     ${tw`flex flex-col space-y-8 mx-auto`} /* Reduced the space between cards */
     max-width: 1250px; /* Set the maximum width to 1250px */
     padding: 20px; /* Add some padding to the container */
+
+    @media (max-width: 768px) {
+        padding: 10px; /* Reduced padding on smaller screens */
+        space-y-6; /* Reduced space between cards on mobile */
+    }
 `;
 
 const Label = styled.div`
@@ -25,25 +30,52 @@ const Card = styled.div`
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
     min-width: 1250px;
     border-radius: 24px;
-   
+
+    @media (max-width: 768px) {
+        flex-direction: column; /* Stack content vertically on mobile */
+        min-width: auto; /* Remove the fixed width on mobile */
+        padding: 15px; /* Reduce padding for a better fit */
+        align-items: center; /* Center align all items */
+    }
 `;
 
 const IconWrapper = styled.div`
     ${tw`flex items-center`}
+
+    @media (max-width: 768px) {
+    justify-content: center; /* Center icon on mobile */
+    margin-bottom: 15px; /* Add margin below the icon */
+}
 `;
 
 const Icon = styled.img`
     ${tw`w-36 h-28`}
+
+    @media (max-width: 768px) {
+    width: 80px; /* Resize icons on mobile */
+    height: 60px;
+}
 `;
 
 const TextWrapper = styled.div`
-    ${tw`ml-4`}
+    ${tw`ml-4 text-center`} /* Center text on mobile */
+
+    @media (max-width: 768px) {
+    margin-left: 0; /* Remove margin */
+    margin-bottom: 15px; /* Add margin below text */
+}
 `;
+
 
 const Title = styled.h3`
     ${tw`text-white text-lg font-bold mb-1 flex items-center`} /* Added flex and items-center for aligning the icon */
     font-weight: 500;
     font-size: 20px;
+
+    @media (max-width: 768px) {
+        justify-content: center; /* Center title on mobile */
+        font-size: 18px; /* Reduce font size on mobile */
+    }
 `;
 
 const RobuxIconImage = styled.img`
@@ -57,10 +89,15 @@ const Description = styled.p`
     font-weight: 500;
     font-size: 18px;
     margin-top: 0px;
+
+    @media (max-width: 768px) {
+        text-align: center; /* Center description on mobile */
+        font-size: 16px; /* Reduce font size on mobile */
+    }
 `;
 
 const ActionIcon = styled.div`
-    ${tw`text-2xl py-2 px-6 text-gray-400 `} /* Increased the width of the container */
+    ${tw`text-2xl py-2 px-6 text-gray-400`} /* Original styles */
     cursor: pointer;
     border-radius: 12px;
     align-items: center;
@@ -68,6 +105,14 @@ const ActionIcon = styled.div`
     text-align: center;
     background: #2d2b3f;
     display: flex;
+
+    @media (max-width: 768px) {
+        margin-top: 10px; /* Add spacing on top for mobile layout */
+        width: 280px; /* Reduce width on mobile */
+        height: 30px; /* Set height to make the container smaller */
+        justify-content: center; /* Center icon within the container */
+    }
+
     &:hover {
         color: white;
     }

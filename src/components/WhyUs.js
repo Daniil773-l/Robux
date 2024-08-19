@@ -21,6 +21,10 @@ const WhyUsContainer = styled.div`
     ${tw`flex flex-col items-center mx-auto`}
     max-width: 1250px;
     padding: 60px 20px;
+
+    @media (max-width: 768px) {
+        padding: 40px 10px; /* Adjust padding for mobile */
+    }
 `;
 
 const Title = styled.h2`
@@ -32,10 +36,19 @@ const Title = styled.h2`
     color: white;
     margin-bottom: 40px;
     animation: ${fadeInUp} 1.2s ease-out; /* Apply the fadeInUp animation */
+
+    @media (max-width: 768px) {
+        font-size: 32px; /* Reduce font size for mobile */
+        margin-bottom: 20px; /* Adjust margin for mobile */
+    }
 `;
 
 const CardsWrapper = styled.div`
     ${tw`flex justify-between space-x-8 w-full`}
+
+    @media (max-width: 768px) {
+    ${tw`flex-col space-x-0 space-y-8`} /* Stack cards vertically and adjust spacing */
+}
 `;
 
 const Card = styled.div`
@@ -44,6 +57,10 @@ const Card = styled.div`
     border-radius: 16px;
     background: #1d1b29;
     ${tw`flex flex-col items-start`}
+
+    @media (max-width: 768px) {
+    padding: 20px; /* Adjust padding for mobile */
+}
 `;
 
 const IconWrapper = styled.div`
@@ -52,15 +69,24 @@ const IconWrapper = styled.div`
 
     img {
         ${tw`w-8 h-8`} /* Adjust the icon size if needed */
+
+        @media (max-width: 768px) {
+        ${tw`w-6 h-6`} /* Reduce icon size for mobile */
+    }
     }
 `;
 
 const CardTitle = styled.h3`
-    ${tw`text-white text-lg  mb-4`} /* Reduced margin below the title */
+    ${tw`text-white text-lg mb-4`} /* Reduced margin below the title */
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: 120%;
+
+    @media (max-width: 768px) {
+        font-size: 18px; /* Adjust font size for mobile */
+        margin-bottom: 10px; /* Adjust margin below title for mobile */
+    }
 `;
 
 const CardText = styled.p`
@@ -69,7 +95,12 @@ const CardText = styled.p`
     font-style: normal;
     font-weight: 400;
     margin-top: 0px;
+
+    @media (max-width: 768px) {
+        font-size: 14px; /* Adjust font size for mobile */
+    }
 `;
+
 
 const WhyUs = () => {
     return (

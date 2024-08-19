@@ -18,6 +18,10 @@ const SectionContainer = styled.div`
     ${tw`flex flex-col items-center mx-auto`}
     max-width: 1250px;
     padding: 60px 20px;
+
+    @media (max-width: 768px) {
+        padding: 40px 10px; /* Adjust padding for mobile */
+    }
 `;
 
 const TitleText = styled.p`
@@ -29,10 +33,19 @@ const TitleText = styled.p`
     letter-spacing: -0.56px;
     color: white;
     margin-bottom: 40px;
+
+    @media (max-width: 768px) {
+        display: none; /* Hide robuxtitle on mobile */
+    }
 `;
 
 const CardsWrapper = styled.div`
     ${tw`flex justify-between space-x-10 w-full`}
+
+    @media (max-width: 768px) {
+    ${tw`flex-col space-x-0 space-y-8`}
+    margin-right: 60px;
+}
 `;
 
 const Card = styled.div`
@@ -44,6 +57,11 @@ const Card = styled.div`
     min-width: 230px;
     height: 150px;
     animation: ${fadeInUp} 1.2s ease-out; /* Apply the fadeInUp animation */
+
+    @media (max-width: 768px) {
+        min-width: 100%; /* Ensure full width on mobile */
+        height: auto; /* Auto height for better fit */
+    }
 `;
 
 const CountWrapper = styled.div`
@@ -54,6 +72,10 @@ const Count = styled.h2`
     ${tw`text-3xl font-bold mb-2`}
     font-size: 48px;
     color: #5974ed;
+
+    @media (max-width: 768px) {
+        font-size: 36px; /* Adjust font size for mobile */
+    }
 `;
 
 const Suffix = styled.span`
@@ -62,6 +84,10 @@ const Suffix = styled.span`
     font-style: normal;
     font-weight: 700;
     color: #5974ed;
+
+    @media (max-width: 768px) {
+        font-size: 36px; /* Adjust font size for mobile */
+    }
 `;
 
 const CardText = styled.p`
@@ -72,6 +98,10 @@ const CardText = styled.p`
     letter-spacing: -0.4px;
     color: white;
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 16px; /* Adjust font size for mobile */
+    }
 `;
 
 const CounterCard = ({ end, text, suffix }) => {
@@ -109,7 +139,7 @@ const CounterCard = ({ end, text, suffix }) => {
 const StatisticsSection = () => {
     return (
         <SectionContainer>
-            <TitleText>
+            <TitleText className="robuxtitle">
                 Robux.io стремится помочь вам получить робуксы более доступным путем с конечной целью — получить хорошую незабываемые впечатления от игры в любимых режимах.
             </TitleText>
             <CardsWrapper>

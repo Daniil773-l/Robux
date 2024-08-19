@@ -8,14 +8,22 @@ const Container = styled.div`
     width: 100%;
     max-width: 1250px;
     padding: 20px;
-    
-`;
 
+    @media (max-width: 768px) {
+        padding: 10px; /* Adjust padding for mobile */
+        max-width: 400px;
+        width: 100%;
+    }
+`;
 const Label = styled.div`
     color: #8990a9;
     font-size: 20px;
     font-weight: 500;
     margin-bottom: 8px;
+
+    @media (max-width: 768px) {
+        font-size: 16px; /* Adjust font size for mobile */
+    }
 `;
 
 const StatsContainer = styled.div`
