@@ -84,7 +84,7 @@ const RobuxWrapper = styled.span`
 const Cards = () => {
     return (
         <CardsContainer>
-            <Card gradient="conic-gradient(from 55deg at 50% 50%, #5c76eb 3deg, #0b2edb 65deg, #3b22db 100deg, #5974ed 360deg) !important;">
+            <Card gradient=" radial-gradient(circle at -1% 57.5%, rgb(19, 170, 82) 0%, rgb(0, 102, 43) 90%) !important;">
                 <Title>Покупайте робуксы<br/>и участвуйте в розыгрышах!</Title>
                 <Description>
                     Получай <RobuxWrapper><img src={RobuxIcon} alt="Robux Icon" /> X2</RobuxWrapper>
@@ -93,7 +93,7 @@ const Cards = () => {
                     К Наградам <FaGift />
                 </Action>
             </Card>
-            <Card gradient="background-color: rgb(29, 27, 41);">
+            <Card gradient="linear-gradient(109.6deg, rgb(0, 204, 130) 11.2%, rgb(58, 181, 46) 91.7%) !important;">
                 <Title>Есть своя игра или Накопились <br/> ненужные робуксы?</Title>
                 <Description>
                     Продай <RobuxWrapper><img src={RobuxIcon} alt="Robux Icon" /></RobuxWrapper>

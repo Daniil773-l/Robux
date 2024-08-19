@@ -16,6 +16,7 @@ module.exports = {
         green: '#4caf50',
         lightGreen: '#81c784',
         white: '#ffffff',
+
       },
       fontFamily: {
         sans: ['Rubik', 'sans-serif'],

@@ -10,8 +10,8 @@ const CardWrapper = styled.div`
 `;
 
 const Card = styled.div`
-    ${tw`flex justify-between items-center p-6 rounded-lg bg-[#1d1b29]`}
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    ${tw`flex justify-between items-center p-6 rounded-lg bg-[#015c2b]`}
+
     max-width: 1080px;
     width: 100%;
     border-radius: 24px;

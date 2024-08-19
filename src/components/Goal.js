@@ -52,7 +52,7 @@ const Card = styled.div`
     z-index: 5;
     padding: 30px;
     border-radius: 32px;
-    background: #1D1B29;
+    background: #015c2b;
     ${tw`flex flex-col items-center`}
     min-width: 230px;
     height: 150px;
@@ -71,7 +71,7 @@ const CountWrapper = styled.div`
 const Count = styled.h2`
     ${tw`text-3xl font-bold mb-2`}
     font-size: 48px;
-    color: #5974ed;
+    color: #03c362;
 
     @media (max-width: 768px) {
         font-size: 36px; /* Adjust font size for mobile */
@@ -83,7 +83,7 @@ const Suffix = styled.span`
     font-size: 48px;
     font-style: normal;
     font-weight: 700;
-    color: #5974ed;
+    color:  #03c362;
 
     @media (max-width: 768px) {
         font-size: 36px; /* Adjust font size for mobile */

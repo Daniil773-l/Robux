@@ -55,7 +55,7 @@ const Card = styled.div`
     z-index: 5;
     padding: 30px;
     border-radius: 16px;
-    background: #1d1b29;
+    background:#015c2b;
     ${tw`flex flex-col items-start`}
 
     @media (max-width: 768px) {

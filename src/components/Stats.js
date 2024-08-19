@@ -27,7 +27,7 @@ const Label = styled.div`
 `;
 
 const StatsContainer = styled.div`
-    ${tw`relative flex items-center overflow-hidden rounded-lg bg-[#1d1b29]`}
+    ${tw`relative flex items-center overflow-hidden rounded-lg bg-[#015c2b]`}
     padding: 16px;
     width: 100%;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
@@ -60,7 +60,7 @@ const CardsWrapper = styled.div`
 `;
 
 const Card = styled.div`
-    ${tw`flex flex-col justify-center items-center bg-[#2d2b3f] rounded-lg p-4`}
+    ${tw`flex flex-col justify-center items-center bg-[#038741] rounded-lg p-4`}
     width: 220px;  /* Ширина карточки */
     height: 80px;  /* Высота карточки */
     border-radius: 24px;
@@ -88,7 +88,7 @@ const Icon = styled.img`
 `;
 
 const Transfer = styled.div`
-    ${tw`text-gray-400 text-sm`}
+    ${tw`text-gray-300 text-sm`}
 `;
 
 const purchases = [

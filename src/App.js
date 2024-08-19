@@ -13,7 +13,7 @@ import {Gi3dGlasses} from "react-icons/gi";
 
 // Create a styled div for the background
 const AppContainer = styled.div`
-    ${tw`bg-[rgb(19, 17, 27)] min-h-screen`} // Apply the background color and make sure it covers the full screen height
+    ${tw`bg-[rgb(11,35,22)] min-h-screen`} // Apply the background color and make sure it covers the full screen height
     display: flex;
     flex-direction: column;
     justify-content: space-between;

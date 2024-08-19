@@ -9,7 +9,9 @@ import coin from '../assets/img/04.png';
 import smallcoin from '../assets/img/05.png';
 import biggercoin from '../assets/img/BiggerCoin.png';
 import ArrowIcon from '../assets/img/ArrowIcon.svg'; // Import the arrow icon
-
+import Robuxmini from '../assets/img/ROBUXMINI.SVG';
+import ClockIcon from '../assets/img/clock.svg';
+import Star from '../assets/img/star.svg'
 // Define keyframes for the fade-in and move-up animation
 const fadeInUp = keyframes`
     0% {
@@ -37,7 +39,7 @@ const jumpAnimation = keyframes`
 
 const BannerArea = styled.div`
     ${tw`relative`}
-    background: rgb(19, 17, 27);
+    background: rgb(11,35,22);
     padding-left: 50px;
     padding-right: 30px;
     z-index: 10;
@@ -65,7 +67,7 @@ const MainChar = styled.img`
     @media (max-width: 768px) {
         @media (max-width: 768px) {
             display: none;
-    }
+        }
 `;
 
 const TitleArea = styled.div`
@@ -181,7 +183,7 @@ const InfoIcon = styled.img`
 
 const NavContainer = styled.div`
     ${tw`mt-4 flex justify-center `}
-    background-color: #2A263B !important;
+    background-color: #015c2b !important;
     border-radius: 16px;
     margin-bottom: 20px;
 
@@ -192,8 +194,8 @@ const NavContainer = styled.div`
 `;
 
 const NavButton = styled.button`
-    ${tw`py-3 m-1 w-full text-white rounded-lg font-semibold`}
-    background: ${({ active }) => (active ? '#1f1b2c' : '#2A263B')};
+    ${tw`py-3 m-2 w-full text-white rounded-lg font-semibold`}
+    background: ${({ active }) => (active ? '#418756' : '#015c2b')};
     cursor: pointer;
     border: none;
     border-radius: 16px;
@@ -220,8 +222,8 @@ const SaleContainer = styled.div`
 `;
 
 const PricingArea = styled.div`
-    ${tw`bg-gray-800 p-6 rounded-lg shadow-lg`}
-    background: #252335;
+    ${tw` p-6 rounded-lg shadow-lg bg-[rgb(1, 92, 43)]`}
+
     border: none;
     border-radius: 24px;
     min-height: 450px; /* Ensure the form maintains a static height */
@@ -244,9 +246,9 @@ const StepCaption = styled.div`
 `;
 
 const AvailabilityText = styled.span`
-    ${tw`text-green-500 ml-2 mb-6`}
+    ${tw` ml-2 mb-4 font-medium`}
     margin-left: 15px;
-
+color: rgb(119, 210, 65);
     @media (max-width: 768px) {
         margin-left: 0;
     }
@@ -274,7 +276,7 @@ const InputWrapper = styled.div`
 `;
 
 const StyledLabel = styled.label`
-    ${tw`text-white font-semibold mb-2`}
+    ${tw`text-white font-semibold mb-3`}
     font-size: 1.1em;
 
     @media (max-width: 768px) {
@@ -300,7 +302,7 @@ const StyledInput = styled.input`
     font-size: 1.1em;
     width: 90%;
     border-radius: 12px;
-    background-color: #2A263B !important;
+    background-color:#013d1d !important;
     filter: brightness(115%);
     padding-right: 20px;
     appearance: none;
@@ -323,7 +325,7 @@ const SecondStyledInput = styled.input`
     font-size: 1.1em;
     width: 90%;
     border-radius: 12px;
-    background-color: #2A263B !important;
+    background-color:#013d1d!important;
     filter: brightness(115%);
     padding-right: 20px;
     appearance: none;
@@ -371,10 +373,10 @@ const BuyButton = styled.button`
     ${tw`bg-purple-500 text-white rounded py-3 rounded`}
     font-size: 1.1em;
     border: none;
-    background-color: #5B73E8;
+    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
     border-radius: 12px;
     &:disabled {
-        opacity: 0.5;
+
         cursor: not-allowed;
     }
 
@@ -405,8 +407,11 @@ const PurpleLineContainer = styled.div`
 `;
 
 const PurpleLine = styled.div`
-    ${tw`h-1 bg-purple-500 rounded`}
+
+    background-color: #77D241;
+    ${tw`rounded h-1`}
 `;
+
 
 const TelegramContainer = styled.div`
     max-height: ${({ isVisible }) => (isVisible ? '60px' : '0')};
@@ -427,7 +432,7 @@ const TelegramLink = styled.a`
 `;
 
 const MinRobuxText = styled.p`
-    ${tw`text-gray-500`}
+    ${tw`text-white`}
     font-size: 0.9em;
 
     @media (max-width: 768px) {
@@ -445,7 +450,7 @@ const Sphere = styled.img`
     @media (max-width: 768px) {
         @media (max-width: 768px) {
             display: none;
-    }
+        }
 `;
 
 const RobuxCoin = styled.img`
@@ -457,7 +462,7 @@ const RobuxCoin = styled.img`
     @media (max-width: 768px) {
         @media (max-width: 768px) {
             display: none;
-    }
+        }
 `;
 
 const SmallCoin = styled.img`
@@ -469,7 +474,7 @@ const SmallCoin = styled.img`
     @media (max-width: 768px) {
         @media (max-width: 768px) {
             display: none;
-    }
+        }
 `;
 
 const BiggerCoin = styled.img`
@@ -481,7 +486,7 @@ const BiggerCoin = styled.img`
     @media (max-width: 768px) {
         @media (max-width: 768px) {
             display: none;
-    }
+        }
 `;
 
 const PurchaseComponent = () => {
@@ -497,14 +502,17 @@ const PurchaseComponent = () => {
     const renderStandardForm = () => (
         <>
             <StepCaption>
-                <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#9aa8e5' }}>(R$)</span></StyledLabel>
+                <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#77D241' }}>(R$)</span></StyledLabel>
                 <AvailabilityText id="instockGamePass">
                     В наличии 13062
+                    <img src={Robuxmini} alt="Robux Mini Icon" style={{ marginLeft: '8px' }} />
                 </AvailabilityText>
+
             </StepCaption>
             <BuyForm>
                 <InputBlock>
                     <InputWrapper>
+
                         <StyledInput
                             placeholder="Получаете R$"
                             id="robuxesCount"
@@ -515,7 +523,7 @@ const PurchaseComponent = () => {
                     </InputWrapper>
                 </InputBlock>
                 <InputBlock>
-                    <StyledLabel htmlFor="rublesToPay">Заплачу (₽)</StyledLabel>
+                <StyledLabel htmlFor="rublesToPay">Заплачу <span style={{ color: '#77D241' }}>(₽)</span></StyledLabel>
                     <InputWrapper>
                         <StyledInput
                             placeholder="Отдаёте ₽"
@@ -586,12 +594,14 @@ const PurchaseComponent = () => {
                         active={activeButton === 'standard'}
                         onClick={() => setActiveButton('standard')}
                     >
+                        <img src={ClockIcon} alt="Clock Icon" style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                         Стандартный трансфер
                     </NavButton>
                     <NavButton
                         active={activeButton === 'instant'}
                         onClick={() => setActiveButton('instant')}
                     >
+                        <img src={Star} alt="Star Icon" style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                         Моментальный гифт
                     </NavButton>
                 </NavContainer>

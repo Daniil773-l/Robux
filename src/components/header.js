@@ -8,33 +8,62 @@ import Bonus from "../assets/img/BonusIcon.svg";
 import FAQ from "../assets/img/FAQIcon.svg";
 import Buy from "../assets/img/BuyRobuxIcon.svg";
 import Purchase from "../assets/img/MyPurchasesIcon.svg";
-import Robux from "../assets/img/trace-4 (1).svg";
-
 
 const gradientPurple = 'conic-gradient(from -125deg at 50% 50%, #5c76eb 0deg, #9465ca 65deg, #6f65ca 100deg, #5c76eb 360deg)';
 
 const HeaderContainer = styled.header`
-    ${tw`bg-[rgb(19, 17, 27)] py-4 fixed top-0 w-full z-50`}
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    ${tw`bg-[rgb(11,35,22)] py-4 fixed top-0 w-full z-50`}
+    @media (max-width: 768px) {
+    ${tw`py-3`}
+}
 `;
 
 const HeaderWrapper = styled.div`
     ${tw`container mx-auto flex items-center justify-between`}
     padding-left: 2rem;
     padding-right: 2rem;
+
+    @media (max-width: 1024px) {
+        ${tw`px-4`}
+    }
+    @media (max-width: 768px) {
+        ${tw`px-2 flex-col items-start`}
+    }
 `;
 
-const LogoArea = tw.div`flex items-center gap-5 ml-12`;
+const LogoArea = styled.div`
+    ${tw`flex items-center gap-5 ml-12`}
+    @media (max-width: 768px) {
+    ${tw`ml-0`}
+}
+`;
+
 const LogoLink = styled.a`
     display: flex;
     align-items: center;
 `;
+
 const LogoImage = styled.img`
     ${tw`h-10`}
+    @media (max-width: 768px) {
+    ${tw`h-8`}
+}
 `;
 
-const Nav = tw.nav`flex items-center`;
-const NavList = tw.ul`flex space-x-6 list-none`;
+const Nav = styled.nav`
+    ${tw`flex items-center`}
+    @media (max-width: 768px) {
+    ${tw`flex-col w-full mt-4`}
+}
+`;
+
+const NavList = styled.ul`
+    ${tw`flex space-x-6 list-none`}
+    @media (max-width: 768px) {
+    ${tw`space-x-0 w-full flex-col space-y-2`}
+}
+`;
+
 const NavItem = styled.li`
     ${tw`relative flex items-center`}
     &:hover > ul,
@@ -42,6 +71,7 @@ const NavItem = styled.li`
         display: block;
     }
 `;
+
 const NavLink = styled.a`
     ${tw`text-white flex items-center text-base hover:text-[#4caf50] cursor-pointer`}
     text-decoration: none;
@@ -53,58 +83,19 @@ const NavLink = styled.a`
         width: 16px;
         height: 16px;
     }
-`;
 
-const SubMenu = styled.ul`
-    ${tw`absolute top-full left-0 rounded mt-2 text-white list-none py-3 px-4 shadow-lg`}
-    width: 200px;
-    border-radius: 10px;
-    padding: 15px;
-    flex-direction: column;
-    align-items: flex-start;
-    background: #1d1b29;
-    box-shadow: 9px 9px 22px -1px rgba(0, 0, 0, 0.12);
-    display: none;
-
-    &:hover {
-        display: block;
-    }
-`;
-
-const SecondSubMenu = styled.ul`
-    ${tw`absolute top-full left-0 rounded mt-2 text-white list-none py-3 px-4 shadow-lg`}
-    width: 100px;
-    border-radius: 10px;
-    padding: 15px;
-    flex-direction: column;
-    align-items: flex-start;
-    background: #1d1b29;
-    box-shadow: 9px 9px 22px -1px rgba(0, 0, 0, 0.12);
-    display: none;
-
-    &:hover {
-        display: block;
-    }
-`;
-
-const SubMenuItem = styled.li`
-    ${tw`py-1 hover:text-[#4caf50] cursor-pointer`}
-    color: #7f859e;
-    text-align: left;
-    font-size: 14px;
-    font-weight: 600;
-
-    a {
-        color: #7f859e;
-        text-align: left;
-        font-size: 14px;
-        font-weight: 600;
-        text-decoration: none;
+    @media (max-width: 768px) {
+        ${tw`text-sm justify-center w-full`}
+        text-align: center;
+        padding: 10px 0;
     }
 `;
 
 const IconArea = styled.div`
     ${tw`flex items-center space-x-3 text-lg`}
+    @media (max-width: 768px) {
+    ${tw`w-full justify-center mt-4`}
+}
 `;
 
 const IconLink = tw.a`text-[#4caf50] hover:text-[#81c784] w-8 h-6`;
@@ -121,10 +112,17 @@ const LoginButton = styled.button`
         opacity: 0.9;
     }
     margin-left: 8px;
+
+    @media (max-width: 768px) {
+        ${tw`w-full mt-4`}
+    }
 `;
 
 const ButtonArea = styled.div`
     ${tw`flex items-center space-x-6 mr-16`}
+    @media (max-width: 768px) {
+    ${tw`w-full justify-center mt-4 space-x-0 flex-col`}
+}
 `;
 
 const LoginModal = styled.div`
@@ -153,7 +151,7 @@ const ModalTitle = styled.h2`
     font-size: 22px;
     font-weight: 500;
     margin-bottom: 16px;
-    margin-top: -12px;  /* Adjust this value to move the title upwards */
+    margin-top: -12px;
 `;
 
 const LabelText = styled.p`
@@ -208,7 +206,6 @@ const copypromo = () => {
     });
 };
 
-
 const Header = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [username, setUsername] = useState('');
@@ -259,11 +256,6 @@ const Header = () => {
                                         <img src={Purchase} alt="Мои покупки" />
                                         Мои покупки
                                     </NavLink>
-                                    <SecondSubMenu>
-                                        <SubMenuItem>
-                                            <a href="#">Скоро</a>
-                                        </SubMenuItem>
-                                    </SecondSubMenu>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink href="faq">
@@ -276,17 +268,6 @@ const Header = () => {
                                         <img src={Bonus} alt="Бонусы" />
                                         Бонусы
                                     </NavLink>
-                                    <SubMenu>
-                                        <SubMenuItem>
-                                            <a href="/">Бесплатные робуксы</a>
-                                        </SubMenuItem>
-                                        <SubMenuItem onClick={() => copypromo()}>
-                                            Промокод: ROBUX10
-                                        </SubMenuItem>
-                                        <SubMenuItem>
-                                            <a href="#">Telegram</a>
-                                        </SubMenuItem>
-                                    </SubMenu>
                                 </NavItem>
                             </NavList>
                         </Nav>

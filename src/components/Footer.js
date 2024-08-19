@@ -8,7 +8,7 @@ const FooterContainer = styled.footer`
     ${tw`relative`}
     padding: 48px 32px;
     border-radius: 32px 32px 0 0;
-    background: #1d1b29;
+    background: #015c2b;
     margin-top: 40px;
     display: flex;
     justify-content: center;
