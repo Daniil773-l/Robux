@@ -51,7 +51,7 @@ const ActionIcon = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: #2d2b3f;
+    background: #038741;
     display: flex;
     &:hover {
         color: white;

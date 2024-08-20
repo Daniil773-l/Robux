@@ -7,7 +7,7 @@ import ArrowUp from '../assets/img/ArrowUp.svg';
 import RobuxIcon from '../assets/img/RobuxWhite.svg';
 
 const CardContainer = styled.div`
-    ${tw`bg-[#1d1b29] p-8 rounded-lg shadow-lg flex flex-col`}
+    ${tw`bg-[#015c2b] p-8 rounded-lg shadow-lg flex flex-col`}
     max-width: 1070px;
     width: 100%;
     border-radius: 24px;
@@ -55,7 +55,7 @@ const TaskContainer = styled.div`
 
 const TaskCard = styled.div`
     ${tw`p-4 flex flex-col justify-between`}
-    background-color: #1d1b29;
+    background-color:#015c2b;
     width: 150px;
     padding-left: 0;
     color: rgb(131, 143, 149);
@@ -112,14 +112,14 @@ const BonusLink = styled.a`
 
 const BonusCard1 = styled.div`
     ${tw`p-4 flex flex-col justify-between`}
-    background-color: #1d1b29;
+    background-color: #038741;
     width: 200px;
     margin-top: 20px;
     height: 50px;
     color: white;
     
     line-height: 24px;
-    background-color: #2A263B;
+    background-color: #038741;
     font-family: Manrope;
     font-weight: 700;
     border-radius: 12px;
@@ -127,13 +127,13 @@ const BonusCard1 = styled.div`
 
 const BonusCard2 = styled.div`
     ${tw`p-4 flex flex-col justify-between`}
-    background-color: #1d1b29;
+    background-color: #038741;
     width: 150px;
     height: 50px;
     
     margin-top: 20px;
     color: white;
-    background-color: #2A263B;
+    background-color: #038741;
     font-family: Manrope;
     font-weight: 700;
     border-radius: 12px;
@@ -150,9 +150,9 @@ const BonusIcon = styled.img`
 const TaskLink = styled.a`
     ${tw`font-bold flex items-center justify-between mb-2`}
     font-family: Manrope;
-    color: rgb(154, 168, 229);
+    color: #02e875;
     text-decoration: none;
-   
+
     font-weight: 600;
     font-size: 19px;
 

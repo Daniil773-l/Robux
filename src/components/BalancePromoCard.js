@@ -11,7 +11,7 @@ const gradientPurple = 'conic-gradient(from -125deg at 50% 50%, #5c76eb 0deg, #9
 
 // Контейнер карточки
 const CardContainer = styled.div`
-    ${tw`bg-[#1d1b29] p-6 rounded-lg shadow-lg flex justify-between items-center relative`}
+    ${tw`bg-[#015c2b] p-6 rounded-lg shadow-lg flex justify-between items-center relative`}
     max-width: 1050px;
     border-radius: 24px;
     z-index: 1;
@@ -25,8 +25,8 @@ const CardContainer = styled.div`
 const ShadowPoint = styled.div`
     display: inline-flex;
     width: 135px;
-   
-    background-color: #0730eb;
+
+    background-color: #00ff21;
     height: 110px;
     position: absolute;
     filter: blur(90px);
@@ -90,7 +90,7 @@ const BalanceAmount = styled.div`
 // Кнопка вывода
 const WithdrawButton = styled.button`
     ${tw`text-white px-4 py-2 rounded-lg text-sm font-semibold`}
-    background: ${gradientPurple};
+    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
     border: none;
     border-radius: 12px;
 `;
@@ -115,7 +115,7 @@ const PromoCodeText = styled.p`
     font-weight: 500;
     font-size: 30px;
     margin-bottom: 20px;
-    color: rgb(131, 143, 149);
+    color: rgb(172, 191, 198);
 `;
 
 // Описание промокода
@@ -134,10 +134,10 @@ const SocialButtonsWrapper = styled.div`
 // Отдельный стиль для контейнеров соцсетей
 const SocialButtonContainer = styled.div`
     ${tw`flex items-center justify-center text-white font-semibold`}
-    background-color: #2A263B;
+    background-color: #038741;
     font-weight: 800;
     font-size: 16px;
-    color: rgb(154, 168, 229);
+    color: #07ff7d;
     line-height: 120%;
     text-decoration: none;
     border-radius: 12px;

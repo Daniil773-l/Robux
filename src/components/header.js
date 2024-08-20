@@ -132,7 +132,7 @@ const LoginModal = styled.div`
 
 const ModalContent = styled.div`
     ${tw`p-8 rounded-lg shadow-lg text-white relative`}
-    background: #232030;
+    background:#015c2b;
     border-radius: 24px;
     width: 420px;
     max-width: 100%;
@@ -162,7 +162,7 @@ const LabelText = styled.p`
 
 const ModalInput = styled.input`
     ${tw`w-full p-3 rounded-lg border-none mt-2 text-white`}
-    background-color: #2A263B !important;
+    background-color: #038741 !important;
     width: 95%;
     font-size: 18px;
     font-weight: 500;
@@ -177,13 +177,13 @@ const ModalInput = styled.input`
 
 const ModalText = styled.p`
     ${tw`mt-3 text-center`}
-    color: #79889c;
+    color: #ffffff;
     font-size: 14px;
 `;
 
 const ModalButton = styled.button`
     ${tw`w-full py-4 rounded-lg mt-5 font-bold border-none cursor-pointer`}
-    background: ${gradientPurple};
+    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
     color: #fff;
     font-size: 16px;
     opacity: 0.5;
@@ -231,14 +231,12 @@ const UserUsername = styled.span`
 
 const Header = () => {
     const [showLogin, setShowLogin] = useState(false);
-    const [nickname, setNickname] = useState('');  // добавлен state для nickname
-    const [isLoading, setIsLoading] = useState(false);  // добавлен state для isLoading
-    const [nicknameValid, setNicknameValid] = useState(null);  // добавлен state для nicknameValid
+    const [nickname, setNickname] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [nicknameValid, setNicknameValid] = useState(null);
     const [users, setUsers] = useState([]);
 
-    // Определите переменную apiKey перед использованием
     const apiKey = process.env.REACT_APP_API_KEY;
-
 
     const toggleLogin = () => {
         setShowLogin(!showLogin);
@@ -254,10 +252,10 @@ const Header = () => {
         console.log('handleNicknameCheck вызвана');
         setIsLoading(true);
         try {
-            const response = await fetch(`/cloud/v2/users/${nickname}`, {
+            const response = await fetch(`'https://apis.roblox.com/cloud/v2/users/${nickname}`, {
                 method: 'GET',
                 headers: {
-                    'x-api-key': apiKey
+                    'x-api-key': '{YRHPBE1QdUiWkU4gT/5VUVnJBUXweJs5qwaXQgOZ/RzwoYAcZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSXNJbU4wZVNJNklrcFhWQ0o5LmV5SmlZWE5sUVhCcFMyVjVJam9pV1ZKSVVFSkZNVkZrVldsWGExVTBaMVF2TlZaVlZtNUtRbFZZZDJWS2N6VnhkMkZZVVdkUFdpOVNlbmR2V1VGaklpd2liM2R1WlhKSlpDSTZJamN5TWpreE9EY3pNakFpTENKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2laWGh3SWpveE56STBNVGN3TWpZd0xDSnBZWFFpT2pFM01qUXhOalkyTmpBc0ltNWlaaUk2TVRjeU5ERTJOalkyTUgwLkhLT1Y5YUVzY0Q0S1JhXzZNcTlqQXZCaUdZYjEwNWx0eGlHWjR6UUJVZlhvSndiZkRKLUp5UHdBbjNFZ0wwaDlfM3ZSamZSdXRyeXNXWUhnSVEtenNhQ3dBbldoWjZCVkhLR1d0UWFVdGZTZDN1TUhnYVRaWDBSMFg2Q0JBV3BINzF6a3I5VVdCSDgxb2tuTHlQYW95ZTZsWjV3dFB1YTRkWk1Vd1hlMjJ0dG9EVW9zVnJwM05wNFNlaEdJdkVoQmZvQTNjYm9hMjdoMTZmVmpudWZiMDRmLTkyOGVqTUVXdXp1ekVIUGR3LXlnQWt2NVpqR2VSajhGNlBDZ29qV2gxY0M1NUR6UW1QMVZCWWVDLVdscUdIWm5BdllaUi11V201aGNLTzNZb2RYOTNmZU9NTE41eURsUjJJRXotZ29HTkRjMVdGRUtTcW54ZTdUekZfUGhJUQ==}'
                 }
             });
 
@@ -277,10 +275,6 @@ const Header = () => {
             setIsLoading(false);
         }
     };
-
-
-
-
 
     const handleInputChange = (e) => {
         setNickname(e.target.value);
@@ -341,7 +335,6 @@ const Header = () => {
             </HeaderContainer>
             <div style={{ height: '80px' }} /> {/* This div creates space so content below isn't hidden behind the fixed header */}
 
-            {/* Login Modal */}
             <LoginModal $show={showLogin} onClick={closeLoginOnOutsideClick}>
                 <ModalContent>
                     <CloseButton onClick={toggleLogin}>&times;</CloseButton>
