@@ -127,7 +127,7 @@ const ButtonArea = styled.div`
 
 const LoginModal = styled.div`
     ${tw`fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50`}
-    display: ${({ show }) => (show ? 'flex' : 'none')};
+    display: ${({ $show }) => ($show ? 'flex' : 'none')};
 `;
 
 const ModalContent = styled.div`
@@ -186,7 +186,7 @@ const ModalButton = styled.button`
     background: ${gradientPurple};
     color: #fff;
     font-size: 16px;
-    opacity: .5;
+    opacity: 0.5;
     &:hover {
         opacity: 0.9;
     }
@@ -200,16 +200,45 @@ const LoadingSpinner = styled.div`
     }
 `;
 
-const copypromo = () => {
-    navigator.clipboard.writeText("ROBUX10").then(() => {
-        alert("Promo code copied to clipboard!");
-    });
-};
+const UserCardContainer = styled.div`
+    ${tw`flex justify-center mt-4`}
+`;
+
+const UserCard = styled.div`
+    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors`}
+    margin-right: 16px;
+    &:hover {
+        background-color: #3C3555;
+    }
+`;
+
+const UserAvatar = styled.img`
+    ${tw`w-12 h-12 rounded-full`}
+    margin-right: 8px;
+`;
+
+const UserInfo = styled.div`
+    ${tw`flex flex-col`}
+`;
+
+const UserName = styled.span`
+    ${tw`text-white text-sm font-bold`}
+`;
+
+const UserUsername = styled.span`
+    ${tw`text-gray-400 text-xs`}
+`;
 
 const Header = () => {
     const [showLogin, setShowLogin] = useState(false);
-    const [username, setUsername] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
+    const [nickname, setNickname] = useState('');  // добавлен state для nickname
+    const [isLoading, setIsLoading] = useState(false);  // добавлен state для isLoading
+    const [nicknameValid, setNicknameValid] = useState(null);  // добавлен state для nicknameValid
+    const [users, setUsers] = useState([]);
+
+    // Определите переменную apiKey перед использованием
+    const apiKey = process.env.REACT_APP_API_KEY;
+
 
     const toggleLogin = () => {
         setShowLogin(!showLogin);
@@ -221,18 +250,40 @@ const Header = () => {
         }
     };
 
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setUsername(value);
+    const handleNicknameCheck = async () => {
+        console.log('handleNicknameCheck вызвана');
+        setIsLoading(true);
+        try {
+            const response = await fetch(`/cloud/v2/users/${nickname}`, {
+                method: 'GET',
+                headers: {
+                    'x-api-key': apiKey
+                }
+            });
 
-        if (value.length > 2) {
-            setIsLoading(true);
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 2000); // 2 seconds delay for showing the spinner
-        } else {
+            if (response.ok) {
+                const data = await response.json();
+                console.log('API Response:', data);
+                setNicknameValid(data.someFieldIndicatingExistence);
+            } else {
+                const errorData = await response.json();
+                console.error('Ошибка API:', errorData.errors);
+                setNicknameValid(false);
+            }
+        } catch (error) {
+            console.error('Ошибка при выполнении запроса:', error.message);
+            setNicknameValid(false);
+        } finally {
             setIsLoading(false);
         }
+    };
+
+
+
+
+
+    const handleInputChange = (e) => {
+        setNickname(e.target.value);
     };
 
     return (
@@ -291,7 +342,7 @@ const Header = () => {
             <div style={{ height: '80px' }} /> {/* This div creates space so content below isn't hidden behind the fixed header */}
 
             {/* Login Modal */}
-            <LoginModal show={showLogin} onClick={closeLoginOnOutsideClick}>
+            <LoginModal $show={showLogin} onClick={closeLoginOnOutsideClick}>
                 <ModalContent>
                     <CloseButton onClick={toggleLogin}>&times;</CloseButton>
                     <ModalTitle>Войти</ModalTitle>
@@ -299,13 +350,30 @@ const Header = () => {
                     <ModalInput
                         type="text"
                         placeholder="Введите никнейм"
-                        value={username}
-                        onChange={handleInputChange}
+                        value={nickname}
+                        onChange={(e) => {
+                            handleInputChange(e);
+                            handleNicknameCheck();  // Вызов проверки при каждом изменении значения
+                        }}
                     />
+
                     {isLoading && (
                         <LoadingSpinner>
                             <AtomicSpinner />
                         </LoadingSpinner>
+                    )}
+                    {!isLoading && users.length > 0 && (
+                        <UserCardContainer>
+                            {users.map((user) => (
+                                <UserCard key={user.id}>
+                                    <UserAvatar src={`https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=150&height=150&format=png`} alt={user.name} />
+                                    <UserInfo>
+                                        <UserName>{user.name}</UserName>
+                                        <UserUsername>@{user.username}</UserUsername>
+                                    </UserInfo>
+                                </UserCard>
+                            ))}
+                        </UserCardContainer>
                     )}
                     <ModalText>{isLoading ? 'Поиск...' : 'Данные появятся после ввода никнейма...'}</ModalText>
                     <ModalButton>Войти</ModalButton>
