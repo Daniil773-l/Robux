@@ -252,11 +252,13 @@ const Header = () => {
     };
 
 
-    const handleUserCheck = async () => {
+    const handleUserCheck = async (nickname) => {
+        console.log(nickname);
         if (!nickname || nickname.length === 0) {
             console.error('User ID is empty or invalid');
             return;
         }
+
         try {
             const response = await fetch(`http://localhost:3000/api/proxy?user=${encodeURIComponent(nickname)}`);
             const data = await response.json();
@@ -281,8 +283,8 @@ const Header = () => {
         setNickname(userInput);
         if (timeoutId) clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
-            handleUserCheck(); // Запускаем проверку после задержки
-        }, 500);
+            handleUserCheck(userInput); // Запускаем проверку после задержки
+        }, 1000);
     };
 
 
