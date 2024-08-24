@@ -234,7 +234,10 @@ const Header = () => {
     const [nickname, setNickname] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [nicknameValid, setNicknameValid] = useState(null);
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState([]); // Начальное значение — пустой массив
+
+
+    let timeoutId;
 
     const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -248,37 +251,40 @@ const Header = () => {
         }
     };
 
-    const handleNicknameCheck = async () => {
-        console.log('handleNicknameCheck вызвана');
-        setIsLoading(true);
+
+    const handleUserCheck = async () => {
+        if (!nickname || nickname.length === 0) {
+            console.error('User ID is empty or invalid');
+            return;
+        }
         try {
-            const response = await fetch(`'https://apis.roblox.com/cloud/v2/users/${nickname}`, {
-                method: 'GET',
-                headers: {
-                    'x-api-key': '{YRHPBE1QdUiWkU4gT/5VUVnJBUXweJs5qwaXQgOZ/RzwoYAcZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNkluTnBaeTB5TURJeExUQTNMVEV6VkRFNE9qVXhPalE1V2lJc0luUjVjQ0k2SWtwWFZDSXNJbU4wZVNJNklrcFhWQ0o5LmV5SmlZWE5sUVhCcFMyVjVJam9pV1ZKSVVFSkZNVkZrVldsWGExVTBaMVF2TlZaVlZtNUtRbFZZZDJWS2N6VnhkMkZZVVdkUFdpOVNlbmR2V1VGaklpd2liM2R1WlhKSlpDSTZJamN5TWpreE9EY3pNakFpTENKaGRXUWlPaUpTYjJKc2IzaEpiblJsY201aGJDSXNJbWx6Y3lJNklrTnNiM1ZrUVhWMGFHVnVkR2xqWVhScGIyNVRaWEoyYVdObElpd2laWGh3SWpveE56STBNVGN3TWpZd0xDSnBZWFFpT2pFM01qUXhOalkyTmpBc0ltNWlaaUk2TVRjeU5ERTJOalkyTUgwLkhLT1Y5YUVzY0Q0S1JhXzZNcTlqQXZCaUdZYjEwNWx0eGlHWjR6UUJVZlhvSndiZkRKLUp5UHdBbjNFZ0wwaDlfM3ZSamZSdXRyeXNXWUhnSVEtenNhQ3dBbldoWjZCVkhLR1d0UWFVdGZTZDN1TUhnYVRaWDBSMFg2Q0JBV3BINzF6a3I5VVdCSDgxb2tuTHlQYW95ZTZsWjV3dFB1YTRkWk1Vd1hlMjJ0dG9EVW9zVnJwM05wNFNlaEdJdkVoQmZvQTNjYm9hMjdoMTZmVmpudWZiMDRmLTkyOGVqTUVXdXp1ekVIUGR3LXlnQWt2NVpqR2VSajhGNlBDZ29qV2gxY0M1NUR6UW1QMVZCWWVDLVdscUdIWm5BdllaUi11V201aGNLTzNZb2RYOTNmZU9NTE41eURsUjJJRXotZ29HTkRjMVdGRUtTcW54ZTdUekZfUGhJUQ==}'
-                }
-            });
+            const response = await fetch(`http://localhost:3000/api/proxy?user=${encodeURIComponent(nickname)}`);
+            const data = await response.json();
 
             if (response.ok) {
-                const data = await response.json();
                 console.log('API Response:', data);
-                setNicknameValid(data.someFieldIndicatingExistence);
+                setUsers([data]); // Обновляем users массивом с данными
+                setNicknameValid(true);
             } else {
-                const errorData = await response.json();
-                console.error('Ошибка API:', errorData.errors);
+                console.error('API Error:', data.errors || 'Unknown Error');
                 setNicknameValid(false);
             }
         } catch (error) {
-            console.error('Ошибка при выполнении запроса:', error.message);
+            console.error('Error during request:', error.message);
             setNicknameValid(false);
-        } finally {
-            setIsLoading(false);
         }
     };
 
+
     const handleInputChange = (e) => {
-        setNickname(e.target.value);
+        const userInput = e.target.value.trim();
+        setNickname(userInput);
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            handleUserCheck(); // Запускаем проверку после задержки
+        }, 500);
     };
+
 
     return (
         <>
@@ -344,10 +350,7 @@ const Header = () => {
                         type="text"
                         placeholder="Введите никнейм"
                         value={nickname}
-                        onChange={(e) => {
-                            handleInputChange(e);
-                            handleNicknameCheck();  // Вызов проверки при каждом изменении значения
-                        }}
+                        onChange={handleInputChange}
                     />
 
                     {isLoading && (
