@@ -201,12 +201,11 @@ const LoadingSpinner = styled.div`
 `;
 
 const UserCardContainer = styled.div`
-    ${tw`flex justify-center mt-4`}
+    ${tw`flex flex-wrap justify-center mt-4`}
 `;
 
 const UserCard = styled.div`
-    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors`}
-    margin-right: 16px;
+    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
     &:hover {
         background-color: #3C3555;
     }
@@ -229,17 +228,19 @@ const UserUsername = styled.span`
     ${tw`text-gray-400 text-xs`}
 `;
 
+const LoggedInUserInfo = styled.div`
+    ${tw`flex items-center space-x-3`}
+`;
+
 const Header = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [nickname, setNickname] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [nicknameValid, setNicknameValid] = useState(null);
-    const [users, setUsers] = useState([]); // Начальное значение — пустой массив
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState('');
+    const [loggedInUser, setLoggedInUser] = useState(null);
 
-
-    let timeoutId;
-
-    const apiKey = process.env.REACT_APP_API_KEY;
+    let debounceTimeout;
 
     const toggleLogin = () => {
         setShowLogin(!showLogin);
@@ -251,42 +252,49 @@ const Header = () => {
         }
     };
 
-
     const handleUserCheck = async (nickname) => {
-        console.log(nickname);
-        if (!nickname || nickname.length === 0) {
-            console.error('User ID is empty or invalid');
+        if (nickname.length < 3) {
+            setUsers([]);
+            setError('Nickname must be at least 3 characters long');
             return;
         }
 
+        setIsLoading(true);
+        setError('');
         try {
             const response = await fetch(`http://localhost:3000/api/proxy?user=${encodeURIComponent(nickname)}`);
             const data = await response.json();
 
-            if (response.ok) {
-                console.log('API Response:', data);
-                setUsers([data]); // Обновляем users массивом с данными
-                setNicknameValid(true);
+            if (response.ok && data.data && Array.isArray(data.data)) {
+                setUsers(data.data);
             } else {
-                console.error('API Error:', data.errors || 'Unknown Error');
-                setNicknameValid(false);
+                setUsers([]);
+                setError('No users found or API error');
             }
         } catch (error) {
-            console.error('Error during request:', error.message);
-            setNicknameValid(false);
+            setError('Error fetching user data');
+        } finally {
+            setIsLoading(false);
         }
     };
-
 
     const handleInputChange = (e) => {
         const userInput = e.target.value.trim();
         setNickname(userInput);
-        if (timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            handleUserCheck(userInput); // Запускаем проверку после задержки
-        }, 1000);
+        if (debounceTimeout) clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+            handleUserCheck(userInput);
+        }, 3000); // 3 seconds debounce
     };
 
+    const handleLogin = (user) => {
+        setLoggedInUser(user);
+        setShowLogin(false);
+    };
+
+    const handleLogout = () => {
+        setLoggedInUser(null);
+    };
 
     return (
         <>
@@ -326,22 +334,35 @@ const Header = () => {
                         </Nav>
                     </LogoArea>
                     <ButtonArea>
-                        <IconArea>
-                            <IconLink href="#">
-                                <FaDiscord />
-                            </IconLink>
-                            <IconLink href="#">
-                                <FaVk />
-                            </IconLink>
-                            <IconLink href="#">
-                                <FaTelegramPlane />
-                            </IconLink>
-                        </IconArea>
-                        <LoginButton onClick={toggleLogin}>Войти</LoginButton>
+                        {loggedInUser ? (
+                            <LoggedInUserInfo>
+                                <UserAvatar
+                                    src={`https://www.roblox.com/headshot-thumbnail/image?userId=${loggedInUser.id}&width=150&height=150&format=png`}
+                                    alt={loggedInUser.name}
+                                    onClick={handleLogout}
+                                />
+                                <span>{loggedInUser.name}</span>
+                            </LoggedInUserInfo>
+                        ) : (
+                            <>
+                                <IconArea>
+                                    <IconLink href="#">
+                                        <FaDiscord />
+                                    </IconLink>
+                                    <IconLink href="#">
+                                        <FaVk />
+                                    </IconLink>
+                                    <IconLink href="#">
+                                        <FaTelegramPlane />
+                                    </IconLink>
+                                </IconArea>
+                                <LoginButton onClick={toggleLogin}>Войти</LoginButton>
+                            </>
+                        )}
                     </ButtonArea>
                 </HeaderWrapper>
             </HeaderContainer>
-            <div style={{ height: '80px' }} /> {/* This div creates space so content below isn't hidden behind the fixed header */}
+            <div style={{ height: '80px' }} />
 
             <LoginModal $show={showLogin} onClick={closeLoginOnOutsideClick}>
                 <ModalContent>
@@ -363,18 +384,19 @@ const Header = () => {
                     {!isLoading && users.length > 0 && (
                         <UserCardContainer>
                             {users.map((user) => (
-                                <UserCard key={user.id}>
+                                <UserCard key={user.id} onClick={() => handleLogin(user)}>
                                     <UserAvatar src={`https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=150&height=150&format=png`} alt={user.name} />
                                     <UserInfo>
                                         <UserName>{user.name}</UserName>
-                                        <UserUsername>@{user.username}</UserUsername>
+                                        <UserUsername>@{user.displayName}</UserUsername>
                                     </UserInfo>
                                 </UserCard>
                             ))}
                         </UserCardContainer>
                     )}
-                    <ModalText>{isLoading ? 'Поиск...' : 'Данные появятся после ввода никнейма...'}</ModalText>
-                    <ModalButton>Войти</ModalButton>
+                    {error && <ModalText>{error}</ModalText>}
+                    {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}
+                    <ModalButton onClick={() => handleLogin(users[0])}>Войти</ModalButton>
                 </ModalContent>
             </LoginModal>
         </>
