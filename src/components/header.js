@@ -201,11 +201,12 @@ const LoadingSpinner = styled.div`
 `;
 
 const UserCardContainer = styled.div`
-    ${tw`flex flex-wrap justify-center mt-4`}
+    ${tw`flex justify-center mt-4`}
 `;
 
 const UserCard = styled.div`
-    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
+    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors`}
+    margin-right: 16px;
     &:hover {
         background-color: #3C3555;
     }
@@ -228,19 +229,18 @@ const UserUsername = styled.span`
     ${tw`text-gray-400 text-xs`}
 `;
 
-const LoggedInUserInfo = styled.div`
-    ${tw`flex items-center space-x-3`}
-`;
-
 const Header = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [nickname, setNickname] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [users, setUsers] = useState([]);
-    const [error, setError] = useState('');
-    const [loggedInUser, setLoggedInUser] = useState(null);
+    const [nicknameValid, setNicknameValid] = useState(null);
+    const [users, setUsers] = useState([]); // Начальное значение — пустой массив
 
-    let debounceTimeout;
+    const cache = {}; // Кэш определен в пределах компонента
+
+    let timeoutId;
+
+    const apiKey = process.env.REACT_APP_API_KEY;
 
     const toggleLogin = () => {
         setShowLogin(!showLogin);
@@ -252,49 +252,46 @@ const Header = () => {
         }
     };
 
-    const handleUserCheck = async (nickname) => {
-        if (nickname.length < 3) {
-            setUsers([]);
-            setError('Nickname must be at least 3 characters long');
+    const handleUserCheck = async () => {
+        if (!nickname || nickname.length === 0) {
+            console.error('User ID is empty or invalid');
             return;
         }
 
-        setIsLoading(true);
-        setError('');
+        if (cache[nickname]) {
+            setUsers(cache[nickname]);
+            setNicknameValid(true);
+            return;
+        }
+
         try {
             const response = await fetch(`http://localhost:3000/api/proxy?user=${encodeURIComponent(nickname)}`);
             const data = await response.json();
 
-            if (response.ok && data.data && Array.isArray(data.data)) {
-                setUsers(data.data);
+            if (response.ok) {
+                console.log('API Response:', data);
+                cache[nickname] = data; // Cache the result
+                setUsers([data]);
+                setNicknameValid(true);
             } else {
-                setUsers([]);
-                setError('No users found or API error');
+                console.error('API Error:', data.errors || 'Unknown Error');
+                setNicknameValid(false);
             }
         } catch (error) {
-            setError('Error fetching user data');
-        } finally {
-            setIsLoading(false);
+            console.error('Error during request:', error.message);
+            setNicknameValid(false);
         }
     };
 
     const handleInputChange = (e) => {
         const userInput = e.target.value.trim();
         setNickname(userInput);
-        if (debounceTimeout) clearTimeout(debounceTimeout);
-        debounceTimeout = setTimeout(() => {
-            handleUserCheck(userInput);
-        }, 3000); // 3 seconds debounce
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            handleUserCheck(); // Запускаем проверку после задержки
+        }, 500); // Debounce delay
     };
 
-    const handleLogin = (user) => {
-        setLoggedInUser(user);
-        setShowLogin(false);
-    };
-
-    const handleLogout = () => {
-        setLoggedInUser(null);
-    };
 
     return (
         <>
@@ -334,35 +331,22 @@ const Header = () => {
                         </Nav>
                     </LogoArea>
                     <ButtonArea>
-                        {loggedInUser ? (
-                            <LoggedInUserInfo>
-                                <UserAvatar
-                                    src={`https://www.roblox.com/headshot-thumbnail/image?userId=${loggedInUser.id}&width=150&height=150&format=png`}
-                                    alt={loggedInUser.name}
-                                    onClick={handleLogout}
-                                />
-                                <span>{loggedInUser.name}</span>
-                            </LoggedInUserInfo>
-                        ) : (
-                            <>
-                                <IconArea>
-                                    <IconLink href="#">
-                                        <FaDiscord />
-                                    </IconLink>
-                                    <IconLink href="#">
-                                        <FaVk />
-                                    </IconLink>
-                                    <IconLink href="#">
-                                        <FaTelegramPlane />
-                                    </IconLink>
-                                </IconArea>
-                                <LoginButton onClick={toggleLogin}>Войти</LoginButton>
-                            </>
-                        )}
+                        <IconArea>
+                            <IconLink href="#">
+                                <FaDiscord />
+                            </IconLink>
+                            <IconLink href="#">
+                                <FaVk />
+                            </IconLink>
+                            <IconLink href="#">
+                                <FaTelegramPlane />
+                            </IconLink>
+                        </IconArea>
+                        <LoginButton onClick={toggleLogin}>Войти</LoginButton>
                     </ButtonArea>
                 </HeaderWrapper>
             </HeaderContainer>
-            <div style={{ height: '80px' }} />
+            <div style={{ height: '80px' }} /> {/* This div creates space so content below isn't hidden behind the fixed header */}
 
             <LoginModal $show={showLogin} onClick={closeLoginOnOutsideClick}>
                 <ModalContent>
@@ -384,19 +368,18 @@ const Header = () => {
                     {!isLoading && users.length > 0 && (
                         <UserCardContainer>
                             {users.map((user) => (
-                                <UserCard key={user.id} onClick={() => handleLogin(user)}>
+                                <UserCard key={user.id}>
                                     <UserAvatar src={`https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=150&height=150&format=png`} alt={user.name} />
                                     <UserInfo>
                                         <UserName>{user.name}</UserName>
-                                        <UserUsername>@{user.displayName}</UserUsername>
+                                        <UserUsername>@{user.username}</UserUsername>
                                     </UserInfo>
                                 </UserCard>
                             ))}
                         </UserCardContainer>
                     )}
-                    {error && <ModalText>{error}</ModalText>}
-                    {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}
-                    <ModalButton onClick={() => handleLogin(users[0])}>Войти</ModalButton>
+                    <ModalText>{isLoading ? 'Поиск...' : 'Данные появятся после ввода никнейма...'}</ModalText>
+                    <ModalButton>Войти</ModalButton>
                 </ModalContent>
             </LoginModal>
         </>
