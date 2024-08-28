@@ -260,7 +260,7 @@ const Header = () => {
         setIsLoading(true);
         setError('');
         try {
-            const response = await fetch(`http://localhost:3000/api/proxy?user=${encodeURIComponent(nickname)}`);
+            const response = await fetch(`http://localhost:3001/api/proxy?user=${encodeURIComponent(nickname)}`);
             const data = await response.json();
 
             if (response.ok && data.data && Array.isArray(data.data)) {
