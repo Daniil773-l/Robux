@@ -42,7 +42,7 @@ app.get('/api/proxy', async (req, res) => {
         const userIdResponse = await fetch(`https://users.roblox.com/v1/users/search?keyword=${username}&limit=10`, {
             method: 'GET',
             headers: {
-                'x-api-key': apiKey,
+                // 'x-api-key': apiKey,
                 'Content-Type': 'application/json',
                 "Priority": "u=1, i", 
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36", 
