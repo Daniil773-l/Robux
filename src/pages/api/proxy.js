@@ -9,19 +9,19 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'x-api-key']
 }));
 
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+// const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const cache = {};
 
-// Debounce функция для ограничения количества запросов
-const debounce = (func, delay) => {
-    let timeoutId;
-    return (...args) => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            func.apply(this, args);
-        }, delay);
-    };
-};
+// // Debounce функция для ограничения количества запросов
+// const debounce = (func, delay) => {
+//     let timeoutId;
+//     return (...args) => {
+//         clearTimeout(timeoutId);
+//         timeoutId = setTimeout(() => {
+//             func.apply(this, args);
+//         }, delay);
+//     };
+// };
 
 app.get('/api/proxy', async (req, res) => {
     const username = req.query.user;
