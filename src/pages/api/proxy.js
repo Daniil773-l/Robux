@@ -51,7 +51,7 @@ app.get('/api/proxy', async (req, res) => {
         });
 
         if (userIdResponse.status === 429) {
-            console.log('Rate limit hit, retrying after delay...');
+            console.log($`Rate limit hit, retrying after delay..., response body: ${userIdResponse}`);
             res.status(429).json({ error: 'Rate limit exceeded, please try again later.' });
             return;
         }
