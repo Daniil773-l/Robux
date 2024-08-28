@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:3001',
+    origin: '*',
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type', 'x-api-key']
 }));
