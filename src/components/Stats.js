@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { FaDiscord, FaVk, FaTelegramPlane } from 'react-icons/fa';
@@ -232,11 +232,58 @@ const LoggedInUserInfo = styled.div`
 
 const Header = () => {
     const [showLogin, setShowLogin] = useState(false);
-    const [nickname, setNickname] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [error, setError] = useState('');
     const [loggedInUser, setLoggedInUser] = useState(null);
+    const [inputValue, setInputValue] = useState('');
+    const [debouncedValue, setDebouncedValue] = useState('');
+    
+    const handleUserCheck = async (nickname) => {
+        if (nickname.length < 3) {
+            setUsers([]);
+            setError('Nickname must be at least 3 characters long');
+            return;
+        }
+
+        setIsLoading(true);
+        setError('');
+        try {
+            const response = await fetch(`https://robuy.gg/api/accounts/search?noAvatars=false&keyword=${encodeURIComponent(inputValue)}`);
+            const data = await response.json();
+
+            if (response.ok && data && Array.isArray(data)) {
+                setUsers(data);
+            } else {
+                setUsers([]);
+                setError('No users found or API error');
+            }
+        } catch (error) {
+            setError('Error fetching user data');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+      // Устанавливаем задержку перед выполнением действия
+      const handler = setTimeout(() => {
+        setDebouncedValue(inputValue);
+      }, 500); // Задержка в 500 мс
+  
+      // Очищаем таймаут при изменении inputValue
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [inputValue]);
+  
+    // Этот useEffect будет вызываться только при изменении debouncedValue
+    useEffect(() => {
+      if (debouncedValue) {
+        console.log('Выполняем поиск по:', debouncedValue);
+        handleUserCheck(debouncedValue)
+      }
+    }, [debouncedValue]);
 
     let debounceTimeout;
 
@@ -250,40 +297,6 @@ const Header = () => {
         }
     };
 
-    const handleUserCheck = async (nickname) => {
-        if (nickname.length < 3) {
-            setUsers([]);
-            setError('Nickname must be at least 3 characters long');
-            return;
-        }
-
-        setIsLoading(true);
-        setError('');
-        try {
-            const response = await fetch(`http://localhost:3001/api/proxy?user=${encodeURIComponent(nickname)}`);
-            const data = await response.json();
-
-            if (response.ok && data.data && Array.isArray(data.data)) {
-                setUsers(data.data);
-            } else {
-                setUsers([]);
-                setError('No users found or API error');
-            }
-        } catch (error) {
-            setError('Error fetching user data');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const handleInputChange = (e) => {
-        const userInput = e.target.value.trim();
-        setNickname(userInput);
-        if (debounceTimeout) clearTimeout(debounceTimeout);
-        debounceTimeout = setTimeout(() => {
-            handleUserCheck(userInput);
-        }, 3000); // 3 seconds debounce
-    };
 
     const handleLogin = (user) => {
         setLoggedInUser(user);
@@ -362,8 +375,8 @@ const Header = () => {
                     <ModalInput
                         type="text"
                         placeholder="Введите никнейм"
-                        value={nickname}
-                        onChange={handleInputChange}
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
                     />
 
                     {isLoading && (
@@ -375,7 +388,7 @@ const Header = () => {
                         <UserCardContainer>
                             {users.map((user) => (
                                 <UserCard key={user.id} onClick={() => handleLogin(user)}>
-                                    <UserAvatar src={`https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=150&height=150&format=png`} alt={user.name} />
+                                    <UserAvatar src={user.avatarUrl} alt={user.name} />
                                     <UserInfo>
                                         <UserName>{user.name}</UserName>
                                         <UserUsername>@{user.displayName}</UserUsername>
