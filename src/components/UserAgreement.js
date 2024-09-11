@@ -19,6 +19,7 @@ const PolicyContainer = styled.div`
     color: white;
     overflow-y: auto;
 
+    
     /* Custom scrollbar styles */
     &::-webkit-scrollbar {
         width: 8px;
@@ -33,6 +34,9 @@ const PolicyContainer = styled.div`
     &::-webkit-scrollbar-track {
         background-color: transparent;
     }
+    
+       
+    
 `;
 
 const Title = styled.h2`
@@ -76,24 +80,40 @@ const Sphere = styled.img`
     left: -50px;
     top: 55%;
     position: absolute;
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const Sphere2 = styled.img`
     left: 10%;
     top: 15%;
     position: absolute;
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const Sphere3 = styled.img`
     right: 10%;
     top: 25%;
     position: absolute;
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const Sphere4 = styled.img`
     right: 8%;
     top: 70%;
     position: absolute;
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const FAQTitleWrapper = styled.div`
@@ -102,6 +122,7 @@ const FAQTitleWrapper = styled.div`
     align-items: center;
     margin-top: 20px;
     z-index: 1;
+    
 `;
 
 const FAQTitle = styled.div`
@@ -120,6 +141,11 @@ const FAQMainText = styled.h1`
     color: white;
     white-space: nowrap;
     z-index: 12;
+    @media (max-width: 768px) {
+        ${tw`mt-4`}
+        margin-top: 30%;
+        font-size:40px
+    }
 `;
 
 const FAQSubText = styled.span`
@@ -131,6 +157,10 @@ const FAQSubText = styled.span`
     margin-top: -40px;
     padding-bottom: 5%;
     z-index: 2;
+    @media (max-width: 768px) {
+        ${tw``}
+        font-size:40px
+    }
 `;
 
 const LetterWrapper = styled.span`

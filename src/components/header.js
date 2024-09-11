@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { FaDiscord, FaVk, FaTelegramPlane } from 'react-icons/fa';
+
 import AtomicSpinner from 'atomic-spinner';
 import Photo from "../assets/img/logo.svg";
+import Menu from "../assets/img/MenuIcon.png";
 import Bonus from "../assets/img/BonusIcon.svg";
 import FAQ from "../assets/img/FAQIcon.svg";
 import Buy from "../assets/img/BuyRobuxIcon.svg";
 import Purchase from "../assets/img/MyPurchasesIcon.svg";
+import MobileHeader from "../components/MobileHeader";
+
 
 const gradientPurple = 'conic-gradient(from -125deg at 50% 50%, #5c76eb 0deg, #9465ca 65deg, #6f65ca 100deg, #5c76eb 360deg)';
 
@@ -235,7 +239,7 @@ const Header = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [nicknameValid, setNicknameValid] = useState(null);
     const [users, setUsers] = useState([]); // Начальное значение — пустой массив
-
+    const [isMobile, setIsMobile] = useState(false);
     const cache = {}; // Кэш определен в пределах компонента
 
     let timeoutId;
@@ -291,6 +295,23 @@ const Header = () => {
             handleUserCheck(); // Запускаем проверку после задержки
         }, 500); // Debounce delay
     };
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768); // Если ширина экрана меньше или равна 768px — мобильная версия
+        };
+
+        handleResize(); // Устанавливаем значение при первом рендере
+        window.addEventListener('resize', handleResize); // Добавляем слушатель событий изменения ширины окна
+
+        return () => {
+            window.removeEventListener('resize', handleResize); // Удаляем слушатель при размонтировании
+        };
+    }, []);
+
+    if (isMobile) {
+        return <MobileHeader />; // Если мобильный экран, возвращаем мобильный хедер
+    }
 
 
     return (

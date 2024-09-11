@@ -18,7 +18,11 @@ const CardContainer = styled.div`
     overflow: hidden;
     padding: 40px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 50px;
+    @media (max-width: 1068px) {
+        ${tw`w-full mt-24`}
+        max-width: 650px;
+    }
 `;
 
 // Элемент для эффекта тени
@@ -99,6 +103,7 @@ const WithdrawButton = styled.button`
 const RightSection = styled.div`
     ${tw`flex flex-col`}
     align-items: flex-start;
+    
 `;
 
 // Промокод заголовок

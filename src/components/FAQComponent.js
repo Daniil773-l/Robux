@@ -18,19 +18,30 @@ const fadeIn = keyframes`
 `;
 
 const FAQContainer = styled.div`
-    ${tw`container mx-auto my-12 px-6 md:px-12`}
+    ${tw`container mx-auto my-12 px-3 md:px-12`}
+  
+}
 `;
 
 const FAQTitleWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    @media (max-width: 768px)  {
+        ${tw`text-sm mt-16`}
+        font-size: 14px;
+    }
+  
 `;
 
 const FAQTitle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    @media (max-width: 768px)  {
+        ${tw`text-sm`}
+        font-size: 14px;
+    }
 `;
 
 const FAQMainText = styled.h1`
@@ -42,6 +53,9 @@ const FAQMainText = styled.h1`
     letter-spacing: -2.4px;
     color: white;
     white-space: nowrap;
+    @media (max-width: 768px)  {
+        font-size: 40px;
+    }
 `;
 
 const FAQSubText = styled.span`
@@ -52,6 +66,10 @@ const FAQSubText = styled.span`
     line-height: 100%;
     margin-top: -40px;
     padding-bottom: 5%;
+    @media (max-width: 768px)  {
+        font-size: 40px;
+        padding-top: 20px;
+    }
 `;
 
 const LetterWrapper = styled.span`
@@ -103,23 +121,39 @@ const Sphere = styled.img`
     left: -50px;
     top: 55%;
     position: absolute;
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const Sphere2 = styled.img`
     left: 10%;
     top: 15%;
     position: absolute;
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const Sphere3 = styled.img`
     right: 10%;
     top: 25%;
     position: absolute;
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 const Sphere4 = styled.img`
     right: 8%;
     top: 70%;
     position: absolute;
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 
