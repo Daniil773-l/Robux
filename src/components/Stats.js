@@ -249,11 +249,11 @@ const Header = () => {
         setIsLoading(true);
         setError('');
         try {
-            const response = await fetch(`https://robuy.gg/api/accounts/search?noAvatars=false&keyword=${encodeURIComponent(inputValue)}`);
+            const response = await fetch(`https://api.rbx.cash/client/search-users?keyword=${encodeURIComponent(nickname)}`);
             const data = await response.json();
 
             if (response.ok && data && Array.isArray(data)) {
-                setUsers(data);
+                setUsers(data.slice(0, 10));
             } else {
                 setUsers([]);
                 setError('No users found or API error');
@@ -388,9 +388,9 @@ const Header = () => {
                         <UserCardContainer>
                             {users.map((user) => (
                                 <UserCard key={user.id} onClick={() => handleLogin(user)}>
-                                    <UserAvatar src={user.avatarUrl} alt={user.name} />
+                                    <UserAvatar src={user.avatar} alt={user.name} />
                                     <UserInfo>
-                                        <UserName>{user.name}</UserName>
+                                        <UserName>{user.username}</UserName>
                                         <UserUsername>@{user.displayName}</UserUsername>
                                     </UserInfo>
                                 </UserCard>
