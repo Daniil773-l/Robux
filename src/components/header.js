@@ -269,7 +269,7 @@ const Header = () => {
         }
 
         try {
-            const response = await fetch(`/api/search/player/${encodeURIComponent(inputValue)}`);
+            const response = await fetch(`/api/search/player/${encodeURIComponent(nickname)}`);
             const data = await response.json();
 
             if (response.ok) {
