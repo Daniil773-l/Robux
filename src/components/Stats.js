@@ -8,6 +8,7 @@ import Bonus from "../assets/img/BonusIcon.svg";
 import FAQ from "../assets/img/FAQIcon.svg";
 import Buy from "../assets/img/BuyRobuxIcon.svg";
 import Purchase from "../assets/img/MyPurchasesIcon.svg";
+import env from 'react-dotenv';
 
 const HeaderContainer = styled.header`
     ${tw`bg-[rgb(11,35,22)] py-4 fixed top-0 w-full z-50`}
@@ -249,7 +250,7 @@ const Header = () => {
         setIsLoading(true);
         setError('');
         try {
-            const response = await fetch(`/api/search/player/${encodeURIComponent(inputValue)}`);
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/player/${encodeURIComponent(inputValue)}`);
             const data = await response.json();
 
             if (response.ok && data && Array.isArray(data)) {

@@ -11,6 +11,7 @@ import FAQ from "../assets/img/FAQIcon.svg";
 import Buy from "../assets/img/BuyRobuxIcon.svg";
 import Purchase from "../assets/img/MyPurchasesIcon.svg";
 import MobileHeader from "../components/MobileHeader";
+import env from 'react-dotenv';
 
 
 const gradientPurple = 'conic-gradient(from -125deg at 50% 50%, #5c76eb 0deg, #9465ca 65deg, #6f65ca 100deg, #5c76eb 360deg)';
@@ -269,7 +270,7 @@ const Header = () => {
         }
 
         try {
-            const response = await fetch(`/api/search/player/${encodeURIComponent(nickname)}`);
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/player/${encodeURIComponent(nickname)}`);
             const data = await response.json();
 
             if (response.ok) {
