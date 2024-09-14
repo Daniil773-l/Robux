@@ -269,7 +269,7 @@ const Header = () => {
         }
 
         try {
-            const response = await fetch(`https://api.rbx.cash/client/search-users?keyword=${encodeURIComponent(nickname)}`);
+            const response = await fetch(`/api/search/player/${encodeURIComponent(inputValue)}`);
             const data = await response.json();
 
             if (response.ok) {
@@ -390,7 +390,7 @@ const Header = () => {
                         <UserCardContainer>
                             {users.map((user) => (
                                 <UserCard key={user.id}>
-                                    <UserAvatar src={`https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=150&height=150&format=png`} alt={user.name} />
+                                    <UserAvatar src={user.avatar_url} alt={user.name} />
                                     <UserInfo>
                                         <UserName>{user.name}</UserName>
                                         <UserUsername>@{user.username}</UserUsername>
