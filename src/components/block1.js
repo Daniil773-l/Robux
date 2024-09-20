@@ -499,7 +499,7 @@ const PurchaseComponent = () => {
 
     useEffect(() => {
         console.log("multiplying robuxes to rubles")
-        setRublesToPay(Math.round(robuxesCount * courseRobuxToRubles))
+        setRublesToPay((robuxesCount * courseRobuxToRubles).toFixed(1))
     }, [robuxesCount])
 
     const handlePurpleLineClick = () => {
