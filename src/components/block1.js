@@ -375,9 +375,14 @@ const BuyButton = styled.button`
     border: none;
     background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
     border-radius: 12px;
+    cursor: pointer; 
     &:disabled {
 
         cursor: not-allowed;
+    }
+
+    &:hover { 
+        background: linear-gradient(75.7deg, rgb(45, 140, 50) 3.8%, rgb(110, 172, 27) 87.1%);
     }
 
     @media (max-width: 768px) {
@@ -548,7 +553,7 @@ const PurchaseComponent = () => {
                     </InputWrapper>
                 </InputBlock>
                 <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
-                <BuyButton disabled>Купить</BuyButton>
+                <BuyButton>Купить</BuyButton>
                 <PromoLink id="open-modal-btn">Использовать промокод</PromoLink>
             </BuyForm>
         </>
