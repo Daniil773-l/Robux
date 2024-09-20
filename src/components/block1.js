@@ -499,7 +499,7 @@ const PurchaseComponent = () => {
 
     useEffect(() => {
         console.log("multiplying robuxes to rubles")
-        if (parseInt(e.target.value) > 210) { 
+        if (parseInt(robuxesCount) > 210) { 
         setRublesToPay(String((robuxesCount * courseRobuxToRubles).toFixed(1)))
         } else { 
             setRublesToPay("")
