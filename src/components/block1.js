@@ -499,7 +499,7 @@ const PurchaseComponent = () => {
 
     useEffect(() => {
         console.log("multiplying robuxes to rubles")
-        setRublesToPay((robuxesCount * courseRobuxToRubles).toFixed(1))
+        setRublesToPay(String((robuxesCount * courseRobuxToRubles).toFixed(1)))
     }, [robuxesCount])
 
     const handlePurpleLineClick = () => {
@@ -557,7 +557,7 @@ const PurchaseComponent = () => {
             <SecondStyledLabel htmlFor="nickname">Введите свой никнейм</SecondStyledLabel>
             <InputWrapper>
                 <SecondStyledInput
-                    placeholder="Введите никнейм"
+                    placeholder="Coming soon..."
                     id="nickname"
                     type="text"
                 />
