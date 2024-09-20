@@ -525,7 +525,11 @@ const PurchaseComponent = () => {
                             id="robuxesCount"
                             type="number"
                             value={robuxesCount}
-                            onChange={(e) => setRobuxesCount(e.target.value)}
+                            onChange={(e) => { 
+                                if (parseInt(e.target.value) > 210) { 
+                                    setRobuxesCount(e.target.value)
+                                }
+                            }}
                         />
                     </InputWrapper>
                 </InputBlock>
