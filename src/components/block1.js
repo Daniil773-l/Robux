@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import tw from 'twin.macro';
 import DragonImage from '../assets/img/char2.png';
@@ -489,11 +489,18 @@ const BiggerCoin = styled.img`
         }
 `;
 
+const courseRobuxToRubles = 0.7 
+
 const PurchaseComponent = () => {
     const [activeButton, setActiveButton] = useState('standard');
     const [rublesToPay, setRublesToPay] = useState('');
     const [robuxesCount, setRobuxesCount] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
+
+    useEffect(() => {
+        console.log("multiplying robuxes to rubles")
+        setRublesToPay(Math.round(robuxesCount * courseRobuxToRubles))
+    }, [robuxesCount])
 
     const handlePurpleLineClick = () => {
         setIsExpanded(!isExpanded);
@@ -530,7 +537,7 @@ const PurchaseComponent = () => {
                             id="rublesToPay"
                             type="number"
                             value={rublesToPay}
-                            onChange={(e) => setRublesToPay(e.target.value)}
+                            onInput={(e) => setRublesToPay(e.target.value)}
                         />
                     </InputWrapper>
                 </InputBlock>
@@ -570,7 +577,7 @@ const PurchaseComponent = () => {
                     <Subtitle>
                         <TitleLine>
                             <GreenText>по курсу</GreenText>
-                            <Word>1.43</Word>
+                            <Word>{courseRobuxToRubles}</Word>
                             <CurrencyIcon src={Robux} alt="Robux Icon" />
                         </TitleLine>
                     </Subtitle>

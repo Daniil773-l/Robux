@@ -345,7 +345,7 @@ const Header = () => {
                         {loggedInUser ? (
                             <LoggedInUserInfo>
                                 <UserAvatar src={loggedInUser.avatar_url} alt={loggedInUser.name} />
-                                <span>{loggedInUser.name}</span>
+                                <span style={{color: "white"}}>{loggedInUser.name}</span>
                             </LoggedInUserInfo>
                         ) : (
                             <>
