@@ -241,12 +241,6 @@ const Header = () => {
     const [debouncedValue, setDebouncedValue] = useState('');
     
     const handleUserCheck = async (nickname) => {
-        if (nickname.length < 3) {
-            setUsers([]);
-            setError('Nickname must be at least 3 characters long');
-            return;
-        }
-
         setIsLoading(true);
         setError('');
         try {

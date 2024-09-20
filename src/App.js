@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import DesktopHeader from './components/header';  // Компонент для десктопа
-import MobileHeader from './components/MobileHeader';    // Компонент для мобильных устройств
 import Buy from './components/block1';
 import Footer from './components/Footer';
 import Cards from './components/Cards';
@@ -10,7 +9,6 @@ import Why from './components/WhyUs';
 import Goal from './components/Goal';
 import styled from 'styled-components';
 import tw from 'twin.macro';
-import Header from "./components/header";
 
 
 // Styled div for app container
@@ -25,10 +23,9 @@ const App = () => {
     return (
         <div>
             <AppContainer>
-                <Header/>
+                <DesktopHeader/>
                 <Buy />
                 <Cards />
-                <Stats />
                 <GiftCards />
                 <Why />
                 <Goal />
