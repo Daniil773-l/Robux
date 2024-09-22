@@ -522,7 +522,7 @@ const PurchaseComponent = () => {
     const sendForm = async () => { 
         let payload = { 
             "url": linkToGamepass, 
-            "amount": robuxesCount, 
+            "amount": parseInt(robuxesCount), 
             "roblox_username": "Username"
         } 
         try {
