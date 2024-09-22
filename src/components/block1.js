@@ -521,12 +521,12 @@ const PurchaseComponent = () => {
 
     const sendForm = async () => { 
         let payload = { 
-            "url": linkToGamepass, 
-            "amount": parseInt(robuxesCount), 
-            "roblox_username": "Username"
+            url: linkToGamepass, 
+            amount: parseInt(robuxesCount), 
+            roblox_username: "Username"
         } 
         try {
-            const response = await fetch(`/api/buy_robux/url`, {method: "post", body: payload});
+            const response = await fetch(`/api/buy_robux/url`, {method: "POST", json: JSON.stringify(payload)});
             const data = await response.json();
 
             if (response.ok && data) {
