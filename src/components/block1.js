@@ -597,7 +597,7 @@ const PurchaseComponent = () => {
                         <StyledInput
                             placeholder="Ссылка"
                             id="linkToGamepass"
-                            type="number"
+                            type="text"
                             value={linkToGamepass}
                             onInput={(e) => setLink(e.target.value)}
                         />
