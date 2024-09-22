@@ -501,6 +501,10 @@ const PurchaseComponent = () => {
     const [rublesToPay, setRublesToPay] = useState('');
     const [robuxesCount, setRobuxesCount] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
+    const [buyMenu, setOpenBuyMenu] = useState(false);  
+    const [linkToGamepass, setLink] = useState(''); 
+    const [result, setResult] = useState(null); 
+    const [error, setError] = useState(''); 
 
     useEffect(() => {
         console.log("multiplying robuxes to rubles")
@@ -515,8 +519,33 @@ const PurchaseComponent = () => {
         setIsExpanded(!isExpanded);
     };
 
+    const sendForm = async () => { 
+        let payload = { 
+            "url": linkToGamepass, 
+            "amount": robuxesCount, 
+            "roblox_username": "Username"
+        } 
+        try {
+            const response = await fetch(`/api/buy_robux/url`, {method: "post", body: JSON.stringify(payload)});
+            const data = await response.json();
+
+            if (response.ok && data) {
+                setResult(data)
+                console.log(data)
+            } else { 
+                console.log(response)
+                setError("Не ожиданная ошибка, или неправильная ссылка")
+            }
+        } catch (error) {
+            console.log(error)
+            setError('Неожиданная ошибка');
+        }
+    }
+
     const renderStandardForm = () => (
         <>
+            {!buyMenu ? 
+            <>
             <StepCaption>
                 <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#77D241' }}>(R$)</span></StyledLabel>
                 <AvailabilityText id="instockGamePass">
@@ -549,13 +578,34 @@ const PurchaseComponent = () => {
                             type="number"
                             value={rublesToPay}
                             onInput={(e) => setRublesToPay(e.target.value)}
+                            disabled
                         />
                     </InputWrapper>
                 </InputBlock>
                 <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
-                <BuyButton>Купить</BuyButton>
+                <BuyButton onClick={() => setOpenBuyMenu(true)}>Купить</BuyButton>
                 <PromoLink id="open-modal-btn">Использовать промокод</PromoLink>
             </BuyForm>
+            </>
+            :
+            <>
+                <StepCaption style={{display: "flex"}}>
+                    <BuyButton onClick={() => setOpenBuyMenu(false)}>Назад</BuyButton>
+                    <StyledLabel htmlFor="robuxesCount">Вставьте ссылку на gamepass</StyledLabel>
+                </StepCaption>
+                <InputWrapper style={{marginTop: "20px"}}>
+                        <StyledInput
+                            placeholder="Ссылка"
+                            id="linkToGamepass"
+                            type="number"
+                            value={linkToGamepass}
+                            onInput={(e) => setLink(e.target.value)}
+                        />
+                    </InputWrapper>
+                {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
+                {result !== null ? <><MinRobuxText htmlFor="robuxesCount">Ваш запрос был успешно отправлен</MinRobuxText></> : null}
+                <BuyButton onClick={sendForm} disabled={result !== null}>Отправить</BuyButton>
+            </>} 
         </>
     );
 
