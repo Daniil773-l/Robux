@@ -9,9 +9,8 @@ import ArrowUp from '../assets/img/ArrowUp.svg';
 
 const gradientPurple = 'conic-gradient(from -125deg at 50% 50%, #5c76eb 0deg, #9465ca 65deg, #6f65ca 100deg, #5c76eb 360deg)';
 
-// Контейнер карточки
 const CardContainer = styled.div`
-    ${tw`bg-[#015c2b] p-6 rounded-lg shadow-lg flex justify-between items-center relative`}
+    ${tw`bg-[#015c2b] p-6 rounded-lg shadow-lg flex justify-between items-center relative`};
     max-width: 1050px;
     border-radius: 24px;
     z-index: 1;
@@ -19,126 +18,150 @@ const CardContainer = styled.div`
     padding: 40px;
     margin: 0 auto;
     margin-top: 50px;
-    @media (max-width: 1068px) {
-        ${tw`w-full mt-24`}
-        max-width: 650px;
+
+    @media (max-width: 768px) {
+        ${tw`flex-col w-full mt-24 items-center`} /* Stack content vertically on mobile */
+        padding: 20px;
     }
 `;
 
-// Элемент для эффекта тени
 const ShadowPoint = styled.div`
     display: inline-flex;
     width: 135px;
-
     background-color: #00ff21;
     height: 110px;
     position: absolute;
     filter: blur(90px);
 `;
 
-// Секция для левой части карточки
 const LeftSection = styled.div`
-    ${tw`flex flex-col`}
+    ${tw`flex flex-col`};
+
+    @media (max-width: 768px) {
+        ${tw`items-center text-center`} /* Center content on mobile */
+        margin-bottom: 20px; /* Add spacing between left and right sections */
+    }
 `;
 
-// Заголовок левой секции
 const LeftSectionTitle = styled.h2`
-    ${tw`text-xl font-bold text-white flex items-center`}
+    ${tw`text-xl font-bold text-white flex items-center`};
     font-weight: 500;
     font-size: 35px;
     margin-top: -5px; /* Adjust the margin to align with "Промокод:" */
+
+    @media (max-width: 768px) {
+        font-size: 30px; /* Slightly reduce font size on mobile */
+    }
 `;
 
-// Иконка рядом с заголовком
 const RobuxIconImage = styled.img`
-    ${tw`ml-2`}
+    ${tw`ml-2`};
     width: 32px;
     height: 30px;
     padding-top: 6px;
 `;
 
 const SmallRobuxImage = styled.img`
-    ${tw`ml-2`}
+    ${tw`ml-2`};
     width: 14px;
     height: 18px;
 `;
 
-// Описание в левой секции
 const LeftSectionDescription = styled.p`
-    ${tw`text-sm text-white`}
+    ${tw`text-sm text-white`};
     font-weight: 500;
     font-size: 15px;
     line-height: 2;
     margin-top: 1px;
+
+    @media (max-width: 768px) {
+        font-size: 14px; /* Adjust font size on mobile */
+    }
 `;
 
-// Доступно к выводу
 const AvailableText = styled.p`
-    ${tw`text-sm text-white mt-2 font-bold`}
+    ${tw`text-sm text-white mt-2 font-bold`};
     font-weight: 500;
     font-size: 18px;
 `;
 
-// Блок с балансом и кнопкой вывода
 const BalanceBlock = styled.div`
-    ${tw`flex items-center mt-2`}
+    ${tw`flex items-center mt-2`};
+
+    @media (max-width: 768px) {
+        justify-content: center; /* Center balance and button on mobile */
+    }
 `;
 
-// Блок с балансом
 const BalanceAmount = styled.div`
-    ${tw`text-2xl font-bold text-white mr-4`}
+    ${tw`text-2xl font-bold text-white mr-4`};
     display: flex;
     align-items: center;
 `;
 
-// Кнопка вывода
 const WithdrawButton = styled.button`
-    ${tw`text-white px-4 py-2 rounded-lg text-sm font-semibold`}
+    ${tw`text-white px-4 py-2 rounded-lg text-sm font-semibold`};
     background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
     border: none;
     border-radius: 12px;
 `;
 
-// Секция для правой части карточки
 const RightSection = styled.div`
-    ${tw`flex flex-col`}
+    ${tw`flex flex-col`};
     align-items: flex-start;
-    
+
+    @media (max-width: 768px) {
+        align-items: center;
+        width: 100%;
+        text-align: center;
+    }
 `;
 
-// Промокод заголовок
 const PromoCodeTitle = styled.p`
-    ${tw`text-lg font-bold text-white`}
+    ${tw`text-lg font-bold text-white`};
     font-weight: 500;
     font-size: 30px;
     margin: 0 0 20px;
+
+    @media (max-width: 768px) {
+        font-size: 24px; /* Reduce font size for mobile */
+    }
 `;
 
-// Промокод текст
 const PromoCodeText = styled.p`
-    ${tw`text-lg text-gray-400 mt-1 `}
+    ${tw`text-lg text-gray-400 mt-1 `};
     font-weight: 500;
     font-size: 30px;
     margin-bottom: 20px;
     color: rgb(172, 191, 198);
+
+    @media (max-width: 768px) {
+        font-size: 22px; /* Reduce font size for mobile */
+        margin-bottom: 10px; /* Adjust spacing on mobile */
+    }
 `;
 
-// Описание промокода
 const PromoDescription = styled.p`
-    ${tw`text-sm text-white mt-2`}
+    ${tw`text-sm text-white mt-2`};
     font-weight: 500;
     line-height: 1.5;
     font-size: 16px;
+
+    @media (max-width: 768px) {
+        margin-bottom: 20px; /* Add space before buttons */
+    }
 `;
 
-// Контейнер для кнопок соц. сетей
 const SocialButtonsWrapper = styled.div`
-    ${tw`flex space-x-4 mt-2`}
+    ${tw`flex space-x-4 mt-2`};
+
+    @media (max-width: 768px) {
+        ${tw`flex-col space-x-0 space-y-4 w-full`}; /* Stack buttons vertically on mobile */
+    }
 `;
 
-// Отдельный стиль для контейнеров соцсетей
 const SocialButtonContainer = styled.div`
-    ${tw`flex items-center justify-center text-white font-semibold`}
+    ${tw`flex items-center justify-center text-white font-semibold`};
     background-color: #038741;
     font-weight: 800;
     font-size: 16px;
@@ -147,29 +170,31 @@ const SocialButtonContainer = styled.div`
     text-decoration: none;
     border-radius: 12px;
     padding: 8px 12px;
-    height: 35px; /* Увеличена высота */
-    width: 240px; /* Установлена фиксированная ширина */
+    height: 35px;
+    width: 240px; /* Fixed width */
+
+    @media (max-width: 768px) {
+        width: 100%; /* Full width on mobile */
+    }
 `;
 
-// Иконка соц. сети
 const SocialIcon = styled.span`
-    ${tw`mr-2`}
-    font-size: 24px; /* Увеличен размер иконок */
+    ${tw`mr-2`};
+    font-size: 24px;
     display: flex;
     align-items: center;
 `;
 
 const ArrowUpImage = styled.img`
-    ${tw`ml-2 mt-1`}
+    ${tw`ml-2 mt-1`};
     width: 12px;
     height: 12px;
 `;
 
 const RedSignImage = styled.img`
-    ${tw`ml-2`}
+    ${tw`ml-2`};
     width: 24px;
     height: 24px;
-    
 `;
 
 const BonusCard = () => {
@@ -197,6 +222,7 @@ const BonusCard = () => {
                     <WithdrawButton>Вывести</WithdrawButton>
                 </BalanceBlock>
             </LeftSection>
+
             <RightSection>
                 <PromoCodeTitle>Промокод:</PromoCodeTitle>
                 <PromoCodeText>
@@ -206,6 +232,7 @@ const BonusCard = () => {
                 <PromoDescription>
                     Друзья, не использовавшие твой промокод при первой покупке, не будут засчитаны системой
                 </PromoDescription>
+
                 <SocialButtonsWrapper>
                     <SocialButtonContainer>
                         <SocialIcon>

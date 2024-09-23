@@ -27,6 +27,10 @@ const DivAnimation = styled.div`
     background-color: rgba(255, 255, 255, 0.7);
     animation: ${pulseAnimation} 2s infinite;
     z-index: 0;
+
+    @media (max-width: 768px) {
+        margin-bottom: 80px;
+    }
 `;
 
 const CardsContainer = styled.div`
@@ -36,9 +40,10 @@ const CardsContainer = styled.div`
 
     @media (max-width: 768px) {
         padding: 10px;
-        space-y-6;
+        max-width: 100%;
     }
 `;
+
 
 const Label = styled.div`
     color: #8990a9;
@@ -52,50 +57,56 @@ const Card = styled.div`
     ${tw`flex justify-between items-center p-6 rounded-lg bg-[#015c2b]`}
     min-width: 1250px;
     border-radius: 24px;
-    position: relative; /* Add this to position child elements like shadows correctly */
+    position: relative;
 
     @media (max-width: 768px) {
-        flex-direction: column;
-        min-width: auto;
+        flex-direction: column; /* Stack content vertically on mobile */
         padding: 15px;
-        align-items: center;
+        min-width: auto; /* Remove fixed width for mobile */
+        align-items: center; /* Center align items */
     }
 `;
 
+
 const IconWrapper = styled.div`
-    ${tw`flex items-center`}
-    position: relative; /* To position shadow correctly */
+    ${tw`flex items-center relative`}
+
     @media (max-width: 768px) {
-        justify-content: center;
-        margin-bottom: 15px;
-    }
+    flex-direction: column; /* Stack icon and text vertically */
+    justify-content: center;
+    margin-bottom: 15px; /* Add margin below the icon for spacing */
+}
 `;
 
 const Icon = styled.img`
     ${tw`w-36 h-28 rounded-lg`}
-    z-index: 1; /* Make sure the icon appears above the shadow */
+    z-index: 1;
+    position: relative;
+
     @media (max-width: 768px) {
         width: 80px;
-        height: 60px;
+        padding-top: 30px;
+        height: 60px; /* Smaller icon size on mobile */
     }
 `;
 
 const TextWrapper = styled.div`
     ${tw`ml-4 text-center`}
+
     @media (max-width: 768px) {
-    margin-left: 0;
-    margin-bottom: 15px;
+    margin-left: 0; /* Reset margin for mobile */
+    margin-bottom: 15px; /* Add space between text and button */
 }
 `;
 
 const Title = styled.h3`
-    ${tw`text-white text-lg font-bold mb-1 flex items-center`}
+    ${tw`text-white text-lg font-bold mb-1`}
     font-weight: 500;
     font-size: 20px;
 
     @media (max-width: 768px) {
-        justify-content: center;
-        font-size: 18px;
+        font-size: 18px; /* Slightly smaller font on mobile */
+        text-align: center; /* Center text on mobile */
     }
 `;
 
@@ -105,15 +116,14 @@ const RobuxIconImage = styled.img`
 
 const Description = styled.p`
     ${tw`text-gray-400`}
-    width: auto;
     color: #8990a9;
     font-weight: 500;
     font-size: 18px;
     margin-top: 0px;
 
     @media (max-width: 768px) {
-        text-align: center;
-        font-size: 16px;
+        text-align: center; /* Center text on mobile */
+        font-size: 16px; /* Smaller font size on mobile */
     }
 `;
 
@@ -128,10 +138,10 @@ const ActionIcon = styled.div`
     display: flex;
 
     @media (max-width: 768px) {
-        margin-top: 10px;
-        width: 280px;
-        height: 30px;
-        justify-content: center;
+        width: 280px; /* Fixed width for button */
+        height: 30px; /* Adjust button height */
+        justify-content: center; /* Center the icon inside the button */
+        margin-top: 10px; /* Space between text and button */
     }
 
     &:hover {

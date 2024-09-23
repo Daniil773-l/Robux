@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { FaDiscord, FaTelegramPlane } from 'react-icons/fa';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { Link } from 'react-router-dom'; // Используем Link из react-router-dom
+import { Link as RouterLink } from 'react-router-dom';
 import RobuxIconSrc from '../assets/img/MainRobuxIcon.svg'; // Your Robux icon
 import MenuIconSrc from '../assets/img/MenuIcon.png';
 import Bonus from "../assets/img/BonusIcon.svg";
@@ -23,6 +23,15 @@ const HeaderWrapper = styled.div`
     padding-right: 1rem;
     @media (max-width: 768px) {
         ${tw`px-2 flex-row items-center justify-between`}
+    }
+`;
+
+const StyledLink = styled(RouterLink)`
+    ${tw`text-lg`} // You can add tw utility classes here if necessary
+    color: white; // Set the default color for the link
+    text-decoration: none; // Remove the underline
+    &:hover {
+        color: #4caf50; // Set the hover color to a different shade
     }
 `;
 
@@ -141,21 +150,24 @@ const SocialLabel = styled.span`
 `;
 
 const LoginModal = styled.div`
-    ${tw`fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50`}
+    ${tw`fixed inset-0 z-50`}
     display: ${({ $show }) => ($show ? 'flex' : 'none')};
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5); // Ensures the modal background covers the entire screen with semi-opacity
 `;
 
 const ModalContent = styled.div`
-    ${tw`p-8 rounded-lg shadow-lg text-white relative`}
-    background:#015c2b;
+    ${tw`rounded-lg shadow-lg relative text-white`}
+    background: #015c2b; // Your modal's background color
     border-radius: 24px;
-    width: 420px;
-    max-width: 100%;
-    @media (max-width: 768px) {
-        ${tw`w-full mr-12`}
-        width: 320px;
-        max-width: 100%;
-    }
+    width: auto; // Adjust width as needed
+    padding: 20px; // Adjust padding as needed
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 `;
 
 const CloseModalButton = styled.button`
@@ -257,9 +269,9 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
             <HeaderContainer>
                 <HeaderWrapper>
                     <LogoArea>
-                        <Link to="/"> {/* Добавляем ссылку на домашнюю страницу */}
+                        <StyledLink to="/"> {/* Добавляем ссылку на домашнюю страницу */}
                             <LogoImage src={RobuxIconSrc} alt="Robux Logo" />
-                        </Link>
+                        </StyledLink>
                         <MenuIcon src={MenuIconSrc} alt="Menu Icon" onClick={toggleSidebar} />
                     </LogoArea>
                     <IconArea>
@@ -286,19 +298,19 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.buy}>
                             <li>
-                                <Link to="/"> {/* Ссылка на страницу покупки */}
+                                <StyledLink to="/"> {/* Ссылка на страницу покупки */}
                                     Game Pass
-                                </Link>
+                                </StyledLink>
                             </li>
                             <li>
-                                <Link to="/"> {/* Ссылка на страницу плагина */}
+                                <StyledLink to="/"> {/* Ссылка на страницу плагина */}
                                     Plugin Method
-                                </Link>
+                                </StyledLink>
                             </li>
                             <li>
-                                <Link to="/"> {/* Ссылка на страницу подарочных карт */}
+                                <StyledLink to="/"> {/* Ссылка на страницу подарочных карт */}
                                     Gift Cards
-                                </Link>
+                                </StyledLink>
                             </li>
                         </DropdownContent>
                     </NavItem>
@@ -312,20 +324,20 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.purchase}>
                             <li>
-                                <Link to="/"> {/* Ссылка на страницу покупок */}
+                                <StyledLink to="/"> {/* Ссылка на страницу покупок */}
                                     Скоро
-                                </Link>
+                                </StyledLink>
                             </li>
                         </DropdownContent>
                     </NavItem>
 
                     <NavItem>
                         <NavLink>
-                            <Link to="/faq">
+                            <StyledLink to="/faq">
                                 <span>
                                     <img src={FAQ} alt="FAQ" /> FAQ
                                 </span>
-                            </Link>
+                            </StyledLink>
                         </NavLink>
                     </NavItem>
 
@@ -338,19 +350,19 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.bonus}>
                             <li>
-                                <Link to="/BonusPage"> {/* Ссылка на страницу бесплатных робуксов */}
+                                <StyledLink to="/BonusPage"> {/* Ссылка на страницу бесплатных робуксов */}
                                     Бесплатные робуксы
-                                </Link>
+                                </StyledLink>
                             </li>
                             <li>
-                                <Link to="/promo-codes"> {/* Ссылка на страницу с промокодами */}
+                                <StyledLink to="/promo-codes"> {/* Ссылка на страницу с промокодами */}
                                     Промокод: ROBUX10
-                                </Link>
+                                </StyledLink>
                             </li>
                             <li>
-                                <Link to="https://t.me/robuxio/27"> {/* Ссылка на страницу Telegram */}
+                                <StyledLink to="https://t.me/robuxio/27"> {/* Ссылка на страницу Telegram */}
                                     Telegram
-                                </Link>
+                                </StyledLink>
                             </li>
                         </DropdownContent>
                     </NavItem>

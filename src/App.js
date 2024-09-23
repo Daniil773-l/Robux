@@ -23,7 +23,6 @@ const App = () => {
     return (
         <div>
             <AppContainer>
-
                 <Buy />
                 <Cards />
                 <GiftCards />
