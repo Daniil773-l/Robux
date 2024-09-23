@@ -1,3 +1,3 @@
 window.env = {
-  "BACKEND_HOST": ""
+  "BACKEND_HOST": "http://localhost:8000"
 };

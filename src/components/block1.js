@@ -526,7 +526,7 @@ const PurchaseComponent = () => {
             roblox_username: "Username"
         } 
         try {
-            const response = await fetch(`/api/buy_robux/url`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux/url`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
             const data = await response.json();
 
             if (response.ok && data) {
