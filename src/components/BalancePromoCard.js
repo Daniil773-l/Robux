@@ -22,6 +22,7 @@ const CardContainer = styled.div`
     @media (max-width: 768px) {
         ${tw`flex-col w-full mt-24 items-center`} /* Stack content vertically on mobile */
         padding: 20px;
+        width: 350px;
     }
 `;
 
@@ -36,10 +37,11 @@ const ShadowPoint = styled.div`
 
 const LeftSection = styled.div`
     ${tw`flex flex-col`};
-
+    
     @media (max-width: 768px) {
-        ${tw`items-center text-center`} /* Center content on mobile */
+        ${tw`items-start`} /* Center content on mobile */
         margin-bottom: 20px; /* Add spacing between left and right sections */
+        align-items: start;
     }
 `;
 
@@ -51,6 +53,7 @@ const LeftSectionTitle = styled.h2`
 
     @media (max-width: 768px) {
         font-size: 30px; /* Slightly reduce font size on mobile */
+        align-items: start;
     }
 `;
 
@@ -76,6 +79,8 @@ const LeftSectionDescription = styled.p`
 
     @media (max-width: 768px) {
         font-size: 14px; /* Adjust font size on mobile */
+        align-items: start;
+      
     }
 `;
 
@@ -111,9 +116,9 @@ const RightSection = styled.div`
     align-items: flex-start;
 
     @media (max-width: 768px) {
-        align-items: center;
+        align-items: start;
         width: 100%;
-        text-align: center;
+        
     }
 `;
 
@@ -125,6 +130,7 @@ const PromoCodeTitle = styled.p`
 
     @media (max-width: 768px) {
         font-size: 24px; /* Reduce font size for mobile */
+        
     }
 `;
 
@@ -174,7 +180,8 @@ const SocialButtonContainer = styled.div`
     width: 240px; /* Fixed width */
 
     @media (max-width: 768px) {
-        width: 100%; /* Full width on mobile */
+        width: 90%; /* Full width on mobile */
+        
     }
 `;
 
