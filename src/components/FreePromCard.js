@@ -7,6 +7,7 @@ import YoutubeIcon from '../assets/img/yt2.png';
 const CardWrapper = styled.div`
     ${tw`flex justify-center mt-6`} /* Center the card horizontally and add a margin on top */
     width: 100%; /* Ensure the wrapper takes the full width */
+  
 `;
 
 const Card = styled.div`

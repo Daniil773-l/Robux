@@ -7,13 +7,19 @@ import ArrowUp from '../assets/img/ArrowUp.svg';
 import RobuxIcon from '../assets/img/RobuxWhite.svg';
 
 const CardContainer = styled.div`
-    ${tw`bg-[#015c2b] p-8 rounded-lg shadow-lg flex flex-col`}
+    ${tw`bg-[#015c2b] p-8 rounded-lg shadow-lg flex flex-col`};
     max-width: 1070px;
     width: 100%;
     border-radius: 24px;
     z-index: 1;
     margin: 0 auto;
     margin-top: 20px;
+
+    @media (max-width: 768px) {
+        ${tw`p-4`} /* Reduce padding for mobile */
+        margin-top: 10px;
+        width: 350px;
+    }
 `;
 
 const Title = styled.h2`
@@ -21,6 +27,11 @@ const Title = styled.h2`
     font-size: 30px;
     margin: 0 0 20px;
     color: white;
+
+    @media (max-width: 768px) {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
 `;
 
 const WhiteText = styled.p`
@@ -29,39 +40,84 @@ const WhiteText = styled.p`
     padding-top: 0px;
     margin: 0 0 10px !important;
     color: white;
-`;
 
-const GrayText = styled.p`
-    color: rgb(131, 143, 149);
-    font-weight: 600;
-    font-size: 18px;
-    font-family: Manrope;
-    padding-bottom: 0;
+    @media (max-width: 768px) {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
 `;
 
 const SubTitle = styled.h3`
     font-weight: 600;
     color: white;
-    text-decoration: none;
     font-size: 30px;
     margin-top: 30px;
     margin-bottom: 20px;
+
+    @media (max-width: 768px) {
+        font-size: 24px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+    }
 `;
 
 const TaskContainer = styled.div`
-    ${tw`flex`}
+    ${tw`flex`};
     gap: 10px;
+
+    @media (max-width: 768px) {
+        ${tw`flex-col`} /* Stack tasks vertically on mobile */
+        gap: 15px;
+    }
 `;
 
 const TaskCard = styled.div`
-    ${tw`p-4 flex flex-col justify-between`}
+    ${tw`p-4 flex flex-col justify-between`};
     background-color:#015c2b;
     width: 150px;
-    padding-left: 0;
     color: rgb(131, 143, 149);
     font-family: Manrope;
     font-weight: 700;
     border-radius: 12px;
+
+    @media (max-width: 768px) {
+        width: 85%;
+        padding: 12px;
+    }
+`;
+
+const BonusCard1 = styled.div`
+    ${tw`p-4 flex flex-col justify-between`};
+    background-color: #038741;
+    width: 200px;
+    margin-top: 20px;
+    height: 50px;
+    color: white;
+    font-family: Manrope;
+    font-weight: 700;
+    border-radius: 12px;
+
+    @media (max-width: 768px) {
+        width: 90%;
+        margin-top: 10px;
+    }
+`;
+
+const BonusCard2 = styled.div`
+    ${tw`p-4 flex flex-col justify-between`};
+    background-color: #038741;
+    width: 150px;
+    height: 50px;
+    margin-top: 20px;
+    color: white;
+    font-family: Manrope;
+    font-weight: 700;
+    border-radius: 12px;
+
+    @media (max-width: 768px) {
+        width: 90%;
+        margin-top: 10px;
+    }
 `;
 
 const BonusText1 = styled.div`
@@ -76,6 +132,10 @@ const BonusText1 = styled.div`
         height: 20px;
         padding-left: 5px;
     }
+
+    @media (max-width: 768px) {
+        font-size: 18px;
+    }
 `;
 
 const BonusText2 = styled.div`
@@ -84,14 +144,24 @@ const BonusText2 = styled.div`
     color: white;
     display: flex;
     align-items: center;
-    
+
     img {
         width: 20px;
         height: 20px;
         padding-left: 5px;
     }
-    
-    
+
+    @media (max-width: 768px) {
+        font-size: 18px;
+    }
+`;
+
+const GrayText = styled.p`
+    color: rgb(131, 143, 149);
+    font-weight: 600;
+    font-size: 18px;
+    font-family: Manrope;
+    padding-bottom: 0;
 `;
 
 const BonusLink = styled.a`
@@ -108,51 +178,17 @@ const BonusLink = styled.a`
     &:hover {
         text-decoration: underline;
     }
-`;
 
-const BonusCard1 = styled.div`
-    ${tw`p-4 flex flex-col justify-between`}
-    background-color: #038741;
-    width: 200px;
-    margin-top: 20px;
-    height: 50px;
-    color: white;
-    
-    line-height: 24px;
-    background-color: #038741;
-    font-family: Manrope;
-    font-weight: 700;
-    border-radius: 12px;
-`;
-
-const BonusCard2 = styled.div`
-    ${tw`p-4 flex flex-col justify-between`}
-    background-color: #038741;
-    width: 150px;
-    height: 50px;
-    
-    margin-top: 20px;
-    color: white;
-    background-color: #038741;
-    font-family: Manrope;
-    font-weight: 700;
-    border-radius: 12px;
-`;
-
-const BonusIcon = styled.img`
-    width: ${(props) => props.size || '24px'};
-    height: ${(props) => props.size || '24px'};
-    margin-left: ${(props) => props.marginLeft || '0px'};
-    margin-right: ${(props) => props.marginRight || '0px'};
-    align-self: ${(props) => props.alignSelf || 'center'};
+    @media (max-width: 768px) {
+        font-size: 13px;
+    }
 `;
 
 const TaskLink = styled.a`
-    ${tw`font-bold flex items-center justify-between mb-2`}
+    ${tw`font-bold flex items-center justify-between mb-2`};
     font-family: Manrope;
     color: #02e875;
     text-decoration: none;
-
     font-weight: 600;
     font-size: 19px;
 
@@ -161,34 +197,46 @@ const TaskLink = styled.a`
     }
 
     img {
-        margin-left: 0; /* Ensure there's no gap between the arrow icon and text */
+        margin-left: 0;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 16px;
     }
 `;
 
 const RobuxPoints = styled.div`
-    ${tw`text-lg font-bold mt-2 flex items-center `}
+    ${tw`text-lg font-bold mt-2 flex items-center`};
     color: white;
     font-size: 24px;
 
     img {
-        margin-left: 8px; /* Increased space between RobuxIcon and the number */
+        margin-left: 8px;
         width: 18px;
         height: 18px;
+    }
+
+    @media (max-width: 768px) {
+        font-size: 20px;
     }
 `;
 
 const LeaveButton = styled.a`
-    ${tw`font-extrabold mt-4 rounded-lg py-2 px-4`}
+    ${tw`font-extrabold mt-4 rounded-lg py-2 px-4`};
     color: rgb(154, 168, 229);
     font-weight: 900;
     font-size: 17px;
     line-height: 120%;
     font-family: Manrope;
-    z-index: 1;
     text-decoration: none;
     background: rgb(154 168 229 / 10%);
     display: inline-block;
     text-align: center;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+        width: 100%;
+    }
 `;
 
 const InviteFriendsCard = () => {
@@ -197,14 +245,14 @@ const InviteFriendsCard = () => {
             <Title>Приглашай друзей</Title>
             <WhiteText>Получай награды, а они получат бонус к первой покупке.</WhiteText>
 
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <TaskContainer>
                 <div>
                     <WhiteText>Ты получишь</WhiteText>
                     <BonusCard1>
                         <BonusText1>+20 <img src={RobuxIcon} alt="Robux Icon" /></BonusText1>
                         <BonusLink href="#">
                             С первой покупки друга
-                            <BonusIcon src={Hat} alt="Hat Icon" size="24px" marginLeft="8px" alignSelf="flex-end" />
+                            <img src={Hat} alt="Hat Icon" width={24} height={24} />
                         </BonusLink>
                     </BonusCard1>
                 </div>
@@ -214,11 +262,11 @@ const InviteFriendsCard = () => {
                         <BonusText2>+1% <img src={RobuxIcon} alt="Robux Icon" /></BonusText2>
                         <BonusLink href="#">
                             К первой покупке
-                            <BonusIcon src={HeadPhones} alt="HeadPhones Icon" size="24px" marginLeft="8px" alignSelf="flex-end" />
+                            <img src={HeadPhones} alt="HeadPhones Icon" width={24} height={24} />
                         </BonusLink>
                     </BonusCard2>
                 </div>
-            </div>
+            </TaskContainer>
 
             <SubTitle>Задания</SubTitle>
             <WhiteText>Бесплатные робуксы за задания</WhiteText>
