@@ -8,13 +8,17 @@ import Bonus from "../assets/img/BonusIcon.svg";
 import FAQ from "../assets/img/FAQIcon.svg";
 import Buy from "../assets/img/BuyRobuxIcon.svg";
 import Purchase from "../assets/img/MyPurchasesIcon.svg";
+import Exit from "../assets/img/Exit.svg";
+import MobileHeader from "../components/MobileHeader";
+
 import env from 'react-dotenv';
 
 const HeaderContainer = styled.header`
     ${tw`bg-[rgb(11,35,22)] py-4 fixed top-0 w-full z-50`}
+    overflow-x: hidden;
     @media (max-width: 768px) {
-    ${tw`py-3`}
-}
+        ${tw`py-3`}
+    }
 `;
 
 const HeaderWrapper = styled.div`
@@ -124,6 +128,114 @@ const ButtonArea = styled.div`
 }
 `;
 
+// User Info for Header Avatar
+const HeaderUserCardContainer = styled.div`
+    ${tw`flex items-center space-x-4`}; /* Контейнер для аватара и имени в хедере */
+`;
+
+const HeaderUserAvatarContainer = styled.div`
+    ${tw`overflow-hidden`}; /* Стили для круглого аватара */
+    width: 40px;
+    height: 40px;
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+`;
+
+const HeaderUserNameContainer = styled.div`
+    ${tw`flex items-center space-x-3`}; /* Добавлен space-x-3 для увеличения отступа между аватаром и именем */
+`;
+
+const HeaderExitIconContainer = styled.div`
+    ${tw`flex items-center justify-center cursor-pointer`}; /* Контейнер для иконки */
+    background-color: #4a4a4a; /* Цвет фона по умолчанию */
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #6a6a6a; /* Цвет фона при наведении */
+    }
+`;
+
+const HeaderExitIcon = styled.img`
+    width: 24px;
+    height: 24px;
+`;
+
+// Modal Form User List (Separate styles)
+const UserCardContainer = styled.div`
+    ${tw`flex flex-wrap justify-center mt-4`};
+    max-height: 300px; /* Ограничиваем высоту контейнера карточек */
+    overflow-y: auto; /* Включаем вертикальную прокрутку */
+    padding-right: 8px; /* Добавляем отступ для скролла */
+    width: 100%; /* Для адаптивности */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+`;
+
+const UserCard = styled.div`
+    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
+    &:hover {
+        background-color: #3C3555;
+    }
+    width: 120px; /* Фиксируем ширину карточки */
+    text-align: center;
+`;
+
+const UserAvatar = styled.img`
+    ${tw`w-12 h-12 rounded-full`}
+    margin-right: 8px;
+`;
+
+const UserInfo = styled.div`
+    ${tw`flex flex-col`}
+    justify-content: center;
+    text-align: center;
+`;
+
+const UserName = styled.span`
+    ${tw`text-white text-sm font-bold`}
+`;
+
+const UserUsername = styled.span`
+    ${tw`text-gray-400 text-xs`}
+`;
+
+const ExitIconContainer = styled.div`
+    ${tw`flex items-center justify-center cursor-pointer`}; /* Контейнер для иконки */
+    background-color: #4a4a4a; /* Цвет фона по умолчанию */
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #6a6a6a; /* Цвет фона при наведении */
+    }
+`;
+
+const ExitIcon = styled.img`
+    width: 24px;
+    height: 24px;
+`;
+
+const LoggedInUserInfo = styled.div`
+    ${tw`flex items-center space-x-3`}
+`;
+
+
 const LoginModal = styled.div`
     ${tw`fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50`}
     display: ${({ $show }) => ($show ? 'flex' : 'none')};
@@ -135,6 +247,10 @@ const ModalContent = styled.div`
     border-radius: 24px;
     width: 420px;
     max-width: 100%;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `;
 
 const CloseButton = styled.button`
@@ -174,6 +290,14 @@ const ModalInput = styled.input`
     }
 `;
 
+const LoadingSpinner = styled.div`
+    ${tw`flex justify-center mt-5`}
+    svg {
+        width: 70px;
+        height: 70px;
+    }
+`;
+
 const ModalText = styled.p`
     ${tw`mt-3 text-center`}
     color: #ffffff;
@@ -191,46 +315,6 @@ const ModalButton = styled.button`
     }
 `;
 
-const LoadingSpinner = styled.div`
-    ${tw`flex justify-center mt-5`}
-    svg {
-        width: 70px;
-        height: 70px;
-    }
-`;
-
-const UserCardContainer = styled.div`
-    ${tw`flex flex-wrap justify-center mt-4`}
-`;
-
-const UserCard = styled.div`
-    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
-    &:hover {
-        background-color: #3C3555;
-    }
-`;
-
-const UserAvatar = styled.img`
-    ${tw`w-12 h-12 rounded-full`}
-    margin-right: 8px;
-`;
-
-const UserInfo = styled.div`
-    ${tw`flex flex-col`}
-`;
-
-const UserName = styled.span`
-    ${tw`text-white text-sm font-bold`}
-`;
-
-const UserUsername = styled.span`
-    ${tw`text-gray-400 text-xs`}
-`;
-
-const LoggedInUserInfo = styled.div`
-    ${tw`flex items-center space-x-3`}
-`;
-
 const Header = () => {
     const [showLogin, setShowLogin] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -238,13 +322,15 @@ const Header = () => {
     const [error, setError] = useState('');
     const [loggedInUser, setLoggedInUser] = useState(null);
     const [inputValue, setInputValue] = useState('');
+    const [isMobile, setIsMobile] = useState(false);
     const [debouncedValue, setDebouncedValue] = useState('');
-    
+
     const handleUserCheck = async (nickname) => {
+        if (nickname.length < 3) return; // Проверяем, что введено хотя бы 3 символа
         setIsLoading(true);
         setError('');
         try {
-            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/player/${encodeURIComponent(inputValue)}`);
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/player/${encodeURIComponent(nickname)}`);
             const data = await response.json();
 
             if (response.ok && data && Array.isArray(data)) {
@@ -261,26 +347,28 @@ const Header = () => {
     };
 
     useEffect(() => {
-      // Устанавливаем задержку перед выполнением действия
-      const handler = setTimeout(() => {
-        setDebouncedValue(inputValue);
-      }, 500); // Задержка в 500 мс
-  
-      // Очищаем таймаут при изменении inputValue
-      return () => {
-        clearTimeout(handler);
-      };
+        const handler = setTimeout(() => {
+            setDebouncedValue(inputValue);
+        }, 500); // Задержка в 500 мс
+
+        return () => {
+            clearTimeout(handler);
+        };
     }, [inputValue]);
-  
-    // Этот useEffect будет вызываться только при изменении debouncedValue
+
     useEffect(() => {
-      if (debouncedValue) {
-        console.log('Выполняем поиск по:', debouncedValue);
-        handleUserCheck(debouncedValue)
-      }
+        if (debouncedValue) {
+            handleUserCheck(debouncedValue);
+        }
     }, [debouncedValue]);
 
-    let debounceTimeout;
+    // При загрузке страницы проверяем, есть ли сохраненный пользователь
+    useEffect(() => {
+        const savedUser = localStorage.getItem('loggedInUser');
+        if (savedUser) {
+            setLoggedInUser(JSON.parse(savedUser));
+        }
+    }, []);
 
     const toggleLogin = () => {
         setShowLogin(!showLogin);
@@ -292,11 +380,35 @@ const Header = () => {
         }
     };
 
-
     const handleLogin = (user) => {
         setLoggedInUser(user);
         setShowLogin(false);
+
+        // Сохраняем информацию о пользователе в localStorage
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
     };
+
+    const handleLogout = () => {
+        setLoggedInUser(null);
+        localStorage.removeItem('loggedInUser'); // Удаляем информацию о пользователе из localStorage
+    };
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768); // Если ширина экрана меньше или равна 768px — мобильная версия
+        };
+
+        handleResize(); // Устанавливаем значение при первом рендере
+        window.addEventListener('resize', handleResize); // Добавляем слушатель событий изменения ширины окна
+
+        return () => {
+            window.removeEventListener('resize', handleResize); // Удаляем слушатель при размонтировании
+        };
+    }, []);
+
+    if (isMobile) {
+        return <MobileHeader loggedInUser={loggedInUser} handleLogout={handleLogout} />;
+    }
 
     return (
         <>
@@ -337,26 +449,17 @@ const Header = () => {
                     </LogoArea>
                     <ButtonArea>
                         {loggedInUser ? (
-                            <LoggedInUserInfo>
-                                <UserAvatar src={loggedInUser.avatar_url} alt={loggedInUser.name} />
-                                <span style={{color: "white"}}>{loggedInUser.name}</span>
-
-                                <div style={{
-                                    backgroundColor: "#273445", 
-                                    display: "flex", 
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    padding: "10px", 
-                                    borderRadius: "5px", 
-                                    cursor: "pointer", 
-                                }} onClick={() => { 
-                                    setLoggedInUser(null)
-                                }}>
-                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.93499 2.48889C7.48227 1.45737 9.51467 2.40305 9.81611 4.1399H12.8333C14.2255 4.1399 15.3541 5.26852 15.3541 6.66074C15.3541 7.04043 15.0463 7.34824 14.6666 7.34824C14.2869 7.34824 13.9791 7.04043 13.9791 6.66074C13.9791 6.02791 13.4661 5.5149 12.8333 5.5149H9.85413V16.9732H12.8333C13.4661 16.9732 13.9791 16.4602 13.9791 15.8274C13.9791 15.4477 14.2869 15.1399 14.6666 15.1399C15.0463 15.1399 15.3541 15.4477 15.3541 15.8274C15.3541 17.2196 14.2255 18.3482 12.8333 18.3482H9.81611C9.51467 20.0851 7.48227 21.0308 5.93499 19.9992L4.10165 18.777C3.40036 18.3095 2.97913 17.5224 2.97913 16.6796V5.80857C2.97913 4.96573 3.40036 4.17864 4.10165 3.71111L5.93499 2.48889ZM16.0138 13.3194C15.7453 13.0509 15.7453 12.6156 16.0138 12.3471L16.6735 11.6874L11.9166 11.6874C11.5369 11.6874 11.2291 11.3796 11.2291 10.9999C11.2291 10.6202 11.5369 10.3124 11.9166 10.3124L16.6735 10.3124L16.0138 9.6527C15.7453 9.38422 15.7453 8.94891 16.0138 8.68043C16.2823 8.41194 16.7176 8.41194 16.9861 8.68043L18.1712 9.86558C18.7977 10.492 18.7977 11.5077 18.1712 12.1342L16.9861 13.3194C16.7176 13.5879 16.2823 13.5879 16.0138 13.3194Z" fill="currentColor"></path>
-                                    </svg>
-                                </div>
-                            </LoggedInUserInfo>
+                            <HeaderUserCardContainer>
+                                <HeaderUserAvatarContainer>
+                                    <img src={loggedInUser.avatar_url} alt={loggedInUser.name} />
+                                </HeaderUserAvatarContainer>
+                                <HeaderUserNameContainer>
+                                    <span style={{ color: "white", fontWeight: "bold" }}>{loggedInUser.name}</span>
+                                </HeaderUserNameContainer>
+                                <HeaderExitIconContainer onClick={() => setLoggedInUser(null)}>
+                                    <HeaderExitIcon src={Exit} alt="Exit" />
+                                </HeaderExitIconContainer>
+                            </HeaderUserCardContainer>
                         ) : (
                             <>
                                 <IconArea>
@@ -377,7 +480,6 @@ const Header = () => {
                 </HeaderWrapper>
             </HeaderContainer>
             <div style={{ height: '80px' }} />
-
             <LoginModal $show={showLogin} onClick={closeLoginOnOutsideClick}>
                 <ModalContent>
                     <CloseButton onClick={toggleLogin}>&times;</CloseButton>

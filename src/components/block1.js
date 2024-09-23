@@ -87,6 +87,7 @@ const Title = styled.h2`
 
     @media (max-width: 768px) {
         font-size: 36px;
+        padding-top: 50px;
     }
 `;
 
@@ -281,6 +282,7 @@ const StyledLabel = styled.label`
 
     @media (max-width: 768px) {
         font-size: 14px;
+     
     }
 `;
 

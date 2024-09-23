@@ -17,7 +17,7 @@ const AppContainer = styled.div`
 const BonusPage = () => {
     return (
         <AppContainer>
-            <Header/>
+
             <Privacy/>
             <Footer/>
         </AppContainer>

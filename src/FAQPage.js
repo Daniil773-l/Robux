@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './components/header';
+import Header from './components/Stats';
 import Footer from './components/Footer';
 
 import FAQ from './components/FAQComponent';
@@ -17,7 +17,7 @@ const FAQPage = () => {
     return (
         <div>
             <AppContainer>
-                <Header/>
+
                 <FAQ />
                 <Footer/>
             </AppContainer>

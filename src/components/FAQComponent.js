@@ -18,8 +18,8 @@ const fadeIn = keyframes`
 `;
 
 const FAQContainer = styled.div`
-    ${tw`container mx-auto my-12 px-3 md:px-12`}
-  
+    ${tw`container mx-auto my-12  md:px-12`}
+    overflow-x: hidden;
 }
 `;
 

@@ -8,11 +8,14 @@ import reportWebVitals from './reportWebVitals';
 import BonusPage from "./BonusPage";
 import PrivacyPage from "./PrivacyPage";
 import AgreementPage from "./AgreementPage";
+import Stats from "./components/Stats";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
+
         <Router>
+            <Stats/>
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/faq" element={<FAQ />} />

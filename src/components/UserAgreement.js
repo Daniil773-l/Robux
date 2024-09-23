@@ -10,7 +10,6 @@ import Pzdz from '../assets/img/PzdzSmall.png';
 const PolicyContainer = styled.div`
     ${tw`bg-[rgb(1, 92, 43)] p-8 rounded-lg shadow-lg flex flex-col`}
     max-width: 1200px;
-    width: 100%;
     height: 80vh;
     margin: 0 auto;
     margin-top: 20px;

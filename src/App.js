@@ -23,7 +23,7 @@ const App = () => {
     return (
         <div>
             <AppContainer>
-                <Stats/>
+
                 <Buy />
                 <Cards />
                 <GiftCards />

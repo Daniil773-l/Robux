@@ -7,17 +7,13 @@ import TiniestSphere from '../assets/img/FuckingTinySphere.png';
 import Pzdz from '../assets/img/PzdzSmall.png';
 
 const PolicyContainer = styled.div`
-    ${tw`bg-[rgb(1, 92, 43)] p-8 rounded-lg shadow-lg flex flex-col`}
+    ${tw`bg-[rgb(1, 92, 43)] items-center self-center p-8 rounded-lg shadow-lg flex flex-col`}
     max-width: 1200px;
-    width: 100%;
     height: 80vh;
-    margin: 0 auto;
     margin-top: 20px;
-    padding: 40px;
     border-radius: 24px;
     color: white;
     overflow-y: auto;
-
     /* Custom scrollbar styles */
     &::-webkit-scrollbar {
         width: 8px;
@@ -71,24 +67,45 @@ const Sphere = styled.img`
     left: -50px;
     top: 55%;
     position: absolute;
+    
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
+    
 `;
 
 const Sphere2 = styled.img`
     left: 10%;
     top: 15%;
     position: absolute;
+
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const Sphere3 = styled.img`
     right: 10%;
     top: 25%;
     position: absolute;
+
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const Sphere4 = styled.img`
     right: 8%;
     top: 70%;
     position: absolute;
+
+    @media (max-width: 768px) {
+        @media (max-width: 768px) {
+            display: none;
+        }
 `;
 
 const FAQTitleWrapper = styled.div`
@@ -115,6 +132,11 @@ const FAQMainText = styled.h1`
     color: white;
     white-space: nowrap;
     z-index: 12;
+    @media (max-width: 768px) {
+        ${tw`mt-4`}
+        margin-top: 35%;
+        font-size:35px;
+    }
 `;
 
 const FAQSubText = styled.span`
@@ -126,6 +148,10 @@ const FAQSubText = styled.span`
     margin-top: -40px;
     padding-bottom: 5%;
     z-index: 2;
+    @media (max-width: 768px) {
+        ${tw`mt-1`}
+        font-size:35px
+    }
 `;
 
 const LetterWrapper = styled.span`

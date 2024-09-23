@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './components/header';
+import Header from './components/Stats';
 import BonusCard from './components/BalancePromoCard';
 import Invite from './components/InviteFriendsCard';
 import VideoPromoCard from './components/FreePromCard';
@@ -48,7 +48,7 @@ const BonusPage = () => {
             <Sphere2 src={TinySphere} alt="Floating Sphere" />
             <Sphere3 src={TiniestSphere} alt="Floating Sphere" />
             <Sphere4 src={Pzdz} alt="Floating Sphere" />
-            <Header/>
+
             <BonusCard/>
             <Invite/>
             <VideoPromoCard/>

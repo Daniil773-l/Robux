@@ -234,70 +234,18 @@ const UserUsername = styled.span`
     ${tw`text-gray-400 text-xs`}
 `;
 
-const LoggedInUserInfo = styled.div`
-    ${tw`flex items-center space-x-3`}
-`;
-
-
 const Header = () => {
     const [showLogin, setShowLogin] = useState(false);
+    const [nickname, setNickname] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [users, setUsers] = useState([]);
-    const [error, setError] = useState('');
-    const [loggedInUser, setLoggedInUser] = useState(null);
-    const [inputValue, setInputValue] = useState('');
-    const [debouncedValue, setDebouncedValue] = useState('');
+    const [nicknameValid, setNicknameValid] = useState(null);
+    const [users, setUsers] = useState([]); // Начальное значение — пустой массив
     const [isMobile, setIsMobile] = useState(false);
     const cache = {}; // Кэш определен в пределах компонента
 
+    let timeoutId;
+
     const apiKey = process.env.REACT_APP_API_KEY;
-
-
-    const handleUserCheck = async () => {
-        if (cache[inputValue]) { 
-            setUsers(cache[inputValue])
-        }
-
-        setIsLoading(true);
-        setError('');
-        try {
-            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/player/${encodeURIComponent(inputValue)}`);
-            const data = await response.json();
-
-            if (response.ok && data && Array.isArray(data)) {
-                setUsers(data.slice(0, 10));
-            } else {
-                setUsers([]);
-                setError('Не было найдено пользвателей, или произошла ошибка API');
-            }
-        } catch (error) {
-            setError('Ошибка на стороне сервера');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    useEffect(() => {
-      // Устанавливаем задержку перед выполнением действия
-      const handler = setTimeout(() => {
-        setDebouncedValue(inputValue);
-      }, 500); // Задержка в 500 мс
-  
-      // Очищаем таймаут при изменении inputValue
-      return () => {
-        clearTimeout(handler);
-      };
-    }, [inputValue]);
-  
-    // Этот useEffect будет вызываться только при изменении debouncedValue
-    useEffect(() => {
-      if (debouncedValue) {
-        console.log('Выполняем поиск по:', debouncedValue);
-        handleUserCheck(debouncedValue)
-      }
-    }, [debouncedValue]);
-
-    let debounceTimeout;
 
     const toggleLogin = () => {
         setShowLogin(!showLogin);
@@ -309,12 +257,45 @@ const Header = () => {
         }
     };
 
+    const handleUserCheck = async () => {
+        if (!nickname || nickname.length === 0) {
+            console.error('User ID is empty or invalid');
+            return;
+        }
 
-    const handleLogin = (user) => {
-        setLoggedInUser(user);
-        setShowLogin(false);
+        if (cache[nickname]) {
+            setUsers(cache[nickname]);
+            setNicknameValid(true);
+            return;
+        }
+
+        try {
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/player/${encodeURIComponent(nickname)}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log('API Response:', data);
+                cache[nickname] = data; // Cache the result
+                setUsers([data]);
+                setNicknameValid(true);
+            } else {
+                console.error('API Error:', data.errors || 'Unknown Error');
+                setNicknameValid(false);
+            }
+        } catch (error) {
+            console.error('Error during request:', error.message);
+            setNicknameValid(false);
+        }
     };
 
+    const handleInputChange = (e) => {
+        const userInput = e.target.value.trim();
+        setNickname(userInput);
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            handleUserCheck(); // Запускаем проверку после задержки
+        }, 500); // Debounce delay
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -372,43 +353,18 @@ const Header = () => {
                         </Nav>
                     </LogoArea>
                     <ButtonArea>
-                        {loggedInUser ? (
-                            <LoggedInUserInfo>
-                                <UserAvatar src={loggedInUser.avatar_url} alt={loggedInUser.name} />
-                                <span style={{color: "white"}}>{loggedInUser.name}</span>
-
-                                <div style={{
-                                    backgroundColor: "#273445", 
-                                    display: "flex", 
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    padding: "10px", 
-                                    borderRadius: "5px", 
-                                    cursor: "pointer", 
-                                }} onClick={() => { 
-                                    setLoggedInUser(null)
-                                }}>
-                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M5.93499 2.48889C7.48227 1.45737 9.51467 2.40305 9.81611 4.1399H12.8333C14.2255 4.1399 15.3541 5.26852 15.3541 6.66074C15.3541 7.04043 15.0463 7.34824 14.6666 7.34824C14.2869 7.34824 13.9791 7.04043 13.9791 6.66074C13.9791 6.02791 13.4661 5.5149 12.8333 5.5149H9.85413V16.9732H12.8333C13.4661 16.9732 13.9791 16.4602 13.9791 15.8274C13.9791 15.4477 14.2869 15.1399 14.6666 15.1399C15.0463 15.1399 15.3541 15.4477 15.3541 15.8274C15.3541 17.2196 14.2255 18.3482 12.8333 18.3482H9.81611C9.51467 20.0851 7.48227 21.0308 5.93499 19.9992L4.10165 18.777C3.40036 18.3095 2.97913 17.5224 2.97913 16.6796V5.80857C2.97913 4.96573 3.40036 4.17864 4.10165 3.71111L5.93499 2.48889ZM16.0138 13.3194C15.7453 13.0509 15.7453 12.6156 16.0138 12.3471L16.6735 11.6874L11.9166 11.6874C11.5369 11.6874 11.2291 11.3796 11.2291 10.9999C11.2291 10.6202 11.5369 10.3124 11.9166 10.3124L16.6735 10.3124L16.0138 9.6527C15.7453 9.38422 15.7453 8.94891 16.0138 8.68043C16.2823 8.41194 16.7176 8.41194 16.9861 8.68043L18.1712 9.86558C18.7977 10.492 18.7977 11.5077 18.1712 12.1342L16.9861 13.3194C16.7176 13.5879 16.2823 13.5879 16.0138 13.3194Z" fill="currentColor"></path>
-                                    </svg>
-                                </div>
-                            </LoggedInUserInfo>
-                        ) : (
-                            <>
-                                <IconArea>
-                                    <IconLink href="#">
-                                        <FaDiscord />
-                                    </IconLink>
-                                    <IconLink href="#">
-                                        <FaVk />
-                                    </IconLink>
-                                    <IconLink href="#">
-                                        <FaTelegramPlane />
-                                    </IconLink>
-                                </IconArea>
-                                <LoginButton onClick={toggleLogin}>Войти</LoginButton>
-                            </>
-                        )}
+                        <IconArea>
+                            <IconLink href="#">
+                                <FaDiscord />
+                            </IconLink>
+                            <IconLink href="#">
+                                <FaVk />
+                            </IconLink>
+                            <IconLink href="#">
+                                <FaTelegramPlane />
+                            </IconLink>
+                        </IconArea>
+                        <LoginButton onClick={toggleLogin}>Войти</LoginButton>
                     </ButtonArea>
                 </HeaderWrapper>
             </HeaderContainer>
@@ -422,8 +378,8 @@ const Header = () => {
                     <ModalInput
                         type="text"
                         placeholder="Введите никнейм"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
+                        value={nickname}
+                        onChange={handleInputChange}
                     />
 
                     {isLoading && (
@@ -434,19 +390,18 @@ const Header = () => {
                     {!isLoading && users.length > 0 && (
                         <UserCardContainer>
                             {users.map((user) => (
-                                <UserCard key={user.id} onClick={() => handleLogin(user)}>
+                                <UserCard key={user.id}>
                                     <UserAvatar src={user.avatar_url} alt={user.name} />
                                     <UserInfo>
                                         <UserName>{user.name}</UserName>
-                                        <UserUsername>@{user.name}</UserUsername>
+                                        <UserUsername>@{user.username}</UserUsername>
                                     </UserInfo>
                                 </UserCard>
                             ))}
                         </UserCardContainer>
                     )}
-                    {error && <ModalText>{error}</ModalText>}
-                    {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}
-                    <ModalButton onClick={() => handleLogin(users[0])}>Войти</ModalButton>
+                    <ModalText>{isLoading ? 'Поиск...' : 'Данные появятся после ввода никнейма...'}</ModalText>
+                    <ModalButton>Войти</ModalButton>
                 </ModalContent>
             </LoginModal>
         </>

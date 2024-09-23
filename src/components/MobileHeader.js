@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 import { FaDiscord, FaTelegramPlane } from 'react-icons/fa';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { Link } from 'react-router-dom'; // Используем Link из react-router-dom
 import RobuxIconSrc from '../assets/img/MainRobuxIcon.svg'; // Your Robux icon
 import MenuIconSrc from '../assets/img/MenuIcon.png';
 import Bonus from "../assets/img/BonusIcon.svg";
@@ -12,7 +13,8 @@ import Purchase from "../assets/img/MyPurchasesIcon.svg";
 import AtomicSpinner from 'atomic-spinner';
 
 const HeaderContainer = styled.header`
-    ${tw`bg-[rgb(11,35,22)] py-2 fixed top-0 w-full z-50`}
+    ${tw`bg-[rgb(11,35,22)] py-2 top-0 w-full z-50`}
+    overflow-x: hidden; 
 `;
 
 const HeaderWrapper = styled.div`
@@ -25,7 +27,7 @@ const HeaderWrapper = styled.div`
 `;
 
 const LogoArea = styled.div`
-    ${tw`flex items-center space-x-2`} /* Removed excessive space between icons */
+    ${tw`flex items-center space-x-2`}
 `;
 
 const LogoImage = styled.img`
@@ -39,7 +41,8 @@ const MenuIcon = styled.img`
 `;
 
 const IconArea = styled.div`
-    ${tw`flex items-center space-x-4 mr-16`} // Reduced space
+    ${tw`flex items-center space-x-4 `}
+    margin-right: 10%;
 `;
 
 const IconLink = styled.a`
@@ -74,16 +77,17 @@ const Sidebar = styled.div`
     ${tw`z-50 bg-transparent`}
     position: fixed;
     top: 0;
-    right: ${({ show }) => (show ? '0' : '-330px')};
-    width: 300px;
+    right: ${({ show }) => (show ? '0' : '-100%')};
+    width: 250px;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden; 
     backdrop-filter: blur(7px);
     display: flex;
     flex-direction: column;
     padding: 40px 30px;
     transition: right 0.3s ease-in-out;
 `;
+
 
 const CloseButton = styled.span`
     font-size: 24px;
@@ -113,7 +117,7 @@ const DropdownContent = styled.ul`
     ${tw`flex flex-col w-full space-y-2 pl-4 pt-2`}
     max-height: ${({ isOpen }) => (isOpen ? '300px' : '0')};
     overflow: hidden;
-    transition: max-height 0.3s ease; /* Smooth dropdown animation */
+    transition: max-height 0.3s ease;
     li {
         list-style: none;
         padding-top: 8px;
@@ -136,11 +140,9 @@ const SocialLabel = styled.span`
     ${tw`text-white text-sm`}
 `;
 
-// Modal and login form logic
 const LoginModal = styled.div`
     ${tw`fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50`}
     display: ${({ $show }) => ($show ? 'flex' : 'none')};
-  
 `;
 
 const ModalContent = styled.div`
@@ -216,7 +218,7 @@ const LoadingSpinner = styled.div`
     }
 `;
 
-const MobileHeader = () => {
+const MobileHeader = ({ loggedInUser, handleLogout }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(false);
     const [nickname, setNickname] = useState('');
@@ -255,7 +257,9 @@ const MobileHeader = () => {
             <HeaderContainer>
                 <HeaderWrapper>
                     <LogoArea>
-                        <LogoImage src={RobuxIconSrc} alt="Robux Logo" />
+                        <Link to="/"> {/* Добавляем ссылку на домашнюю страницу */}
+                            <LogoImage src={RobuxIconSrc} alt="Robux Logo" />
+                        </Link>
                         <MenuIcon src={MenuIconSrc} alt="Menu Icon" onClick={toggleSidebar} />
                     </LogoArea>
                     <IconArea>
@@ -275,51 +279,79 @@ const MobileHeader = () => {
                 <NavList>
                     <NavItem>
                         <NavLink onClick={() => toggleDropdown('buy')}>
-              <span>
-                <img src={Buy} alt="Buy Robux" /> Покупка робуксов
-              </span>
+                            <span>
+                                <img src={Buy} alt="Buy Robux" /> Покупка робуксов
+                            </span>
                             <DropdownIcon>{dropdowns.buy ? <FiChevronUp /> : <FiChevronDown />}</DropdownIcon>
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.buy}>
-                            <li>Game Pass</li>
-                            <li>Plugin Method</li>
-                            <li>Gift Cards</li>
+                            <li>
+                                <Link to="/"> {/* Ссылка на страницу покупки */}
+                                    Game Pass
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/"> {/* Ссылка на страницу плагина */}
+                                    Plugin Method
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/"> {/* Ссылка на страницу подарочных карт */}
+                                    Gift Cards
+                                </Link>
+                            </li>
                         </DropdownContent>
                     </NavItem>
 
                     <NavItem>
                         <NavLink onClick={() => toggleDropdown('purchase')}>
-              <span>
-                <img src={Purchase} alt="Мои покупки" /> Мои покупки
-              </span>
+                            <span>
+                                <img src={Purchase} alt="Мои покупки" /> Мои покупки
+                            </span>
                             <DropdownIcon>{dropdowns.purchase ? <FiChevronUp /> : <FiChevronDown />}</DropdownIcon>
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.purchase}>
-                            <li>Скоро </li>
+                            <li>
+                                <Link to="/"> {/* Ссылка на страницу покупок */}
+                                    Скоро
+                                </Link>
+                            </li>
                         </DropdownContent>
                     </NavItem>
 
                     <NavItem>
-                        <NavLink onClick={() => toggleDropdown('faq')}>
-              <span>
-                <img src={FAQ} alt="FAQ" /> FAQ
-              </span>
-
+                        <NavLink>
+                            <Link to="/faq">
+                                <span>
+                                    <img src={FAQ} alt="FAQ" /> FAQ
+                                </span>
+                            </Link>
                         </NavLink>
-
                     </NavItem>
 
                     <NavItem>
                         <NavLink onClick={() => toggleDropdown('bonus')}>
-              <span>
-                <img src={Bonus} alt="Бонусы" /> Бонусы
-              </span>
+                            <span>
+                                <img src={Bonus} alt="Бонусы" /> Бонусы
+                            </span>
                             <DropdownIcon>{dropdowns.bonus ? <FiChevronUp /> : <FiChevronDown />}</DropdownIcon>
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.bonus}>
-                            <li>Бесплатные робуксы</li>
-                            <li>Промокод: ROBUX10</li>
-                            <li>Telegram</li>
+                            <li>
+                                <Link to="/BonusPage"> {/* Ссылка на страницу бесплатных робуксов */}
+                                    Бесплатные робуксы
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/promo-codes"> {/* Ссылка на страницу с промокодами */}
+                                    Промокод: ROBUX10
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="https://t.me/robuxio/27"> {/* Ссылка на страницу Telegram */}
+                                    Telegram
+                                </Link>
+                            </li>
                         </DropdownContent>
                     </NavItem>
                 </NavList>
