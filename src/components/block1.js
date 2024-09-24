@@ -761,7 +761,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             game_id: parseInt(gameId),
             robux_amount: parseInt(robuxesCount),
             paid_amount: parseInt(rublesToPay),
-            roblox_username: "Username"
+            roblox_username: loggedInUser.name, 
         } 
         try {
             const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
@@ -881,7 +881,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                     </> : <>
                         <GamePassWrapper style={{maxWidth: "100%", boxSizing: "border-box"}}>
-                            <GamePassTitle>Создайте новый GamePass с ценой 1426</GamePassTitle>
+                            <GamePassTitle>Создайте новый GamePass с ценой {robuxesCount} 💸</GamePassTitle>
 
                             <GamePassAttention>
                                 <strong style={{}}>Внимание </strong>
@@ -918,8 +918,9 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
                             <GamePassButtonContainer>
                                 <ModalButton onClick={handleCreateGamePass}>Создать GamePass</ModalButton>
-                                <ModalButton style={{marginLeft: "100px"}} onClick={handleCheckStatus}>Отправить</ModalButton>
+                                <ModalButton style={{marginLeft: "100px"}} onClick={sendForm}>Отправить</ModalButton>
                             </GamePassButtonContainer>
+                            {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                         </GamePassWrapper>
                     </>}
         </>
