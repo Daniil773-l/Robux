@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -10,20 +10,29 @@ import PrivacyPage from "./PrivacyPage";
 import AgreementPage from "./AgreementPage";
 import Stats from "./components/Stats";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-    <React.StrictMode>
+const RootApp = () => {
+
+    const [loggedInUser, setLoggedInUser] = useState(null);
+
+    return (
 
         <Router>
-            <Stats/>
+            <Stats loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>
             <Routes>
-                <Route path="/" element={<App />} />
+                <Route path="/" element={<App loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>} />
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/BonusPage" element={<BonusPage />} />
                 <Route path="/PrivacyPage" element={<PrivacyPage/>} />
                 <Route path="/AgreementPage" element={<AgreementPage/>} />
             </Routes>
         </Router>
+    )
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+    <React.StrictMode>
+        <RootApp />
     </React.StrictMode>
 );
 

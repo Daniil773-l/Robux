@@ -19,11 +19,11 @@ const AppContainer = styled.div`
     justify-content: space-between;
 `;
 
-const App = () => {
+const App = ({loggedInUser, setLoggedInUser}) => {
     return (
         <div>
             <AppContainer>
-                <Buy />
+                <Buy loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
                 <Cards />
                 <GiftCards />
                 <Why />

@@ -12,6 +12,7 @@ import ArrowIcon from '../assets/img/ArrowIcon.svg'; // Import the arrow icon
 import Robuxmini from '../assets/img/ROBUXMINI.SVG';
 import ClockIcon from '../assets/img/clock.svg';
 import Star from '../assets/img/star.svg'
+import AtomicSpinner from "atomic-spinner";
 // Define keyframes for the fade-in and move-up animation
 const fadeInUp = keyframes`
     0% {
@@ -117,7 +118,7 @@ const Subtitle = styled.h2`
 
 const TitleLine = styled.div`
     ${tw`inline-block relative w-full text-center flex items-center justify-center`}
-
+    margin: auto;
     @media (max-width: 768px) {
     flex-direction: column;
 }
@@ -166,7 +167,11 @@ const SubTitle = styled.h4`
         font-size: 16px;
     }
 `;
-
+const PlaceImage = styled.img`
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+`;
 const InfoButton = styled.div`
     ${tw`relative inline-block ml-2`}
 `;
@@ -393,6 +398,26 @@ const BuyButton = styled.button`
     }
 `;
 
+const StyledPlace = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #1b142c; // Dark background as in the image
+    border-radius: 12px;
+    padding: 10px;
+    width: 150px; // Adjust width as needed
+    height: 220px; // Adjust height as needed
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+`;
+
+const PlaceTitle = styled.div`
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+`;
+
 const PromoLink = styled.a`
     ${tw`mt-3 text-green-300 text-center cursor-pointer`}
     font-size: 1.1em;
@@ -496,17 +521,207 @@ const BiggerCoin = styled.img`
         }
 `;
 
+const LoadingSpinner = styled.div`
+    ${tw`flex justify-center mt-5`}
+    svg {
+        width: 70px;
+        height: 70px;
+    }
+`;
+
+const ModalText = styled.p`
+    ${tw`mt-3 text-center`}
+    color: #ffffff;
+    font-size: 14px;
+`;
+const ModalButton = styled.button`
+    ${tw`w-full py-4 rounded-lg mt-5 font-bold border-none cursor-pointer`}
+    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    color: #fff;
+    font-size: 16px;
+    opacity: 0.5;
+    &:hover {
+        opacity: 0.9;
+    }
+`;
+const UserCardContainer = styled.div`
+    ${tw`flex flex-wrap justify-center mt-4`};
+    max-height: 300px; /* Ограничиваем высоту контейнера карточек */
+    overflow-y: auto; /* Включаем вертикальную прокрутку */
+    padding-right: 8px; /* Добавляем отступ для скролла */
+    width: 100%; /* Для адаптивности */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+`;
+
+const UserCard = styled.div`
+    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
+    &:hover {
+        background-color: #3C3555;
+    }
+    width: 120px; /* Фиксируем ширину карточки */
+    text-align: center;
+`;
+
+const UserAvatar = styled.img`
+    ${tw`w-12 h-12 rounded-full`}
+    margin-right: 8px;
+`;
+
+const UserInfo = styled.div`
+    ${tw`flex flex-col`}
+    justify-content: center;
+    text-align: center;
+`;
+
+const UserName = styled.span`
+    ${tw`text-white text-sm font-bold`}
+`;
+
+const UserUsername = styled.span`
+    ${tw`text-gray-400 text-xs`}
+`;
+
+const GamePassWrapper = styled.div`
+  ${tw`p-5 text-white rounded-lg max-w-md mx-auto`}
+`;
+
+const GamePassTitle = styled.h2`
+  ${tw`text-2xl mb-5`}
+`;
+
+const GamePassAttention = styled.div`
+  ${tw`mb-5`}
+`;
+
+const GamePassInstruction = styled.a`
+  ${tw`text-blue-400 underline`}
+`;
+
+const GamePassLink = styled.a`
+  ${tw`text-blue-400 underline`}
+`;
+
+const GamePassLabel = styled.label`
+  ${tw`block mb-2`}
+`;
+
+const GamePassInput = styled.input`
+  ${tw`w-full p-4 mb-4 rounded-lg border border-none`}
+    
+    &::after { 
+      border-color: #013d1d;
+      color: rgb(255 255 255);
+  }
+`;
+
+
+const GamePassCheckboxContainer = styled.div`
+  ${tw`mt-4 mb-6`}
+`;
+
+const GamePassButtonContainer = styled.div`
+  ${tw`flex justify-between`}
+`;
+
+
 const courseRobuxToRubles = 0.7 
 
-const PurchaseComponent = () => {
+const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [activeButton, setActiveButton] = useState('standard');
     const [rublesToPay, setRublesToPay] = useState('');
     const [robuxesCount, setRobuxesCount] = useState('');
+    const [gameId, setGameId] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
     const [buyMenu, setOpenBuyMenu] = useState(false);  
-    const [linkToGamepass, setLink] = useState(''); 
+    const [searchRequest, setSearchRequest] = useState('');
     const [result, setResult] = useState(null); 
-    const [error, setError] = useState(''); 
+    const [error, setError] = useState('');
+    const [debouncedValue, setDebouncedValue] = useState('');
+    const [inputValue, setInputValue] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [showLogin, setShowLogin] = useState(false);
+    const [games, setGames] = useState([]);
+    const [email, setEmail] = useState('');
+
+    const handleUserCheck = async (nickname) => {
+        if (nickname.length < 3) return; // Проверяем, что введено хотя бы 3 символа
+        setIsLoading(true);
+        setError('');
+        try {
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/player/${encodeURIComponent(nickname)}`);
+            const data = await response.json();
+
+            if (response.ok && data && Array.isArray(data)) {
+                setUsers(data.slice(0, 10));
+            } else {
+                setUsers([]);
+                setError('No users found or API error');
+            }
+        } catch (error) {
+            setError('Error fetching user data');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleCreateGamePass = () => {
+        // Functionality for creating GamePass
+        console.log('Creating GamePass...');
+    };
+
+    const handleCheckStatus = () => {
+        // Functionality for checking GamePass status
+        console.log('Checking GamePass status...');
+    };
+
+    const handleLogin = (user) => {
+        setLoggedInUser(user);
+        setShowLogin(false);
+
+
+        // Сохраняем информацию о пользователе в localStorage
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
+    };
+
+    const fetchGames = async () => {
+        if (loggedInUser === null || loggedInUser === undefined) {return}
+        setIsLoading(true); // Set loading to true when fetch starts
+        setError(null); // Reset the error state in case of previous errors
+
+        try {
+            console.log(loggedInUser)
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/games?player_id=${loggedInUser.user_id}`, ); // Replace with actual API endpoint
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch games'); // Handle non-200 responses
+            }
+
+            const data = await response.json(); // Parse the response data
+            setGames(data); // Set the fetched games data to state
+
+        } catch (err) {
+            setError(err.message); // Catch and set any errors that occurred
+        } finally {
+            setIsLoading(false); // Set loading to false when fetch completes
+        }
+    };
+
+    // useEffect hook to fetch games when the component mounts
+    useEffect(() => {
+        fetchGames();
+    }, [loggedInUser]); // Empty dependency array ensures it runs only once on mount
 
     useEffect(() => {
         console.log("multiplying robuxes to rubles")
@@ -517,18 +732,39 @@ const PurchaseComponent = () => {
         }
     }, [robuxesCount])
 
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(inputValue);
+        }, 500); // Задержка в 500 мс
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [inputValue]);
+
+    const handlePlaceChoice = (game) => {
+        setGameId(game.id); // Update the selected game ID
+    };
+
+    useEffect(() => {
+        if (debouncedValue) {
+            handleUserCheck(debouncedValue);
+        }
+    }, [debouncedValue]);
+
     const handlePurpleLineClick = () => {
         setIsExpanded(!isExpanded);
     };
 
     const sendForm = async () => { 
         let payload = { 
-            url: linkToGamepass, 
-            amount: parseInt(robuxesCount), 
+            game_id: parseInt(gameId),
+            robux_amount: parseInt(robuxesCount),
+            paid_amount: parseInt(rublesToPay),
             roblox_username: "Username"
         } 
         try {
-            const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux/url`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
             const data = await response.json();
 
             if (response.ok && data) {
@@ -589,25 +825,103 @@ const PurchaseComponent = () => {
                 <PromoLink id="open-modal-btn">Использовать промокод</PromoLink>
             </BuyForm>
             </>
-            :
+            : loggedInUser === null || loggedInUser === undefined ?
             <>
                 <StepCaption style={{display: "flex"}}>
                     <BuyButton onClick={() => setOpenBuyMenu(false)}>Назад</BuyButton>
-                    <StyledLabel htmlFor="robuxesCount">Вставьте ссылку на gamepass</StyledLabel>
+                    <StyledLabel htmlFor="robuxesCount"></StyledLabel>
                 </StepCaption>
                 <InputWrapper style={{marginTop: "20px"}}>
                         <StyledInput
-                            placeholder="Ссылка"
-                            id="linkToGamepass"
+                            placeholder="Поиск Игрока"
+                            id="SearchRequest"
                             type="text"
-                            value={linkToGamepass}
-                            onInput={(e) => setLink(e.target.value)}
+                            value={inputValue}
+                            onInput={(e ) => setInputValue(e.target.value)}
                         />
+                    {isLoading && (
+                        <LoadingSpinner>
+                            <AtomicSpinner />
+                        </LoadingSpinner>
+                    )}
+                    {!isLoading && users.length > 0 && (
+                        <UserCardContainer>
+                            {users.map((user) => (
+                                <UserCard key={user.id} onClick={() => handleLogin(user)}>
+                                    <UserAvatar src={user.avatar_url} alt={user.name} />
+                                    <UserInfo>
+                                        <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>
+                                        <UserUsername>@{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>
+                                    </UserInfo>
+                                </UserCard>
+                            ))}
+                        </UserCardContainer>
+                    )}
+                    {error && <ModalText>{error}</ModalText>}
+                    {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}
+                    <ModalButton onClick={() => handleLogin(users[0])}>Войти</ModalButton>
+
                     </InputWrapper>
-                {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
-                {result !== null ? <><MinRobuxText htmlFor="robuxesCount">Ваш запрос был успешно отправлен</MinRobuxText></> : null}
-                <BuyButton onClick={sendForm} disabled={result !== null}>Отправить</BuyButton>
-            </>} 
+            </>: gameId === null || gameId === undefined || gameId === "" ? <>
+
+                        {/*<StepCaption style={{display: "flex"}}>*/}
+                        {/*    <BuyButton onClick={() => setOpenBuyMenu(false)}>Назад</BuyButton>*/}
+                        {/*    <StyledLabel htmlFor="robuxesCount"></StyledLabel>*/}
+                        {/*</StepCaption>*/}
+                        <InputWrapper style={{marginTop: "20px"}}>
+                            <StyledPlace>
+                                {games.map((game) => (
+                                    <div onClick={() => handlePlaceChoice(game)} style={{cursor: "pointer"}}>
+                                    <PlaceImage src={game.icon_url} alt={game.name} />
+                                    <PlaceTitle>{game.name}</PlaceTitle>
+                                    </div>
+                                ))}
+                            </StyledPlace>
+                        </InputWrapper>
+                        {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
+                    </> : <>
+                        <GamePassWrapper style={{maxWidth: "100%", boxSizing: "border-box"}}>
+                            <GamePassTitle>Создайте новый GamePass с ценой 1426</GamePassTitle>
+
+                            <GamePassAttention>
+                                <strong style={{}}>Внимание </strong>
+                                <GamePassInstruction href="/path/to/instruction.pdf">Инструкция.pdf</GamePassInstruction>
+                                <p>
+                                    Обязательно каждый раз создавайте новый геймпасс. Робуксы доставляются методом Transfer в течение 5-7 дней с момента оплаты. Проверить статус робуксов можно в поле Pending Robux —{' '}
+                                    <GamePassLink href="https://www.roblox.com/transactions" target="_blank" rel="noopener noreferrer">
+                                        https://www.roblox.com/transactions
+                                    </GamePassLink>
+                                </p>
+                            </GamePassAttention>
+
+                            <div>
+                                <GamePassLabel htmlFor="email">Почта</GamePassLabel>
+                                <GamePassInput
+                                    style={{width: "94%", color: "rgb(255 255 255 / var(--tw-text-opacity)", backgroundColor: "#013d1d"}}
+                                    type="email"
+                                    id="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Введите свою почту"
+                                />
+                                <p>Вводя свою почту, вы соглашаетесь с тем, что на неё будет отправлен чек и информация о заказе.</p>
+                            </div>
+
+                            <GamePassCheckboxContainer style={{display: "flex"}}>
+                                <input type="checkbox" id="agreement" />
+                                <GamePassLabel htmlFor="agreement" style={{marginLeft: "10px"}}>
+                                    Согласен с{' '}
+                                    <GamePassLink href="/public-offer">Публичной офертой</GamePassLink> и{' '}
+                                    <GamePassLink href="/user-agreement">Пользовательским соглашением</GamePassLink>
+                                </GamePassLabel>
+                            </GamePassCheckboxContainer>
+
+                            <GamePassButtonContainer>
+                                <ModalButton onClick={handleCreateGamePass}>Создать GamePass</ModalButton>
+                                <ModalButton style={{marginLeft: "100px"}} onClick={handleCheckStatus}>Отправить</ModalButton>
+                            </GamePassButtonContainer>
+                        </GamePassWrapper>
+                    </>}
         </>
     );
 
@@ -629,7 +943,7 @@ const PurchaseComponent = () => {
     );
 
     return (
-        <BannerArea>
+        <BannerArea  style={{height: "auto", marginBottom: "20px"}}>
             <Sphere src={sphere} alt="Floating Sphere" />
             <RobuxCoin src={coin} alt="Floating Coin" />
             <SmallCoin src={smallcoin} alt="Floating Coin" />

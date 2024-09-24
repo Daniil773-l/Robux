@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import { FaDiscord, FaTelegramPlane } from 'react-icons/fa';
@@ -11,6 +11,7 @@ import FAQ from "../assets/img/FAQIcon.svg";
 import Buy from "../assets/img/BuyRobuxIcon.svg";
 import Purchase from "../assets/img/MyPurchasesIcon.svg";
 import AtomicSpinner from 'atomic-spinner';
+import Exit from "../assets/img/Exit.svg";
 
 const HeaderContainer = styled.header`
     ${tw`bg-[rgb(11,35,22)] py-2 top-0 w-full z-50`}
@@ -230,29 +231,147 @@ const LoadingSpinner = styled.div`
     }
 `;
 
-const MobileHeader = ({ loggedInUser, handleLogout }) => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [showLogin, setShowLogin] = useState(false);
-    const [nickname, setNickname] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-    const [users, setUsers] = useState([]);
+const HeaderUserCardContainer = styled.div`
+    ${tw`flex items-center space-x-4`}; /* Контейнер для аватара и имени в хедере */
+`;
+
+const HeaderUserAvatarContainer = styled.div`
+    ${tw`overflow-hidden`}; /* Стили для круглого аватара */
+    width: 40px;
+    height: 40px;
+    img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+`;
+
+const HeaderUserNameContainer = styled.div`
+    ${tw`flex items-center space-x-3`}; /* Добавлен space-x-3 для увеличения отступа между аватаром и именем */
+`;
+
+const HeaderExitIconContainer = styled.div`
+    ${tw`flex items-center justify-center cursor-pointer`}; /* Контейнер для иконки */
+    background-color: #4a4a4a; /* Цвет фона по умолчанию */
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #6a6a6a; /* Цвет фона при наведении */
+    }
+`;
+
+const HeaderExitIcon = styled.img`
+    width: 24px;
+    height: 24px;
+`;
+
+const UserCardContainer = styled.div`
+    ${tw`flex flex-wrap justify-center mt-4`};
+    max-height: 300px; /* Ограничиваем высоту контейнера карточек */
+    overflow-y: auto; /* Включаем вертикальную прокрутку */
+    padding-right: 8px; /* Добавляем отступ для скролла */
+    width: 100%; /* Для адаптивности */
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+`;
+
+const UserCard = styled.div`
+    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
+    &:hover {
+        background-color: #3C3555;
+    }
+    width: 120px; /* Фиксируем ширину карточки */
+    text-align: center;
+`;
+
+const UserAvatar = styled.img`
+    ${tw`w-12 h-12 rounded-full`}
+    margin-right: 8px;
+`;
+
+const UserInfo = styled.div`
+    ${tw`flex flex-col`}
+    justify-content: center;
+    text-align: center;
+`;
+
+const UserName = styled.span`
+    ${tw`text-white text-sm font-bold`}
+`;
+
+const UserUsername = styled.span`
+    ${tw`text-gray-400 text-xs`}
+`;
+
+const MobileHeader = ({ handleLogout, loggedInUser, setLoggedInUser }) => {
+    const [sidebarOpen, setSidebarOpen] = useState(false); // Sidebar state
+    const [showLogin, setShowLogin] = useState(false); // Login modal state
+    const [nickname, setNickname] = useState(''); // Nickname input state
+    const [isLoading, setIsLoading] = useState(false); // Loading state
+    const [users, setUsers] = useState([]); // Users data
+    const [debouncedValue, setDebouncedValue] = useState('');
+    const [inputValue, setInputValue] = useState('');
+    const [error, setError] = useState('');
     const [dropdowns, setDropdowns] = useState({
         buy: false,
         purchase: false,
         faq: false,
         bonus: false,
-    });
+    }); // Dropdowns state
 
+    const handleUserCheck = async (nickname) => {
+        if (nickname.length < 3) return; // Проверяем, что введено хотя бы 3 символа
+        setIsLoading(true);
+        setError('');
+        try {
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/player/${encodeURIComponent(nickname)}`);
+            const data = await response.json();
+
+            if (response.ok && data && Array.isArray(data)) {
+                setUsers(data.slice(0, 10));
+            } else {
+                setUsers([]);
+                setError('No users found or API error');
+            }
+        } catch (error) {
+            setError('Error fetching user data');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+    // Toggle sidebar visibility
     const toggleSidebar = () => {
         setSidebarOpen(!sidebarOpen);
     };
 
+    const handleLogin = (user) => {
+        setLoggedInUser(user);
+        setShowLogin(false);
+
+        // Сохраняем информацию о пользователе в localStorage
+        localStorage.setItem('loggedInUser', JSON.stringify(user));
+    };
+
+    // Toggle login modal visibility
     const toggleLogin = (e) => {
         if (e.target === e.currentTarget) {
             setShowLogin(!showLogin);
         }
     };
 
+    // Toggle dropdown visibility
     const toggleDropdown = (item) => {
         setDropdowns({
             ...dropdowns,
@@ -260,16 +379,53 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
         });
     };
 
+    // Handle input change for nickname
     const handleInputChange = (e) => {
-        setNickname(e.target.value.trim());
+        const value = e.target.value.trim();
+        console.log("Current nickname: ", value); // Log the nickname
+        setNickname(value);
     };
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(inputValue);
+        }, 500); // Задержка в 500 мс
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [inputValue]);
+
+    useEffect(() => {
+        if (debouncedValue) {
+            handleUserCheck(debouncedValue);
+        }
+    }, [debouncedValue]);
+
+    // Simulate fetching users (API call logic can be inserted here)
+    useEffect(() => {
+        const fetchUsers = async () => {
+            setIsLoading(true);
+            try {
+                const response = await fetch('/api/users'); // Replace with actual API endpoint
+                const data = await response.json();
+                setUsers(data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUsers();
+    }, [nickname]);
 
     return (
         <>
             <HeaderContainer>
                 <HeaderWrapper>
                     <LogoArea>
-                        <StyledLink to="/"> {/* Добавляем ссылку на домашнюю страницу */}
+                        <StyledLink to="/"> {/* Link to home page */}
                             <LogoImage src={RobuxIconSrc} alt="Robux Logo" />
                         </StyledLink>
                         <MenuIcon src={MenuIconSrc} alt="Menu Icon" onClick={toggleSidebar} />
@@ -281,14 +437,29 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         <IconLink href="#">
                             <FaTelegramPlane />
                         </IconLink>
-                        <LoginButton onClick={toggleLogin}>Войти</LoginButton>
+                        {loggedInUser ? (
+                                <HeaderUserCardContainer>
+                                    <HeaderUserAvatarContainer>
+                                        <img src={loggedInUser.avatar_url} alt={loggedInUser.name} />
+                                    </HeaderUserAvatarContainer>
+                                    <HeaderUserNameContainer>
+                                        <span style={{ color: "white", fontWeight: "bold" }}>{loggedInUser.name}</span>
+                                    </HeaderUserNameContainer>
+                                    <HeaderExitIconContainer onClick={() => setLoggedInUser(null)}>
+                                        <HeaderExitIcon src={Exit} alt="Exit" />
+                                    </HeaderExitIconContainer>
+                                </HeaderUserCardContainer>
+                            ) : (
+                            <><LoginButton onClick={toggleLogin}>Войти</LoginButton></>)}
                     </IconArea>
                 </HeaderWrapper>
             </HeaderContainer>
 
+            {/* Sidebar */}
             <Sidebar show={sidebarOpen}>
                 <CloseButton onClick={toggleSidebar}>&times;</CloseButton>
                 <NavList>
+                    {/* Buy Dropdown */}
                     <NavItem>
                         <NavLink onClick={() => toggleDropdown('buy')}>
                             <span>
@@ -298,23 +469,24 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.buy}>
                             <li>
-                                <StyledLink to="/"> {/* Ссылка на страницу покупки */}
+                                <StyledLink to="/"> {/* Link to Game Pass */}
                                     Game Pass
                                 </StyledLink>
                             </li>
                             <li>
-                                <StyledLink to="/"> {/* Ссылка на страницу плагина */}
+                                <StyledLink to="/"> {/* Link to Plugin Method */}
                                     Plugin Method
                                 </StyledLink>
                             </li>
                             <li>
-                                <StyledLink to="/"> {/* Ссылка на страницу подарочных карт */}
+                                <StyledLink to="/"> {/* Link to Gift Cards */}
                                     Gift Cards
                                 </StyledLink>
                             </li>
                         </DropdownContent>
                     </NavItem>
 
+                    {/* Purchase Dropdown */}
                     <NavItem>
                         <NavLink onClick={() => toggleDropdown('purchase')}>
                             <span>
@@ -324,13 +496,14 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.purchase}>
                             <li>
-                                <StyledLink to="/"> {/* Ссылка на страницу покупок */}
+                                <StyledLink to="/"> {/* Link to purchase history */}
                                     Скоро
                                 </StyledLink>
                             </li>
                         </DropdownContent>
                     </NavItem>
 
+                    {/* FAQ Link */}
                     <NavItem>
                         <NavLink>
                             <StyledLink to="/faq">
@@ -341,6 +514,7 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         </NavLink>
                     </NavItem>
 
+                    {/* Bonus Dropdown */}
                     <NavItem>
                         <NavLink onClick={() => toggleDropdown('bonus')}>
                             <span>
@@ -350,17 +524,17 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         </NavLink>
                         <DropdownContent isOpen={dropdowns.bonus}>
                             <li>
-                                <StyledLink to="/BonusPage"> {/* Ссылка на страницу бесплатных робуксов */}
+                                <StyledLink to="/BonusPage"> {/* Free Robux page */}
                                     Бесплатные робуксы
                                 </StyledLink>
                             </li>
                             <li>
-                                <StyledLink to="/promo-codes"> {/* Ссылка на страницу с промокодами */}
+                                <StyledLink to="/promo-codes"> {/* Promo Code page */}
                                     Промокод: ROBUX10
                                 </StyledLink>
                             </li>
                             <li>
-                                <StyledLink to="https://t.me/robuxio/27"> {/* Ссылка на страницу Telegram */}
+                                <StyledLink to="https://t.me/robuxio/27"> {/* Telegram link */}
                                     Telegram
                                 </StyledLink>
                             </li>
@@ -368,6 +542,7 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                     </NavItem>
                 </NavList>
 
+                {/* Social Links */}
                 <SocialLinks>
                     <SocialIcons>
                         <IconLink href="#">
@@ -381,6 +556,7 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                 </SocialLinks>
             </Sidebar>
 
+            {/* Login Modal */}
             <LoginModal $show={showLogin} onClick={toggleLogin}>
                 <ModalContent onClick={(e) => e.stopPropagation()}> {/* Prevent closing on input click */}
                     <CloseModalButton onClick={toggleLogin}>&times;</CloseModalButton>
@@ -389,8 +565,8 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                     <ModalInput
                         type="text"
                         placeholder="Введите никнейм"
-                        value={nickname}
-                        onChange={handleInputChange}
+                        value={inputValue}
+                        onChange={ (e) => setInputValue(e.target.value)}
                     />
                     {isLoading && (
                         <LoadingSpinner>
@@ -398,14 +574,17 @@ const MobileHeader = ({ loggedInUser, handleLogout }) => {
                         </LoadingSpinner>
                     )}
                     {!isLoading && users.length > 0 && (
-                        <div>
+                        <UserCardContainer>
                             {users.map((user) => (
-                                <div key={user.id}>
-                                    <img src={`https://www.roblox.com/headshot-thumbnail/image?userId=${user.id}&width=150&height=150&format=png`} alt={user.name} />
-                                    <span>{user.name}</span>
-                                </div>
+                                <UserCard key={user.id} onClick={() => handleLogin(user)}>
+                                    <UserAvatar src={user.avatar_url} alt={user.name} />
+                                    <UserInfo>
+                                        <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>
+                                        <UserUsername>@{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>
+                                    </UserInfo>
+                                </UserCard>
                             ))}
-                        </div>
+                        </UserCardContainer>
                     )}
                     <ModalText>Данные появятся после ввода никнейма...</ModalText>
                     <ModalButton>Войти</ModalButton>

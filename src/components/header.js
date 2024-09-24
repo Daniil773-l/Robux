@@ -393,8 +393,8 @@ const Header = () => {
                                 <UserCard key={user.id}>
                                     <UserAvatar src={user.avatar_url} alt={user.name} />
                                     <UserInfo>
-                                        <UserName>{user.name}</UserName>
-                                        <UserUsername>@{user.username}</UserUsername>
+                                        <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>
+                                        <UserUsername>@{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>
                                     </UserInfo>
                                 </UserCard>
                             ))}

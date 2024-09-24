@@ -247,7 +247,7 @@ const ModalContent = styled.div`
     border-radius: 24px;
     width: 420px;
     max-width: 100%;
-    height: 500px;
+    //height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -315,12 +315,11 @@ const ModalButton = styled.button`
     }
 `;
 
-const Header = () => {
+const Header = ({loggedInUser, setLoggedInUser}) => {
     const [showLogin, setShowLogin] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [error, setError] = useState('');
-    const [loggedInUser, setLoggedInUser] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const [isMobile, setIsMobile] = useState(false);
     const [debouncedValue, setDebouncedValue] = useState('');
@@ -407,7 +406,7 @@ const Header = () => {
     }, []);
 
     if (isMobile) {
-        return <MobileHeader loggedInUser={loggedInUser} handleLogout={handleLogout} />;
+        return <MobileHeader loggedInUser={loggedInUser} handleLogout={handleLogout} setLoggedInUser={setLoggedInUser}/>;
     }
 
     return (
@@ -449,18 +448,18 @@ const Header = () => {
                     </LogoArea>
                     <ButtonArea>
                         {loggedInUser ? (
-                            <HeaderUserCardContainer>
-                                <HeaderUserAvatarContainer>
-                                    <img src={loggedInUser.avatar_url} alt={loggedInUser.name} />
-                                </HeaderUserAvatarContainer>
-                                <HeaderUserNameContainer>
-                                    <span style={{ color: "white", fontWeight: "bold" }}>{loggedInUser.name}</span>
-                                </HeaderUserNameContainer>
-                                <HeaderExitIconContainer onClick={() => setLoggedInUser(null)}>
-                                    <HeaderExitIcon src={Exit} alt="Exit" />
-                                </HeaderExitIconContainer>
-                            </HeaderUserCardContainer>
-                        ) : (
+                                <HeaderUserCardContainer>
+                                    <HeaderUserAvatarContainer>
+                                        <img src={loggedInUser.avatar_url} alt={loggedInUser.name} />
+                                    </HeaderUserAvatarContainer>
+                                    <HeaderUserNameContainer>
+                                        <span style={{ color: "white", fontWeight: "bold" }}>{loggedInUser.name}</span>
+                                    </HeaderUserNameContainer>
+                                    <HeaderExitIconContainer onClick={() => setLoggedInUser(null)}>
+                                        <HeaderExitIcon src={Exit} alt="Exit" />
+                                    </HeaderExitIconContainer>
+                                </HeaderUserCardContainer>
+                            ) : (
                             <>
                                 <IconArea>
                                     <IconLink href="#">
@@ -503,8 +502,8 @@ const Header = () => {
                                 <UserCard key={user.id} onClick={() => handleLogin(user)}>
                                     <UserAvatar src={user.avatar_url} alt={user.name} />
                                     <UserInfo>
-                                        <UserName>{user.name}</UserName>
-                                        <UserUsername>@{user.name}</UserUsername>
+                                        <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>
+                                        <UserUsername>@{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>
                                     </UserInfo>
                                 </UserCard>
                             ))}
