@@ -815,8 +815,10 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             id="rublesToPay"
                             type="number"
                             value={rublesToPay}
-                            onInput={(e) => setRublesToPay(e.target.value)}
-                            disabled
+                            onInput={(e) => { 
+                                setRublesToPay(e.target.value)
+                                setRobuxesCount(parseInt(e.target.value) / 0.7)
+                            }}
                         />
                     </InputWrapper>
                 </InputBlock>
