@@ -913,8 +913,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                 <input type="checkbox" id="agreement" />
                                 <GamePassLabel htmlFor="agreement" style={{marginLeft: "10px"}}>
                                     Согласен с{' '}
-                                    <GamePassLink href="/public-offer">Публичной офертой</GamePassLink> и{' '}
-                                    <GamePassLink href="/user-agreement">Пользовательским соглашением</GamePassLink>
+                                    <GamePassLink href="/PrivacyPage">Публичной офертой</GamePassLink> и{' '}
+                                    <GamePassLink href="/AgreementPage">Пользовательским соглашением</GamePassLink>
                                 </GamePassLabel>
                             </GamePassCheckboxContainer>
 
