@@ -679,6 +679,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [showLogin, setShowLogin] = useState(false);
     const [games, setGames] = useState([]);
     const [email, setEmail] = useState('');
+    const [botRobuxAmount, setBotRobux] = useState(0)
 
     const handleUserCheck = async (nickname) => {
         if (nickname.length < 3) return; // Проверяем, что введено хотя бы 3 символа
@@ -742,6 +743,24 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             setIsLoading(false); // Set loading to false when fetch completes
         }
     };
+
+    useEffect(() => { 
+        (async () => {
+            try { 
+                let response = await fetch(`${window.env.BACKEND_HOST}/api/robux_amount`, {method: "GET"})
+                if (response.status !== 200) { 
+                    setError("Получение робуксов не работает")
+                    setBotRobux(0)
+                }
+                
+                let data = await response.text()
+                setBotRobux(parseInt(data))
+            } catch (err) { 
+                console.error(err)
+                setBotRobux(0)
+            }
+        })()
+    })
 
     // useEffect hook to fetch games when the component mounts
     useEffect(() => {
@@ -812,7 +831,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             <StepCaption>
                 <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#77D241' }}>(R$)</span></StyledLabel>
                 <AvailabilityText id="instockGamePass">
-                    В наличии 13062
+                    В наличии {botRobuxAmount}
                     <img src={Robuxmini} alt="Robux Mini Icon" style={{ marginLeft: '8px' }} />
                 </AvailabilityText>
 
