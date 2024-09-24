@@ -38,6 +38,33 @@ const jumpAnimation = keyframes`
     }
 `;
 
+const ScrollWrapper = styled.div`
+  &::-webkit-scrollbar {
+    width: 8px;
+    background-color: #1a1a1a; /* Цвет фона скроллбара */
+  }
+
+  /* Цвет бегунка (ползунка) */
+    &::-webkit-scrollbar-thumb {
+    background-color: #90ee90; /* Светло-зелёный цвет бегунка */
+    border-radius: 10px; /* Скругление краев */
+  }
+
+    &::-webkit-scrollbar-thumb:hover {
+    background-color: #77dd77; /* Более насыщенный зеленый при наведении */
+  }
+
+    &::-webkit-scrollbar-track {
+    background-color: #1a1a1a; /* Цвет фона */
+  }
+`;
+
+const Content = styled.div`
+  height: 600px; /* Пример контента, чтобы появился скроллбар */
+  background-color: #2a2a2a;
+  color: white;
+`;
+
 const BannerArea = styled.div`
     ${tw`relative`}
     background: rgb(11,35,22);
@@ -399,15 +426,13 @@ const BuyButton = styled.button`
 `;
 
 const StyledPlace = styled.div`
+    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
+    &:hover {
+        background-color: #6eaa5e;
+    }
+    background-color: rgb(1 92 43);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #1b142c; // Dark background as in the image
-    border-radius: 12px;
-    padding: 10px;
-    width: 150px; // Adjust width as needed
-    height: 220px; // Adjust height as needed
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    text-align: center;
 `;
 
 const PlaceTitle = styled.div`
@@ -725,9 +750,9 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
     useEffect(() => {
         console.log("multiplying robuxes to rubles")
-        if (parseInt(robuxesCount) >= 210) { 
+        if (parseInt(robuxesCount) >= 210 && !(rublesToPay === "" || rublesToPay === 0 || rublesToPay === undefined || rublesToPay === null || rublesToPay === "0") ) {
         setRublesToPay(String((robuxesCount * courseRobuxToRubles).toFixed(1)))
-        } else { 
+        } else {
             setRublesToPay("")
         }
     }, [robuxesCount])
@@ -801,8 +826,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             id="robuxesCount"
                             type="number"
                             value={robuxesCount}
-                            onChange={(e) => { 
-                                setRobuxesCount(e.target.value)
+                            onInput={(e) => {
+                                setRobuxesCount(parseInt(e.target.value))
                             }}
                         />
                     </InputWrapper>
@@ -816,8 +841,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             type="number"
                             value={rublesToPay}
                             onInput={(e) => { 
-                                setRublesToPay(e.target.value)
-                                setRobuxesCount(parseInt(e.target.value) / 0.7)
+                                setRublesToPay(parseInt(e.target.value))
+                                setRobuxesCount(Math.round(parseInt(e.target.value) / 0.7))
                             }}
                         />
                     </InputWrapper>
@@ -871,14 +896,14 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         {/*    <StyledLabel htmlFor="robuxesCount"></StyledLabel>*/}
                         {/*</StepCaption>*/}
                         <InputWrapper style={{marginTop: "20px"}}>
-                            <StyledPlace>
+                            <ScrollWrapper style={{overflowY: "scroll", height: "50vh"}}>
                                 {games.map((game) => (
-                                    <div onClick={() => handlePlaceChoice(game)} style={{cursor: "pointer"}}>
-                                    <PlaceImage src={game.icon_url} alt={game.name} />
-                                    <PlaceTitle>{game.name}</PlaceTitle>
-                                    </div>
+                                    <StyledPlace onClick={() => handlePlaceChoice(game)} style={{cursor: "pointer"}}>
+                                    <PlaceImage src={game.icon_url} alt={game.name} style={{height: '180px', width: '210px'}}/>
+                                    <PlaceTitle style={{marginLeft: "20px"}}>{game.name}</PlaceTitle>
+                                    </StyledPlace>
                                 ))}
-                            </StyledPlace>
+                            </ScrollWrapper>
                         </InputWrapper>
                         {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                     </> : <>
