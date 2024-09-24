@@ -881,7 +881,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                     </> : <>
                         <GamePassWrapper style={{maxWidth: "100%", boxSizing: "border-box"}}>
-                            <GamePassTitle>Создайте новый GamePass с ценой {robuxesCount} 💸</GamePassTitle>
+                            <GamePassTitle>Создайте новый GamePass с ценой {robuxesCount * 1.3} (R$)</GamePassTitle>
 
                             <GamePassAttention>
                                 <strong style={{}}>Внимание </strong>
