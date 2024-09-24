@@ -760,7 +760,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                 setBotRobux(0)
             }
         })()
-    })
+    }, [])
 
     // useEffect hook to fetch games when the component mounts
     useEffect(() => {
