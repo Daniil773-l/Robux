@@ -726,17 +726,23 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         } 
         try {
             const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux/check`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
-            const data = await response.text();
+            
+            if (response.status === 402) { 
+                setError("Создайте геймпасс с указанным количеством робуксов")
+                return 
+            }
 
-            if (response.ok && Boolean(data)) {
+            const data = await response.text();
+            
+            if (data === "true") {
                 setChekcked(true)
                 console.log(data)
             } else { 
                 console.log(response)
-                setError("Не ожиданная ошибка, или неправильная ссылка")
+                setError("Создайте новый геймпасс, этот геймпасс был уже куплен ботом")
             }
         } catch (error) {
-            console.log(error)
+            console.error(error)
             setError('Неожиданная ошибка');
         }
     }
@@ -826,9 +832,16 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             robux_amount: parseInt(robuxesCount),
             paid_amount: parseInt(rublesToPay),
             roblox_username: loggedInUser.name, 
+            email: email, 
         } 
         try {
             const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
+            if (response.status === 409) { 
+                setError("Геймпасс уже куплен ботом")
+            }
+            if (response.status === 402) { 
+                setError("Создайте геймпасс с указанным количеством робуксов")
+            }
             const data = await response.json();
 
             if (response.ok && data) {
