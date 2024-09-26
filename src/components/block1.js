@@ -680,6 +680,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [games, setGames] = useState([]);
     const [email, setEmail] = useState('');
     const [botRobuxAmount, setBotRobux] = useState(0)
+    const [availabilityChecked, setChekcked] = useState(false)
 
     const handleUserCheck = async (nickname) => {
         if (nickname.length < 3) return; // Проверяем, что введено хотя бы 3 символа
@@ -707,11 +708,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         console.log('Creating GamePass...');
     };
 
-    const handleCheckStatus = () => {
-        // Functionality for checking GamePass status
-        console.log('Checking GamePass status...');
-    };
-
     const handleLogin = (user) => {
         setLoggedInUser(user);
         setShowLogin(false);
@@ -720,6 +716,30 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         // Сохраняем информацию о пользователе в localStorage
         localStorage.setItem('loggedInUser', JSON.stringify(user));
     };
+
+    const sendCheck = async () => { 
+        let payload = { 
+            game_id: parseInt(gameId),
+            robux_amount: parseInt(robuxesCount),
+            paid_amount: parseInt(rublesToPay),
+            roblox_username: loggedInUser.name, 
+        } 
+        try {
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux/check`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
+            const data = await response.text();
+
+            if (response.ok && Boolean(data)) {
+                setChekcked(true)
+                console.log(data)
+            } else { 
+                console.log(response)
+                setError("Не ожиданная ошибка, или неправильная ссылка")
+            }
+        } catch (error) {
+            console.log(error)
+            setError('Неожиданная ошибка');
+        }
+    }
 
     const fetchGames = async () => {
         if (loggedInUser === null || loggedInUser === undefined) {return}
@@ -964,7 +984,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
                             <GamePassButtonContainer>
                                 <ModalButton onClick={handleCreateGamePass}>Создать GamePass</ModalButton>
-                                <ModalButton style={{marginLeft: "100px"}} onClick={sendForm}>Отправить</ModalButton>
+                                {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck}>Проверить</ModalButton> :  
+                                    <ModalButton style={{marginLeft: "100px"}} onClick={sendForm}>Отправить</ModalButton> }
                             </GamePassButtonContainer>
                             {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                         </GamePassWrapper>
