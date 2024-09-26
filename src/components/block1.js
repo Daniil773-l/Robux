@@ -984,6 +984,20 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         {/*    <BuyButton onClick={() => setOpenBuyMenu(false)}>Назад</BuyButton>*/}
                         {/*    <StyledLabel htmlFor="robuxesCount"></StyledLabel>*/}
                         {/*</StepCaption>*/}
+                        <StepCaption style={{display: "flex", marginTop: 0}} onClick={() => {setGameId(null); setOpenBuyMenu(false)}}>
+                    
+                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>
+                                <g clip-path="url(#clip0_76_1619)">
+                                    <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_76_1619">
+                                        <rect width="21" height="21" fill="currentColor"></rect>
+                                    </clipPath>
+                                </defs>
+                            </svg>
+                            <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}}>Назад</BuyButton>
+                        </StepCaption>
                         <InputWrapper style={{marginTop: "20px"}}>
                             <ScrollWrapper style={{overflowY: "scroll", height: "50vh"}}>
                                 {games.map((game) => (
