@@ -769,8 +769,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
     useEffect(() => {
         console.log("multiplying robuxes to rubles")
-        if (parseInt(robuxesCount) >= 210 && !(rublesToPay === "" || rublesToPay === 0 || rublesToPay === undefined || rublesToPay === null || rublesToPay === "0") ) {
-        setRublesToPay(String((robuxesCount * courseRobuxToRubles).toFixed(1)))
+        if (parseInt(robuxesCount) >= 210) {
+            setRublesToPay(String((robuxesCount * courseRobuxToRubles).toFixed(1)))
         } else {
             setRublesToPay("")
         }
@@ -927,7 +927,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                     </> : <>
                         <GamePassWrapper style={{maxWidth: "100%", boxSizing: "border-box"}}>
-                            <GamePassTitle>Создайте новый GamePass с ценой {Math.round(robuxesCount * 1.3)} (R$)</GamePassTitle>
+                            <GamePassTitle>Создайте новый GamePass с ценой {Math.round(robuxesCount * 1.439)} (R$)</GamePassTitle>
 
                             <GamePassAttention>
                                 <strong style={{}}>Внимание </strong>
