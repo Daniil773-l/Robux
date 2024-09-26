@@ -104,9 +104,6 @@ const Footer = () => {
                             <LogoImage src={Photo} alt="Robux.io" />
                         </Logo>
                         <CompanyDetails>
-                            ИП Пугачев Данил Сергеевич<br />
-                            ИНН 482308221255<br />
-                            ОГРН 324480000026066<br />
                             EMAIL robuxiosup@gmail.com<br />
                             <br/>
                             ©2024 Robux.io

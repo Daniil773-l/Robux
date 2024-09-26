@@ -268,7 +268,7 @@ const PricingArea = styled.div`
 `;
 
 const StepCaption = styled.div`
-    ${tw`mt-3 text-white flex justify-between items-center`}
+    ${tw`mt-3 text-white flex items-center`}
     font-size: 1.1em;
 
     @media (max-width: 768px) {
@@ -418,11 +418,6 @@ const BuyButton = styled.button`
     &:hover { 
         background: linear-gradient(75.7deg, rgb(45, 140, 50) 3.8%, rgb(110, 172, 27) 87.1%);
     }
-
-    @media (max-width: 768px) {
-        padding: 12px;
-        font-size: 14px;
-    }
 `;
 
 const StyledPlace = styled.div`
@@ -568,7 +563,27 @@ const ModalButton = styled.button`
     &:hover {
         opacity: 0.9;
     }
+    &[disabled]:hover {
+        opacity: 0.3;
+    }
+    &[disabled] { 
+        opacity: 0.3; 
+    }
 `;
+
+const ModalLink = styled.a`
+    ${tw`w-full py-4 rounded-lg mt-5 font-bold border-none cursor-pointer`}
+    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    color: #fff;
+    font-size: 16px;
+    opacity: 0.5;
+    text-decoration: none; 
+    text-align: center; 
+    &:hover {
+        opacity: 0.9;
+    }
+`;
+
 const UserCardContainer = styled.div`
     ${tw`flex flex-wrap justify-center mt-4`};
     max-height: 300px; /* Ограничиваем высоту контейнера карточек */
@@ -680,7 +695,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [games, setGames] = useState([]);
     const [email, setEmail] = useState('');
     const [botRobuxAmount, setBotRobux] = useState(0)
-    const [availabilityChecked, setChekcked] = useState(false)
+    const [availabilityChecked, setChekcked] = useState(false); 
+    const [agreement, setAgreement] = useState(false); 
 
     const handleUserCheck = async (nickname) => {
         if (nickname.length < 3) return; // Проверяем, что введено хотя бы 3 символа
@@ -703,11 +719,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         }
     };
 
-    const handleCreateGamePass = () => {
-        // Functionality for creating GamePass
-        console.log('Creating GamePass...');
-    };
-
     const handleLogin = (user) => {
         setLoggedInUser(user);
         setShowLogin(false);
@@ -718,6 +729,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     };
 
     const sendCheck = async () => { 
+        setIsLoading(true)
         let payload = { 
             game_id: parseInt(gameId),
             robux_amount: parseInt(robuxesCount),
@@ -744,6 +756,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         } catch (error) {
             console.error(error)
             setError('Неожиданная ошибка');
+        } finally { 
+            setIsLoading(false)
         }
     }
 
@@ -827,6 +841,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     };
 
     const sendForm = async () => { 
+        setIsLoading(true)
         let payload = { 
             game_id: parseInt(gameId),
             robux_amount: parseInt(robuxesCount),
@@ -838,9 +853,15 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
             if (response.status === 409) { 
                 setError("Геймпасс уже куплен ботом")
+                return
             }
             if (response.status === 402) { 
                 setError("Создайте геймпасс с указанным количеством робуксов")
+                return
+            }
+            if (response.status === 429) { 
+                setError("Остынь, слишком много запросов")
+                return
             }
             const data = await response.json();
 
@@ -854,6 +875,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         } catch (error) {
             console.log(error)
             setError('Неожиданная ошибка');
+        } finally { 
+            setIsLoading(false)
         }
     }
 
@@ -900,15 +923,29 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                     </InputWrapper>
                 </InputBlock>
                 <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
-                <BuyButton onClick={() => setOpenBuyMenu(true)}>Купить</BuyButton>
+                <BuyButton onClick={() => {
+                    if (robuxesCount !== '' && rublesToPay !== '') {  
+                        setOpenBuyMenu(true)
+                    } 
+                }}>Купить</BuyButton>
                 <PromoLink id="open-modal-btn">Использовать промокод</PromoLink>
             </BuyForm>
             </>
             : loggedInUser === null || loggedInUser === undefined ?
             <>
-                <StepCaption style={{display: "flex"}}>
-                    <BuyButton onClick={() => setOpenBuyMenu(false)}>Назад</BuyButton>
-                    <StyledLabel htmlFor="robuxesCount"></StyledLabel>
+                <StepCaption style={{display: "flex", marginTop: 0}} onClick={() => setOpenBuyMenu(false)}>
+                
+                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>
+                          <g clip-path="url(#clip0_76_1619)">
+                              <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>
+                          </g>
+                          <defs>
+                              <clipPath id="clip0_76_1619">
+                                  <rect width="21" height="21" fill="currentColor"></rect>
+                              </clipPath>
+                          </defs>
+                      </svg>
+                    <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}} >Назад</BuyButton>
                 </StepCaption>
                 <InputWrapper style={{marginTop: "20px"}}>
                         <StyledInput
@@ -960,6 +997,21 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                     </> : <>
                         <GamePassWrapper style={{maxWidth: "100%", boxSizing: "border-box"}}>
+                            <StepCaption style={{display: "flex", marginTop: 0}} onClick={() => setGameId(null)}>
+                    
+                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>
+                                    <g clip-path="url(#clip0_76_1619)">
+                                        <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_76_1619">
+                                            <rect width="21" height="21" fill="currentColor"></rect>
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                                <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}}>Назад</BuyButton>
+                            </StepCaption>
+
                             <GamePassTitle>Создайте новый GamePass с ценой {Math.round(robuxesCount * 1.429)} (R$)</GamePassTitle>
 
                             <GamePassAttention>
@@ -987,7 +1039,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             </div>
 
                             <GamePassCheckboxContainer style={{display: "flex"}}>
-                                <input type="checkbox" id="agreement" />
+                                <input type="checkbox" id="agreement" onChange={() => setAgreement(!agreement)}/>
                                 <GamePassLabel htmlFor="agreement" style={{marginLeft: "10px"}}>
                                     Согласен с{' '}
                                     <GamePassLink href="/PrivacyPage">Публичной офертой</GamePassLink> и{' '}
@@ -996,9 +1048,9 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             </GamePassCheckboxContainer>
 
                             <GamePassButtonContainer>
-                                <ModalButton onClick={handleCreateGamePass}>Создать GamePass</ModalButton>
-                                {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck}>Проверить</ModalButton> :  
-                                    <ModalButton style={{marginLeft: "100px"}} onClick={sendForm}>Отправить</ModalButton> }
+                                <ModalLink href={`https://create.roblox.com/dashboard/creations/experiences/${gameId}/associated-items?activeTab=Pass`}>Создать GamePass</ModalLink>
+                                {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck} disabled={isLoading}>Проверить</ModalButton> :  
+                                    <ModalButton style={{marginLeft: "100px"}} onClick={sendForm} disabled={isLoading}>Отправить</ModalButton> }
                             </GamePassButtonContainer>
                             {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                         </GamePassWrapper>
