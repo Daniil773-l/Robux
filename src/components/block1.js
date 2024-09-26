@@ -884,7 +884,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         <>
             {!buyMenu ? 
             <>
-            <StepCaption>
+            <StepCaption style={{justifyContent: "space-between"}}>
                 <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#77D241' }}>(R$)</span></StyledLabel>
                 <AvailabilityText id="instockGamePass">
                     В наличии {botRobuxAmount}
