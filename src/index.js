@@ -24,6 +24,7 @@ const RootApp = () => {
                 <Route path="/BonusPage" element={<BonusPage />} />
                 <Route path="/PrivacyPage" element={<PrivacyPage/>} />
                 <Route path="/AgreementPage" element={<AgreementPage/>} />
+                <Route path="/SwitcherBot" element={<SwitcherBot />}/>
             </Routes>
         </Router>
     )

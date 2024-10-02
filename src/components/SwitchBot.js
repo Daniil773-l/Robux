@@ -26,10 +26,7 @@ const SwitcherContainer = styled.div`
 
     &::-webkit-scrollbar-track {
         background-color: transparent;
-    }
-    
-       
-    
+    }    
 `
 
 const SwitcherBot = ({loggedInUser, setLoggedInUser}) => {
@@ -39,3 +36,5 @@ const SwitcherBot = ({loggedInUser, setLoggedInUser}) => {
         </SwitcherContainer>
     )
 }
+
+export default SwitcherBot; 
