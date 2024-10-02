@@ -9,6 +9,7 @@ import BonusPage from "./BonusPage";
 import PrivacyPage from "./PrivacyPage";
 import AgreementPage from "./AgreementPage";
 import Stats from "./components/Stats";
+import SwitcherBot from "./components/SwitchBot";
 
 const RootApp = () => {
 
