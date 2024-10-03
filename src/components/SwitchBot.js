@@ -227,7 +227,7 @@ const SwitcherBot = () => {
                         'Content-Type': 'application/json',
                         'token': authToken
                     },
-                    body: JSON.stringify({ roblox_name: bot.roblox_name, token: editValue }),
+                    body: JSON.stringify({ id: bot.id, roblox_name: bot.roblox_name, token: editValue }),
                 });
                 if (response.ok) {
                     setItems(updatedItems);
