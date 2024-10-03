@@ -233,7 +233,7 @@ const BonusCard = ({ loggedInUser }) => {
                     }
                     
                     const data = await response.json();
-                    setBonusBalance(data.bonus_balance || 0); // Set the bonus balance from response
+                    setBonusBalance(data.bonus || 0); // Set the bonus balance from response
                 } catch (error) {
                     console.error('Error fetching bonuses:', error);
                     setError('Не удалось загрузить бонусный баланс. Попробуйте позже.'); // User-friendly error message
