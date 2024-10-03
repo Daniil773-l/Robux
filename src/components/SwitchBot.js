@@ -158,7 +158,8 @@ const SwitcherBot = () => {
                     }),
                 });
                 if (response.ok) {
-                    setItems([...items, { nickname }]); // Не добавляем токен в список
+                    let data = await response.json()
+                    setItems([...items, { roblox_name: nickname, id: data.id, is_active: data.is_active }]); // Не добавляем токен в список
                     setNickname('');
                     setToken('');
                 } else {
@@ -226,7 +227,7 @@ const SwitcherBot = () => {
                         'Content-Type': 'application/json',
                         'token': authToken
                     },
-                    body: JSON.stringify({ nickname: bot.nickname, token: editValue }),
+                    body: JSON.stringify({ roblox_name: bot.roblox_name, token: editValue }),
                 });
                 if (response.ok) {
                     setItems(updatedItems);
