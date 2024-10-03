@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import RobuxIcon from '../assets/img/RobuxWhite.svg';
@@ -6,6 +6,7 @@ import SmallRobux from '../assets/img/SmallWhiteRobux.svg';
 import { FaVk, FaTelegramPlane } from 'react-icons/fa';
 import RegSign from '../assets/img/RedSign.svg';
 import ArrowUp from '../assets/img/ArrowUp.svg';
+import { useNavigate } from 'react-router-dom';
 
 const gradientPurple = 'conic-gradient(from -125deg at 50% 50%, #5c76eb 0deg, #9465ca 65deg, #6f65ca 100deg, #5c76eb 360deg)';
 
@@ -109,6 +110,11 @@ const WithdrawButton = styled.button`
     background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
     border: none;
     border-radius: 12px;
+    cursor: pointer; 
+
+    &:hover {   
+        background: linear-gradient(75.7deg, rgb(25, 118, 24) 3.8%, rgb(80, 150, 10) 87.1%);
+    }
 `;
 
 const RightSection = styled.div`
@@ -178,10 +184,15 @@ const SocialButtonContainer = styled.div`
     padding: 8px 12px;
     height: 35px;
     width: 240px; /* Fixed width */
+    cursor: pointer; 
 
     @media (max-width: 768px) {
         width: 90%; /* Full width on mobile */
         
+    }
+
+    &:hover { 
+        background-color: #039752;
     }
 `;
 
@@ -204,7 +215,44 @@ const RedSignImage = styled.img`
     height: 24px;
 `;
 
-const BonusCard = () => {
+const BonusCard = ({ loggedInUser }) => {
+    const navigate = useNavigate(); // For navigation
+    const [bonusBalance, setBonusBalance] = useState(0);
+
+    useEffect(() => {
+        if (loggedInUser) {
+            fetch(`${window.env.BACKEND_HOST}/api/bonuses/${loggedInUser.name}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Assuming data contains the bonus balance
+                    setBonusBalance(data.bonus_balance || 0); // Update bonus balance state
+                })
+                .catch(error => console.error('Error fetching bonuses:', error));
+        }
+    }, [loggedInUser]);
+
+    const handleWithdraw = () => {
+        if (loggedInUser) {
+            fetch(`${window.env.BACKEND_HOST}/api/activate_bonus_withdraw`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ roblox_name: loggedInUser.name }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.withdraw_id) {
+                    localStorage.setItem('withdraw_id', data.withdraw_id); // Save withdraw_id to localStorage
+                    navigate(`/home?withdraw_id=${data.withdraw_id}`); // Redirect to home with withdraw_id in query
+                }
+            })
+            .catch(error => console.error('Error during withdrawal request:', error));
+        }
+    };
+
+
+
     return (
         <CardContainer>
             {/* Элемент тени */}
@@ -223,18 +271,22 @@ const BonusCard = () => {
                 </AvailableText>
                 <BalanceBlock>
                     <BalanceAmount>
-                        0
+                        {bonusBalance}
                         <SmallRobuxImage src={SmallRobux} alt="Small Robux Icon" />
                     </BalanceAmount>
-                    <WithdrawButton>Вывести</WithdrawButton>
+                    <WithdrawButton onClick={handleWithdraw} >Вывести</WithdrawButton>
                 </BalanceBlock>
             </LeftSection>
 
             <RightSection>
                 <PromoCodeTitle>Промокод:</PromoCodeTitle>
                 <PromoCodeText>
-                    Авторизуйтесь
-                    <RedSignImage src={RegSign} alt="Red Sign" />
+                    {loggedInUser === null ? 
+                    <>
+                        Авторизуйтесь
+                        <RedSignImage src={RegSign} alt="Red Sign" />
+                    </>
+                    : loggedInUser.name }
                 </PromoCodeText>
                 <PromoDescription>
                     Друзья, не использовавшие твой промокод при первой покупке, не будут засчитаны системой

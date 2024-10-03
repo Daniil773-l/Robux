@@ -22,7 +22,7 @@ const RootApp = () => {
             <Routes>
                 <Route path="/" element={<App loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser}/>} />
                 <Route path="/faq" element={<FAQ />} />
-                <Route path="/BonusPage" element={<BonusPage />} />
+                <Route path="/BonusPage" element={<BonusPage loggedInUser={loggedInUser}/>} />
                 <Route path="/PrivacyPage" element={<PrivacyPage/>} />
                 <Route path="/AgreementPage" element={<AgreementPage/>} />
                 <Route path="/SwitcherBot" element={<SwitcherBot />}/>

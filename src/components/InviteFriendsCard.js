@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 import Hat from '../assets/img/Hat.svg';
 import HeadPhones from '../assets/img/HeadPhones.svg';
 import ArrowUp from '../assets/img/ArrowUp.svg';
 import RobuxIcon from '../assets/img/RobuxWhite.svg';
+import BonusType from './BonusTypes'; // Assuming you have an enum defined elsewhere
+import { useNavigate } from 'react-router-dom';
+
 
 const CardContainer = styled.div`
     ${tw`bg-[#015c2b] p-8 rounded-lg shadow-lg flex flex-col`};
     max-width: 1070px;
-    width: 100%;
+    width: 100%; 
     border-radius: 24px;
     z-index: 1;
     margin: 0 auto;
@@ -232,25 +235,57 @@ const LeaveButton = styled.a`
     background: rgb(154 168 229 / 10%);
     display: inline-block;
     text-align: center;
+    cursor: pointer; 
 
     @media (max-width: 768px) {
         font-size: 14px;
         width: 100%;
     }
+
+    
 `;
 
-const InviteFriendsCard = () => {
+const InviteFriendsCard = ({ loggedInUser }) => {
+    const [linksClicked, setLinksClicked] = useState({})
+    const history = useNavigate(); // For navigation
+
+    const handleLinkClick = (task) => {
+        let value = { ...linksClicked }
+        value[task.type] = true 
+        setLinksClicked(value)
+        history(task.link)
+    };
+
+    const handleLeaveFeedback = (taskType) => {
+        fetch(`${window.env.BACKEND_HOST}/api/activate_bonus_withdrawl`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ roblox_name: loggedInUser.name, type: taskType }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.withdraw_id) {
+                    localStorage.setItem('withdraw_id', data.withdraw_id);
+                    history(`/home?withdraw_id=${data.withdraw_id}`);
+                }
+            })
+            .catch(error => console.error('Error sending feedback:', error));
+    };
+
     return (
         <CardContainer>
             <Title>Приглашай друзей</Title>
             <WhiteText>Получай награды, а они получат бонус к первой покупке.</WhiteText>
+            {loggedInUser && <WhiteText>Добро пожаловать, {loggedInUser.name}!</WhiteText>}
 
             <TaskContainer>
                 <div>
                     <WhiteText>Ты получишь</WhiteText>
                     <BonusCard1>
                         <BonusText1>+20 <img src={RobuxIcon} alt="Robux Icon" /></BonusText1>
-                        <BonusLink href="#">
+                        <BonusLink href="#" onClick={handleLinkClick}>
                             С первой покупки друга
                             <img src={Hat} alt="Hat Icon" width={24} height={24} />
                         </BonusLink>
@@ -260,7 +295,7 @@ const InviteFriendsCard = () => {
                     <WhiteText>Друг получит</WhiteText>
                     <BonusCard2>
                         <BonusText2>+1% <img src={RobuxIcon} alt="Robux Icon" /></BonusText2>
-                        <BonusLink href="#">
+                        <BonusLink href="#" onClick={handleLinkClick}>
                             К первой покупке
                             <img src={HeadPhones} alt="HeadPhones Icon" width={24} height={24} />
                         </BonusLink>
@@ -272,45 +307,21 @@ const InviteFriendsCard = () => {
             <WhiteText>Бесплатные робуксы за задания</WhiteText>
 
             <TaskContainer>
-                <TaskCard>
-                    <GrayText>Подпишись на</GrayText>
-                    <TaskLink href="#">Telegram канал <img src={ArrowUp} alt="Arrow Up" width={12} height={12} /></TaskLink>
-                    <RobuxPoints>+5 <img src={RobuxIcon} alt="Robux Icon" /></RobuxPoints>
-                    <LeaveButton href="#">Оставил</LeaveButton>
-                </TaskCard>
-                <TaskCard>
-                    <GrayText>Подпишись на</GrayText>
-                    <TaskLink href="#">Группу ВК <img src={ArrowUp} alt="Arrow Up" width={12} height={12} /></TaskLink>
-                    <RobuxPoints>+5 <img src={RobuxIcon} alt="Robux Icon" /></RobuxPoints>
-                    <LeaveButton href="#">Оставил</LeaveButton>
-                </TaskCard>
-                <TaskCard>
-                    <GrayText>Присоединись к</GrayText>
-                    <TaskLink href="#">Discord серверу <img src={ArrowUp} alt="Arrow Up" width={12} height={12} /></TaskLink>
-                    <RobuxPoints>+5 <img src={RobuxIcon} alt="Robux Icon" /></RobuxPoints>
-                    <LeaveButton href="#">Оставил</LeaveButton>
-                </TaskCard>
-            </TaskContainer>
-
-            <TaskContainer>
-                <TaskCard>
-                    <GrayText>Оставь отзыв на</GrayText>
-                    <TaskLink href="#">TrustPilot <img src={ArrowUp} alt="Arrow Up" width={12} height={12} /></TaskLink>
-                    <RobuxPoints>+10 <img src={RobuxIcon} alt="Robux Icon" /></RobuxPoints>
-                    <LeaveButton href="#">Оставил</LeaveButton>
-                </TaskCard>
-                <TaskCard>
-                    <GrayText>Оставь отзыв на</GrayText>
-                    <TaskLink href="#">Отзывы ВК <img src={ArrowUp} alt="Arrow Up" width={12} height={12} /></TaskLink>
-                    <RobuxPoints>+5 <img src={RobuxIcon} alt="Robux Icon" /></RobuxPoints>
-                    <LeaveButton href="#">Оставил</LeaveButton>
-                </TaskCard>
-                <TaskCard>
-                    <GrayText>Оставь отзыв на</GrayText>
-                    <TaskLink href="#">Отзывы Discord <img src={ArrowUp} alt="Arrow Up" width={12} height={12} /></TaskLink>
-                    <RobuxPoints>+5 <img src={RobuxIcon} alt="Robux Icon" /></RobuxPoints>
-                    <LeaveButton href="#">Оставил</LeaveButton>
-                </TaskCard>
+                {[
+                    { type: BonusType.telegram, label: 'Telegram канал', points: 5, link: "https://web.telegram.org" },
+                    { type: BonusType.vk, label: 'Группу ВК', points: 5, link: "https://vk.com" },
+                    { type: BonusType.discord, label: 'Discord серверу', points: 5, link: "https://discord.com" },
+                    { type: BonusType.trust_pilot, label: 'TrustPilot', points: 10, link: "https://trust-pilot.com" },
+                    { type: BonusType.vk_reviews, label: 'Отзывы ВК', points: 5 , link: "https://vk-reviews.com"},
+                    { type: BonusType.ds_review, label: 'Отзывы Discord', points: 5, link: "https://discord.com" }
+                ].map((task, index) => (
+                    <TaskCard key={index}>
+                        <GrayText>Подпишись на</GrayText>
+                        <TaskLink href={task.link} onClick={() => handleLinkClick(task)}>{task.label} <img src={ArrowUp} alt="Arrow Up" width={12} height={12} target="_blank"/></TaskLink>
+                        <RobuxPoints>+{task.points} <img src={RobuxIcon} alt="Robux Icon" /></RobuxPoints>
+                        {linksClicked[task.type] ? <LeaveButton onClick={() => handleLeaveFeedback(task.type)}>Оставил</LeaveButton> : <LeaveButton style={{backgroundColor: "rgb(95, 102, 135, 0.3)", cursor: "auto"}}>Оставил</LeaveButton> }
+                    </TaskCard>
+                ))}
             </TaskContainer>
         </CardContainer>
     );

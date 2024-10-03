@@ -41,7 +41,7 @@ const Sphere4 = styled.img`
     position: absolute;
 `;
 
-const BonusPage = () => {
+const BonusPage = ({loggedInUser}) => {
     return (
         <AppContainer>
             <Sphere src={HalfSphere} alt="Floating Sphere" />
@@ -49,8 +49,8 @@ const BonusPage = () => {
             <Sphere3 src={TiniestSphere} alt="Floating Sphere" />
             <Sphere4 src={Pzdz} alt="Floating Sphere" />
 
-            <BonusCard/>
-            <Invite/>
+            <BonusCard loggedInUser={loggedInUser}/>
+            <Invite loggedInUser={loggedInUser}/>
             <VideoPromoCard/>
             <Footer/>
         </AppContainer>
