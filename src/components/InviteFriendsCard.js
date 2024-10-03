@@ -245,8 +245,7 @@ const LeaveButton = styled.a`
 `;
 
 const InviteFriendsCard = ({ loggedInUser }) => {
-    const [linksClicked, setLinksClicked] = useState({})
-    const [error, setError] = useState(null);
+    const [linksClicked, setLinksClicked] = useState({});
     const [taskCompletion, setTaskCompletion] = useState({
         telegram: false,
         vk: false,
@@ -255,12 +254,52 @@ const InviteFriendsCard = ({ loggedInUser }) => {
         vk_reviews: false,
         ds_review: false
     });
+    const [bonusBalance, setBonusBalance] = useState(0); // To hold the bonus balance
+    const [error, setError] = useState(null); 
 
     const handleLinkClick = (task) => {
-        let value = { ...linksClicked }
-        value[task.type] = true 
-        setLinksClicked(value)
+        setLinksClicked(prevState => ({
+            ...prevState,
+            [task.type]: true
+        }));
     };
+
+    // Fetch bonuses on page load
+    useEffect(() => {
+        const fetchBonuses = async () => {
+            if (loggedInUser) {
+                try {
+                    const response = await fetch(`${window.env.BACKEND_HOST}/api/bonuses/${loggedInUser.name}`);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch bonuses: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    setBonusBalance(data.bonus || 0); // Update bonus balance
+
+                    // Parse completed tasks (stringified JSON array)
+                    const completedTasks = JSON.parse(data.completed_tasks);
+
+                    // Update task completion state based on the completed tasks
+                    setTaskCompletion({
+                        telegram: completedTasks.includes('tg'), // assuming "tg" is the key for Telegram
+                        vk: completedTasks.includes('vk'),
+                        discord: completedTasks.includes('ds'),
+                        trust_pilot: completedTasks.includes('review'),
+                        vk_reviews: completedTasks.includes('vk_reviews'),
+                        ds_review: completedTasks.includes('ds_reviews')
+                    });
+
+                } catch (error) {
+                    console.error('Error fetching bonuses:', error);
+                    setError('Не удалось загрузить бонусный баланс. Попробуйте позже.');
+                }
+            }
+        };
+
+        fetchBonuses();
+    }, [loggedInUser]);
 
     const handleTaskCompletion = async (bonusType) => {
         if (loggedInUser) {
@@ -322,12 +361,12 @@ const InviteFriendsCard = ({ loggedInUser }) => {
 
             <TaskContainer>
                 {[
-                    { type: BonusType.TELEGRAM, label: 'Telegram канал', points: 5, link: "https://web.telegram.org" },
-                    { type: BonusType.VK, label: 'Группу ВК', points: 5, link: "https://vk.com" },
-                    { type: BonusType.DISCORD, label: 'Discord серверу', points: 5, link: "https://discord.com" },
-                    { type: BonusType.TRUST_PILOT, label: 'TrustPilot', points: 10, link: "https://trust-pilot.com" },
-                    { type: BonusType.VK_REVIEWS, label: 'Отзывы ВК', points: 5 , link: "https://vk-reviews.com"},
-                    { type: BonusType.DS_REVIEWS, label: 'Отзывы Discord', points: 5, link: "https://discord.com" }
+                    { type: 'telegram', label: 'Telegram канал', points: 5, link: "https://web.telegram.org" },
+                    { type: 'vk', label: 'Группу ВК', points: 5, link: "https://vk.com" },
+                    { type: 'discord', label: 'Discord серверу', points: 5, link: "https://discord.com" },
+                    { type: 'trust_pilot', label: 'TrustPilot', points: 10, link: "https://trust-pilot.com" },
+                    { type: 'vk_reviews', label: 'Отзывы ВК', points: 5 , link: "https://vk-reviews.com" },
+                    { type: 'ds_review', label: 'Отзывы Discord', points: 5, link: "https://discord.com" }
                 ].map((task, index) => (
                     <TaskCard key={index}>
                         <GrayText>Подпишись на</GrayText>
@@ -337,13 +376,21 @@ const InviteFriendsCard = ({ loggedInUser }) => {
                             target="_blank"
                         >
                             {task.label}
-                            <img src={ArrowUp} alt="Arrow Up" width={12} height={12}/>
+                            <img src={ArrowUp} alt="Arrow Up" width={12} height={12} />
                         </TaskLink>
                         <RobuxPoints>+{task.points} <img src={RobuxIcon} alt="Robux Icon" /></RobuxPoints>
-                        {linksClicked[task.type] ? <LeaveButton onClick={() => handleTaskCompletion(task.type)}>Оставил</LeaveButton> : <LeaveButton style={{backgroundColor: "rgb(95, 102, 135, 0.3)", cursor: "auto"}}>Оставил</LeaveButton> }
+                        {taskCompletion[task.type] ? (
+                            <LeaveButton disabled>Выполнено</LeaveButton>
+                        ) : linksClicked[task.type] ? (
+                            <LeaveButton onClick={() => handleTaskCompletion(task.type)}>Оставил</LeaveButton>
+                        ) : (
+                            <LeaveButton style={{ backgroundColor: "rgba(95, 102, 135, 0.3)", cursor: "auto" }}>Оставил</LeaveButton>
+                        )}
                     </TaskCard>
                 ))}
             </TaskContainer>
+
+            {error && <p>{error}</p>}
         </CardContainer>
     );
 };
