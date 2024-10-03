@@ -217,41 +217,62 @@ const RedSignImage = styled.img`
 
 const BonusCard = ({ loggedInUser }) => {
     const navigate = useNavigate(); // For navigation
+    const [error, setError] = useState(null);
     const [bonusBalance, setBonusBalance] = useState(0);
 
+    // 3. Fetch bonuses on page load
     useEffect(() => {
-        if (loggedInUser) {
-            fetch(`${window.env.BACKEND_HOST}/api/bonuses/${loggedInUser.name}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Assuming data contains the bonus balance
-                    setBonusBalance(data.bonus_balance || 0); // Update bonus balance state
-                })
-                .catch(error => console.error('Error fetching bonuses:', error));
-        }
+        const fetchBonuses = async () => {
+            if (loggedInUser) {
+                try {
+                    const response = await fetch(`${window.env.BACKEND_HOST}/api/bonuses/${loggedInUser.name}`);
+                    
+                    // Check if response is OK
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch bonuses: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    setBonusBalance(data.bonus_balance || 0); // Set the bonus balance from response
+                } catch (error) {
+                    console.error('Error fetching bonuses:', error);
+                    setError('Не удалось загрузить бонусный баланс. Попробуйте позже.'); // User-friendly error message
+                }
+            }
+        };
+
+        fetchBonuses();
     }, [loggedInUser]);
 
-    const handleWithdraw = () => {
+    // 6. Handle withdraw request
+    const handleWithdraw = async () => {
         if (loggedInUser) {
-            fetch(`${window.env.BACKEND_HOST}/api/activate_bonus_withdraw`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ roblox_name: loggedInUser.name }),
-            })
-            .then(response => response.json())
-            .then(data => {
+            try {
+                const response = await fetch(`${window.env.BACKEND_HOST}/api/activate_bonus_withdrawl`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ roblox_name: loggedInUser.name }),
+                });
+
+                // Check if response is OK
+                if (!response.ok) {
+                    throw new Error(`Withdraw request failed: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+
                 if (data.withdraw_id) {
                     localStorage.setItem('withdraw_id', data.withdraw_id); // Save withdraw_id to localStorage
                     navigate(`/home?withdraw_id=${data.withdraw_id}`); // Redirect to home with withdraw_id in query
                 }
-            })
-            .catch(error => console.error('Error during withdrawal request:', error));
+            } catch (error) {
+                console.error('Error during withdrawal request:', error);
+                setError('Не удалось выполнить вывод средств. Попробуйте позже.'); // User-friendly error message
+            }
         }
     };
-
-
 
     return (
         <CardContainer>
