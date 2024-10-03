@@ -697,6 +697,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [botRobuxAmount, setBotRobux] = useState(0)
     const [availabilityChecked, setChekcked] = useState(false); 
     const [agreement, setAgreement] = useState(false); 
+    const [course, setCourse] = useState(courseRobuxToRubles)
 
     const handleUserCheck = async (nickname) => {
         if (nickname.length < 3) return; // Проверяем, что введено хотя бы 3 символа
@@ -793,8 +794,9 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                     setBotRobux(0)
                 }
                 
-                let data = await response.text()
-                setBotRobux(parseInt(data))
+                let data = await response.json()    
+                setCourse(data['course'])
+                setBotRobux(data['instock'])
             } catch (err) { 
                 console.error(err)
                 setBotRobux(0)
@@ -810,7 +812,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     useEffect(() => {
         console.log("multiplying robuxes to rubles")
         if (parseInt(robuxesCount) >= 210) {
-            setRublesToPay(String((robuxesCount * courseRobuxToRubles).toFixed(1)))
+            setRublesToPay(String((robuxesCount * course).toFixed(1)))
         } else {
             setRublesToPay("")
         }
@@ -1101,7 +1103,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                     <Subtitle>
                         <TitleLine>
                             <GreenText>по курсу</GreenText>
-                            <Word>{courseRobuxToRubles}</Word>
+                            <Word>{course}</Word>
                             <CurrencyIcon src={Robux} alt="Robux Icon" />
                         </TitleLine>
                     </Subtitle>
