@@ -788,7 +788,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     useEffect(() => { 
         (async () => {
             try { 
-                let response = await fetch(`${window.env.BACKEND_HOST}/api/robux_amount`, {method: "GET"})
+                let response = await fetch(`${window.env.BACKEND_HOST}/api/robux_amount_and_course`, {method: "GET"})
                 if (response.status !== 200) { 
                     setError("Получение робуксов не работает")
                     setBotRobux(0)
