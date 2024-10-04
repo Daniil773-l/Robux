@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './components/Stats';
 import BonusCard from './components/BalancePromoCard';
 import Invite from './components/InviteFriendsCard';
