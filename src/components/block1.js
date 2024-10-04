@@ -854,7 +854,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         let payload = { 
             game_id: parseInt(gameId),
             robux_amount: parseInt(robuxesCount),
-            paid_amount: parseInt(rublesToPay),
+            paid_amount: parseInt(rublesToPay) || 0,
             roblox_username: loggedInUser.name, 
             bonus_withdrawal_id: withdrawId,  
             bonus_username: promocode, 
@@ -1004,6 +1004,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             if (response.ok && data) {
                 setResult(data)
                 console.log(data)
+                setError("Успешно отправлен запрос о покупке")
             } else { 
                 console.log(response)
                 setError("Не ожиданная ошибка, или неправильная ссылка")
