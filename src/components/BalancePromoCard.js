@@ -246,7 +246,7 @@ const BonusCard = ({ loggedInUser }) => {
 
     // 6. Handle withdraw request
     const handleWithdraw = async () => {
-        if (bonusBalance <= 35) {
+        if (bonusBalance <= 50) {
             setError("Баланс должен быть больше 50")
             return
         }
@@ -269,7 +269,7 @@ const BonusCard = ({ loggedInUser }) => {
 
                 if (data.withdraw_id) {
                     localStorage.setItem('withdraw_id', data.withdraw_id); // Save withdraw_id to localStorage
-                    navigate(`/?withdraw_id=${data.withdraw_id}`, {replace: true, relative: 'path'}); // Redirect to home with withdraw_id in query
+                    navigate(`/`, {replace: true, relative: 'path', state: {withdrawId: data.withdraw_id, username: loggedInUser.name}}); // Redirect to home with withdraw_id in query
                 }
             } catch (error) {
                 console.error('Error during withdrawal request:', error);

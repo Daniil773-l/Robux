@@ -13,6 +13,7 @@ import Robuxmini from '../assets/img/ROBUXMINI.SVG';
 import ClockIcon from '../assets/img/clock.svg';
 import Star from '../assets/img/star.svg'
 import AtomicSpinner from "atomic-spinner";
+import { useLocation, useParams } from 'react-router-dom';
 // Define keyframes for the fade-in and move-up animation
 const fadeInUp = keyframes`
     0% {
@@ -674,10 +675,67 @@ const GamePassButtonContainer = styled.div`
   ${tw`flex justify-between`}
 `;
 
+const LoginModal = styled.div`
+    ${tw`fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50`}
+    display: ${({ $show }) => ($show ? 'flex' : 'none')};
+`;
+
+const ModalContent = styled.div`
+    ${tw`p-8 rounded-lg shadow-lg text-white relative`}
+    background:#015c2b;
+    border-radius: 24px;
+    width: 420px;
+    max-width: 100%;
+    //height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
+const CloseButton = styled.button`
+    ${tw`absolute top-3 right-3 text-white`}
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+`;
+
+const ModalTitle = styled.h2`
+    ${tw`text-lg font-semibold mb-4`}
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    margin-top: -12px;
+`;
+
+const LabelText = styled.p`
+    ${tw`text-sm mb-2`}
+    font-weight: 500;
+    color: #8990a9;
+`;
+
+const ModalInput = styled.input`
+    ${tw`w-full p-3 rounded-lg border-none mt-2 text-white`}
+    background-color: #038741 !important;
+    width: 95%;
+    font-size: 18px;
+    font-weight: 500;
+    height: 30px;
+    border: none;
+    border-radius: 12px;
+    filter: brightness(115%);
+    &::placeholder {
+        color: #6f7489;
+    }
+`;
+
 
 const courseRobuxToRubles = 0.7 
 
 const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
+
+
+    const [withdrawId, setWithdrawId] = useState(null)
     const [activeButton, setActiveButton] = useState('standard');
     const [rublesToPay, setRublesToPay] = useState('');
     const [robuxesCount, setRobuxesCount] = useState('');
@@ -697,7 +755,69 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [botRobuxAmount, setBotRobux] = useState(0)
     const [availabilityChecked, setChekcked] = useState(false); 
     const [agreement, setAgreement] = useState(false); 
+    const [promocodeMenu, setPromocodeMenu] = useState(false)
     const [course, setCourse] = useState(courseRobuxToRubles)
+    const [bonusBalance, setBonusBalance] = useState(0);
+    const [promocode, setPromocode] = useState('')
+    const [promocodeMsg, setPromocodeMsg] = useState(null)
+    let location = useLocation();
+    let state = location.state 
+
+    // 3. Fetch bonuses on page load
+    useEffect(() => {
+        const fetchBonuses = async () => {
+            
+            if (state === null) { 
+                return 
+            }
+            if (loggedInUser && state.withdrawId) {
+                try {
+                    console.log(state.withdrawId)
+                    const response = await fetch(`${window.env.BACKEND_HOST}/api/bonuses/${loggedInUser.name}`);
+                    
+                    // Check if response is OK
+                    if (!response.ok) {
+                        throw new Error(`Failed to fetch bonuses: ${response.status} ${response.statusText}`);
+                    }
+                    
+                    const data = await response.json();
+                    setBonusBalance(data.bonus || 0); // Set the bonus balance from response
+                    setOpenBuyMenu(true)
+                    setRobuxesCount(data.bonus)
+                    setRublesToPay(0)
+                    setWithdrawId(state.withdrawId)
+                } catch (error) {
+                    console.error('Error fetching bonuses:', error);
+                    setError('Не удалось загрузить бонусный баланс. Попробуйте позже.'); // User-friendly error message
+                }
+            }
+        };
+
+        fetchBonuses();
+    }, [loggedInUser]);
+
+
+    const handlePromocode = async () => {
+        if (loggedInUser) {
+            try {
+                const response = await fetch(`${window.env.BACKEND_HOST}/api/activate_coupon`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ 
+                    player_name: promocode, 
+                })});
+                
+                // Check if response is OK
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch promocodes: ${response.status} ${response.statusText}`);
+                }
+
+                setPromocodeMenu(false)
+                setPromocodeMsg('Промокод активирован успешно')
+            } catch (error) {
+                console.error('Error fetching bonuses:', error);
+                setError('Не удалось загрузить купон. Попробуйте позже.'); // User-friendly error message
+            }
+        }     
+    }
+
 
     const handleUserCheck = async (nickname) => {
         if (nickname.length < 3) return; // Проверяем, что введено хотя бы 3 символа
@@ -736,6 +856,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             robux_amount: parseInt(robuxesCount),
             paid_amount: parseInt(rublesToPay),
             roblox_username: loggedInUser.name, 
+            bonus_withdrawal_id: withdrawId,  
+            bonus_username: promocode, 
         } 
         try {
             const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux/check`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
@@ -842,6 +964,16 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         setIsExpanded(!isExpanded);
     };
 
+    const togglePromocodeMenu = () => {
+        setPromocodeMenu(!promocodeMenu);
+    };
+
+    const closeToggleMenu = (e) => {
+        if (e.target === e.currentTarget) {
+            togglePromocodeMenu();
+        }
+    };
+
     const sendForm = async () => { 
         setIsLoading(true)
         let payload = { 
@@ -850,6 +982,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             paid_amount: parseInt(rublesToPay),
             roblox_username: loggedInUser.name, 
             email: email, 
+            bonus_withdrawal_id: withdrawId,  
+            bonus_username: promocode, 
         } 
         try {
             const response = await fetch(`${window.env.BACKEND_HOST}/api/buy_robux`, {method: "POST", body: JSON.stringify(payload), headers: {"Content-Type": "application/json"}});
@@ -925,13 +1059,36 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                     </InputWrapper>
                 </InputBlock>
                 <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
+                {promocodeMsg !== null ? <MinRobuxText>{promocodeMsg}</MinRobuxText> : null }
                 <BuyButton onClick={() => {
-                    if (robuxesCount !== '' && rublesToPay !== '') {  
+                    if (robuxesCount !== '' && rublesToPay !== '' && parseInt(robuxesCount) >= 210) {  
                         setOpenBuyMenu(true)
                     } 
                 }}>Купить</BuyButton>
-                <PromoLink id="open-modal-btn">Использовать промокод</PromoLink>
+                <PromoLink id="open-modal-btn" onClick={() => setPromocodeMenu(true)}>Использовать промокод</PromoLink>
             </BuyForm>
+            <LoginModal $show={promocodeMenu} onClick={closeToggleMenu}>
+                <ModalContent>
+                    <CloseButton onClick={togglePromocodeMenu}>&times;</CloseButton>
+                    <ModalTitle>Активация промокода</ModalTitle>
+                    <LabelText>Введите промокод</LabelText>
+                    <ModalInput
+                        type="text"
+                        placeholder="Введите промокод"
+                        style={{color: "white"}}
+                        value={promocode}
+                        onChange={(e) => setPromocode(e.target.value)}
+                    />
+
+                    {isLoading && (
+                        <LoadingSpinner>
+                            <AtomicSpinner />
+                        </LoadingSpinner>
+                    )}
+                    {error && <ModalText>{error}</ModalText>}
+                    <ModalButton onClick={handlePromocode}>Активировать</ModalButton>
+                </ModalContent>
+            </LoginModal>
             </>
             : loggedInUser === null || loggedInUser === undefined ?
             <>
@@ -1069,6 +1226,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                     <ModalButton style={{marginLeft: "100px"}} onClick={sendForm} disabled={isLoading}>Отправить</ModalButton> }
                             </GamePassButtonContainer>
                             {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
+                            {bonusBalance !== 0 ? <MinRobuxText htmlFor="bonusBalanceInfo">Вы выводите бонусы с своего аккаунта!</MinRobuxText> : null}
                         </GamePassWrapper>
                     </>}
         </>
