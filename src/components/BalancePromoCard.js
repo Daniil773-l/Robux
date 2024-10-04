@@ -245,7 +245,7 @@ const BonusCard = ({ loggedInUser, bonusBalance, setBonusBalance }) => {
 
     // 6. Handle withdraw request
     const handleWithdraw = async () => {
-        if (bonusBalance <= 1) {
+        if (bonusBalance <= 50) {
             setError("Баланс должен быть больше 50")
             return
         }
