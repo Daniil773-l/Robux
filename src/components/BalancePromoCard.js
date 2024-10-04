@@ -246,9 +246,13 @@ const BonusCard = ({ loggedInUser }) => {
 
     // 6. Handle withdraw request
     const handleWithdraw = async () => {
+        if (bonusBalance <= 35) {
+            setError("Баланс должен быть больше 50")
+            return
+        }
         if (loggedInUser) {
             try {
-                const response = await fetch(`${window.env.BACKEND_HOST}/api/activate_bonus_withdrawl`, {
+                const response = await fetch(`${window.env.BACKEND_HOST}/api/activate_bonus_withdraw`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -265,7 +269,7 @@ const BonusCard = ({ loggedInUser }) => {
 
                 if (data.withdraw_id) {
                     localStorage.setItem('withdraw_id', data.withdraw_id); // Save withdraw_id to localStorage
-                    navigate(`/home?withdraw_id=${data.withdraw_id}`); // Redirect to home with withdraw_id in query
+                    navigate(`/?withdraw_id=${data.withdraw_id}`, {replace: true, relative: 'path'}); // Redirect to home with withdraw_id in query
                 }
             } catch (error) {
                 console.error('Error during withdrawal request:', error);
@@ -297,6 +301,7 @@ const BonusCard = ({ loggedInUser }) => {
                     </BalanceAmount>
                     <WithdrawButton onClick={handleWithdraw} >Вывести</WithdrawButton>
                 </BalanceBlock>
+                {error !== null ? <div style={{color: "white"}}>{error}</div> : null}
             </LeftSection>
 
             <RightSection>

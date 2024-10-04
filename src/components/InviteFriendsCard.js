@@ -247,12 +247,12 @@ const LeaveButton = styled.a`
 const InviteFriendsCard = ({ loggedInUser }) => {
     const [linksClicked, setLinksClicked] = useState({});
     const [taskCompletion, setTaskCompletion] = useState({
-        telegram: false,
+        tg: false,
         vk: false,
-        discord: false,
-        trust_pilot: false,
+        ds: false,
+        review: false,
         vk_reviews: false,
-        ds_review: false
+        ds_reviews: false
     });
     const [bonusBalance, setBonusBalance] = useState(0); // To hold the bonus balance
     const [error, setError] = useState(null); 
@@ -283,12 +283,12 @@ const InviteFriendsCard = ({ loggedInUser }) => {
 
                     // Update task completion state based on the completed tasks
                     setTaskCompletion({
-                        telegram: completedTasks.includes('tg'), // assuming "tg" is the key for Telegram
+                        tg: completedTasks.includes('tg'), // assuming "tg" is the key for Telegram
                         vk: completedTasks.includes('vk'),
-                        discord: completedTasks.includes('ds'),
-                        trust_pilot: completedTasks.includes('review'),
+                        ds: completedTasks.includes('ds'),
+                        review: completedTasks.includes('review'),
                         vk_reviews: completedTasks.includes('vk_reviews'),
-                        ds_review: completedTasks.includes('ds_reviews')
+                        ds_reviews: completedTasks.includes('ds_reviews')
                     });
 
                 } catch (error) {
@@ -317,9 +317,10 @@ const InviteFriendsCard = ({ loggedInUser }) => {
                 }
 
                 const data = await response.json();
-                if (data.success) {
-                    setTaskCompletion(prevState => ({ ...prevState, [bonusType]: true })); // Mark task as completed
-                }
+
+                let temp = { ...taskCompletion }
+                temp[bonusType] = true
+                setTaskCompletion(temp); // Mark task as completed
             } catch (error) {
                 console.error('Error completing task:', error);
                 setError('Не удалось выполнить задание. Попробуйте позже.');
@@ -361,12 +362,12 @@ const InviteFriendsCard = ({ loggedInUser }) => {
 
             <TaskContainer>
                 {[
-                    { type: 'telegram', label: 'Telegram канал', points: 5, link: "https://web.telegram.org" },
+                    { type: 'tg', label: 'Telegram канал', points: 5, link: "https://web.telegram.org" },
                     { type: 'vk', label: 'Группу ВК', points: 5, link: "https://vk.com" },
-                    { type: 'discord', label: 'Discord серверу', points: 5, link: "https://discord.com" },
-                    { type: 'trust_pilot', label: 'TrustPilot', points: 10, link: "https://trust-pilot.com" },
+                    { type: 'ds', label: 'Discord серверу', points: 5, link: "https://discord.com" },
+                    { type: 'review', label: 'TrustPilot', points: 10, link: "https://trust-pilot.com" },
                     { type: 'vk_reviews', label: 'Отзывы ВК', points: 5 , link: "https://vk-reviews.com" },
-                    { type: 'ds_review', label: 'Отзывы Discord', points: 5, link: "https://discord.com" }
+                    { type: 'ds_reviews', label: 'Отзывы Discord', points: 5, link: "https://discord.com" }
                 ].map((task, index) => (
                     <TaskCard key={index}>
                         <GrayText>Подпишись на</GrayText>
