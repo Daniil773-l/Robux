@@ -42,6 +42,8 @@ const Sphere4 = styled.img`
 `;
 
 const BonusPage = ({loggedInUser}) => {
+    
+    const [bonusBalance, setBonusBalance] = useState(0);
     return (
         <AppContainer>
             <Sphere src={HalfSphere} alt="Floating Sphere" />
@@ -49,8 +51,8 @@ const BonusPage = ({loggedInUser}) => {
             <Sphere3 src={TiniestSphere} alt="Floating Sphere" />
             <Sphere4 src={Pzdz} alt="Floating Sphere" />
 
-            <BonusCard loggedInUser={loggedInUser}/>
-            <Invite loggedInUser={loggedInUser}/>
+            <BonusCard loggedInUser={loggedInUser} bonusBalance={bonusBalance} setBonusBalance={setBonusBalance}/> 
+            <Invite loggedInUser={loggedInUser} bonusBalance={bonusBalance} setBonusBalance={setBonusBalance}/>
             <VideoPromoCard/>
             <Footer/>
         </AppContainer>

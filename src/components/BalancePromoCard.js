@@ -215,10 +215,9 @@ const RedSignImage = styled.img`
     height: 24px;
 `;
 
-const BonusCard = ({ loggedInUser }) => {
+const BonusCard = ({ loggedInUser, bonusBalance, setBonusBalance }) => {
     const navigate = useNavigate(); // For navigation
     const [error, setError] = useState(null);
-    const [bonusBalance, setBonusBalance] = useState(0);
 
     // 3. Fetch bonuses on page load
     useEffect(() => {

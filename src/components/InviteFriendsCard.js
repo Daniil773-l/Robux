@@ -244,7 +244,7 @@ const LeaveButton = styled.a`
     
 `;
 
-const InviteFriendsCard = ({ loggedInUser }) => {
+const InviteFriendsCard = ({ loggedInUser, bonusBalance, setBonusBalance}) => {
     const [linksClicked, setLinksClicked] = useState({});
     const [taskCompletion, setTaskCompletion] = useState({
         tg: false,
@@ -254,7 +254,6 @@ const InviteFriendsCard = ({ loggedInUser }) => {
         vk_reviews: false,
         ds_reviews: false
     });
-    const [bonusBalance, setBonusBalance] = useState(0); // To hold the bonus balance
     const [error, setError] = useState(null); 
 
     const handleLinkClick = (task) => {
