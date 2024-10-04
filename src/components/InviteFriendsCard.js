@@ -319,7 +319,7 @@ const InviteFriendsCard = ({ loggedInUser, bonusBalance, setBonusBalance}) => {
 
                 let temp = { ...taskCompletion }
                 temp[bonusType] = true
-                setBonusBalance(bonusBalance + task.points)
+                setBonusBalance(data['bonus'])
                 setTaskCompletion(temp); // Mark task as completed
             } catch (error) {
                 console.error('Error completing task:', error);
