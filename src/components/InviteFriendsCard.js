@@ -9,9 +9,9 @@ import BonusType from './BonusTypes'; // Assuming you have an enum defined elsew
 
 
 const CardContainer = styled.div`
-    ${tw`bg-[#015c2b] p-8 rounded-lg shadow-lg flex flex-col`};
+    ${tw`bg-[#151515] p-8 rounded-lg shadow-lg flex flex-col`}; // Change background color here
     max-width: 1070px;
-    width: 100%; 
+    width: 100%;
     border-radius: 24px;
     z-index: 1;
     margin: 0 auto;
@@ -75,7 +75,7 @@ const TaskContainer = styled.div`
 
 const TaskCard = styled.div`
     ${tw`p-4 flex flex-col justify-between`};
-    background-color:#015c2b;
+    background-color:#313131;
     width: 150px;
     color: rgb(131, 143, 149);
     font-family: Manrope;
@@ -90,7 +90,7 @@ const TaskCard = styled.div`
 
 const BonusCard1 = styled.div`
     ${tw`p-4 flex flex-col justify-between`};
-    background-color: #038741;
+    background-color: #313131;
     width: 200px;
     margin-top: 20px;
     height: 50px;
@@ -107,7 +107,7 @@ const BonusCard1 = styled.div`
 
 const BonusCard2 = styled.div`
     ${tw`p-4 flex flex-col justify-between`};
-    background-color: #038741;
+    background-color: #313131;
     width: 150px;
     height: 50px;
     margin-top: 20px;
@@ -189,7 +189,7 @@ const BonusLink = styled.a`
 const TaskLink = styled.a`
     ${tw`font-bold flex items-center justify-between mb-2`};
     font-family: Manrope;
-    color: #02e875;
+    color: white;
     text-decoration: none;
     font-weight: 600;
     font-size: 19px;
@@ -242,6 +242,17 @@ const LeaveButton = styled.a`
     }
 
     
+`;
+
+const ErrorMessage = styled.p`
+    color: #ff4d4d; /* Set the color to a shade of red */
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 10px;
+
+    @media (max-width: 768px) {
+        font-size: 14px; /* Adjust font size for mobile */
+    }
 `;
 
 const InviteFriendsCard = ({ loggedInUser, bonusBalance, setBonusBalance}) => {
@@ -391,7 +402,7 @@ const InviteFriendsCard = ({ loggedInUser, bonusBalance, setBonusBalance}) => {
                 ))}
             </TaskContainer>
 
-            {error && <p>{error}</p>}
+            {error && <ErrorMessage>{error}</ErrorMessage>}
         </CardContainer>
     );
 };

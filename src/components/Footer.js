@@ -6,30 +6,32 @@ import Photo from "../assets/img/logo.svg";
 
 const FooterContainer = styled.footer`
     ${tw`relative`}
-    padding: 48px 32px;
+    padding: 32px 24px; /* Чуть увеличены отступы */
     border-radius: 32px 32px 0 0;
-    background: #015c2b;
-    margin-top: 40px;
+    background: #151515;
+    margin-top: 30px; /* Чуть увеличен отступ сверху */
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    color: rgba(135, 146, 162, .9);
+    color: rgba(255, 255, 255, 0.9); /* Прозрачный белый цвет */
+    width: 100vw;
 `;
 
 const FooterContent = styled.div`
-    ${tw`flex justify-between w-full max-w-screen-lg`} /* Centers and limits the max width */
+    ${tw`flex justify-between w-full`}
     flex-wrap: wrap;
-    max-width: 1290px;
+    max-width: 1400px;
+    gap: 32px; /* Чуть увеличено расстояние между колонками */
 `;
 
 const Column = styled.div`
-    ${tw`flex flex-col mb-6`}
-    flex: ${({ small }) => (small ? '0 0 auto' : '1')}; /* Smaller sections take less space */
-    padding: 0 16px; /* Adds space between columns */
+    ${tw`flex flex-col mb-6`} /* Увеличен отступ снизу */
+    flex: ${({ small }) => (small ? '0 0 auto' : '1')};
+    padding: 0 20px; /* Чуть увеличены внутренние отступы */
 `;
 
 const LogoImage = styled.img`
-    ${tw`h-10`}
+    ${tw`h-10`} /* Чуть увеличен размер логотипа */
 `;
 
 const LogoSection = styled.div`
@@ -37,14 +39,15 @@ const LogoSection = styled.div`
 `;
 
 const Logo = styled.h2`
-    ${tw`text-xl font-bold text-white`}
+    ${tw`text-xl font-bold text-white`} /* Чуть увеличен размер текста */
     margin-bottom: 16px;
 `;
 
 const CompanyDetails = styled.div`
-    ${tw`text-sm`}
+    ${tw`text-sm`} /* Чуть увеличен размер текста */
     line-height: 1.5;
-    font-size: 18px; /* Increase font size */
+    font-size: 16px; /* Чуть увеличен размер шрифта */
+    color: rgba(255, 255, 255, 0.8);
 `;
 
 const LinksSection = styled.div`
@@ -52,19 +55,21 @@ const LinksSection = styled.div`
 `;
 
 const LinksTitle = styled.h3`
-    ${tw`text-lg font-semibold text-white`}
+    ${tw`text-base font-semibold text-white`} /* Увеличен размер заголовков */
     margin-bottom: 16px;
-    font-size: 20px; /* Increase font size */
+    font-size: 18px; /* Увеличен размер текста */
 `;
 
 const Link = styled.a`
-    ${tw`text-sm mb-2`}
-    color: rgba(135, 146, 162, .9);
+    ${tw`text-sm mb-2`} /* Чуть увеличен размер текста и отступы между ссылками */
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    line-height: 28px;
-    font-size: 18px; /* Increase font size */
+    white-space: nowrap; /* Отключение переноса текста */
+    line-height: 26px; /* Чуть увеличено расстояние между строками */
+    font-size: 16px; /* Чуть увеличен размер шрифта */
     &:hover {
         text-decoration: underline;
+        color: rgba(255, 255, 255, 1);
     }
 `;
 
@@ -73,25 +78,23 @@ const SocialMediaSection = styled.div`
 `;
 
 const IconLink = styled.a`
-    ${tw`text-xl mr-4 text-white`} /* Reduced size of icons */
-    
+    ${tw`text-2xl mr-4 text-white`} /* Размер иконок не изменён */
 `;
 
 const Divider = styled.div`
-    ${tw`w-full mt-6 mb-6`}
+    ${tw`w-full mt-6 mb-6`} /* Чуть увеличены отступы сверху и снизу */
     height: 1px;
-    background: rgba(135, 146, 162, .3); /* Light gray line */
-    max-width: 1260px; /* Limit the width to the content width */
-    margin: 0 auto; /* Center the divider */
-  
+    background: rgba(255, 255, 255, 0.3);
+    max-width: 1360px;
+    margin: 0 auto;
 `;
 
 const FooterBottomText = styled.div`
-    ${tw`w-full items-start mt-6 text-xs`}
+    ${tw`w-full items-start mt-6 text-sm`} /* Чуть увеличен размер текста */
     line-height: 1.5;
-    font-size: 16px; /* Increase font size */
-    max-width: 1260px;
-    
+    font-size: 16px; /* Чуть увеличен размер текста */
+    max-width: 1360px;
+    color: rgba(255, 255, 255, 0.8);
 `;
 
 const Footer = () => {
@@ -101,35 +104,43 @@ const Footer = () => {
                 <Column>
                     <LogoSection>
                         <Logo>
-                            <LogoImage src={Photo} alt="Robux.io" />
+                            <LogoImage src={Photo} alt="RBXSell" />
                         </Logo>
                         <CompanyDetails>
-                            EMAIL robuxiosup@gmail.com<br />
-                            <br/>
-                            ©2024 Robux.io
+                            GLOGAMING LLC. Reg Number: 36-5040821<br />
+                            919 North Market st., Suite 950, Wilmington, DE, 19801
                         </CompanyDetails>
                     </LogoSection>
                 </Column>
                 <Column>
                     <LinksSection>
-                        <LinksTitle>Документы</LinksTitle>
-                        <Link href="PrivacyPage">Политика конфиденциальности</Link>
-                        <Link href="AgreementPage">Пользовательское соглашение</Link>
-                        <Link href="refund-policy.pdf">Политика возврата средств</Link>
-                        <Link href="security-policy.pdf">Политика информационной безопасности</Link>
-                        <Link href="services.pdf">Перечень предоставляемых услуг</Link>
+                        <LinksTitle>Помощь</LinksTitle>
+                        <Link href="#">Вопросы и ответы</Link>
+                        <Link href="#">Пользовательское соглашение</Link>
+                        <Link href="#">Политика конфиденциальности</Link>
+                        <Link href="#">Контакты</Link>
+                    </LinksSection>
+                </Column>
+                <Column>
+                    <LinksSection>
+                        <LinksTitle>Сообщество</LinksTitle>
+                        <Link href="#">Telegram канал</Link>
+                        <Link href="#">Группа ВК</Link>
+                        <Link href="#">Discord сервер</Link>
+                        <Link href="#">YouTube канал</Link>
                     </LinksSection>
                 </Column>
                 <Column small>
-                    <SocialMediaSection>
-                        <IconLink href="#"><FaDiscord /></IconLink>
-                        <IconLink href="#"><FaTelegramPlane /></IconLink>
-                    </SocialMediaSection>
+                    <LinksSection>
+                        <LinksTitle>Сотрудничество</LinksTitle>
+                        <Link href="#">Запиши видео о сайте и получи 100 робуксов</Link>
+                        <Link href="#">Пишите</Link>
+                    </LinksSection>
                 </Column>
             </FooterContent>
             <Divider />
             <FooterBottomText>
-                Robux.io is in no way an affiliate or partner of Roblox Corporation. We are not authorized, endorsed or sponsored by Roblox Corporation. We are an independent site for the sale of game values. All Roblox trademarks remain the property of Roblox Corporation. All Roblox content used on the site is legal, unaltered Roblox content.
+                Покупайте робуксы по низким ценам и наслаждайтесь моментами в любимой игре.
             </FooterBottomText>
         </FooterContainer>
     );

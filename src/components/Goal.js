@@ -18,9 +18,11 @@ const SectionContainer = styled.div`
     ${tw`flex flex-col items-center mx-auto`}
     max-width: 1250px;
     padding: 60px 20px;
+    background: #151515; /* Фон секции черный */
+    color: #fff; /* Белый текст */
 
     @media (max-width: 768px) {
-        padding: 40px 10px; /* Adjust padding for mobile */
+        padding: 40px 10px;
     }
 `;
 
@@ -35,7 +37,7 @@ const TitleText = styled.p`
     margin-bottom: 40px;
 
     @media (max-width: 768px) {
-        display: none; 
+        display: none;
     }
 `;
 
@@ -51,16 +53,23 @@ const CardsWrapper = styled.div`
 const Card = styled.div`
     z-index: 5;
     padding: 30px;
-    border-radius: 32px;
-    background: #015c2b;
+    border-radius: 16px;
+    background: #222; /* Более светлый фон карточек */
     ${tw`flex flex-col items-center`}
     min-width: 230px;
     height: 150px;
-    animation: ${fadeInUp} 1.2s ease-out; /* Apply the fadeInUp animation */
+    animation: ${fadeInUp} 1.2s ease-out; /* Анимация */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Тень для отделения от фона */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+        transform: translateY(-5px); /* Поднятие карточки при наведении */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6); /* Увеличенная тень при наведении */
+    }
 
     @media (max-width: 768px) {
-        min-width: 100%; /* Ensure full width on mobile */
-        height: auto; /* Auto height for better fit */
+        min-width: 100%;
+        height: auto;
     }
 `;
 
@@ -71,10 +80,10 @@ const CountWrapper = styled.div`
 const Count = styled.h2`
     ${tw`text-3xl font-bold mb-2`}
     font-size: 48px;
-    color: #03c362;
+    color: #f0f0f0; /* Светлый текст для чисел */
 
     @media (max-width: 768px) {
-        font-size: 36px; /* Adjust font size for mobile */
+        font-size: 36px;
     }
 `;
 
@@ -83,10 +92,10 @@ const Suffix = styled.span`
     font-size: 48px;
     font-style: normal;
     font-weight: 700;
-    color:  #03c362;
+    color:  #f0f0f0; /* Светлый текст */
 
     @media (max-width: 768px) {
-        font-size: 36px; /* Adjust font size for mobile */
+        font-size: 36px;
     }
 `;
 
@@ -96,11 +105,11 @@ const CardText = styled.p`
     font-weight: 400;
     line-height: 150%;
     letter-spacing: -0.4px;
-    color: white;
+    color: #e0e0e0; /* Светло-серый текст */
     text-align: center;
 
     @media (max-width: 768px) {
-        font-size: 16px; /* Adjust font size for mobile */
+        font-size: 16px;
     }
 `;
 
@@ -109,13 +118,13 @@ const CounterCard = ({ end, text, suffix }) => {
 
     useEffect(() => {
         let start = 0;
-        const duration = 180; // Faster animation duration
+        const duration = 180; // Длительность анимации
         const increment = end / duration;
 
         const updateCount = () => {
             start += increment;
             if (start < end) {
-                setCount(Math.round(start * 10) / 10); // rounding to 1 decimal place
+                setCount(Math.round(start * 10) / 10); // округление до 1 знака после запятой
             } else {
                 setCount(end);
             }
@@ -140,13 +149,12 @@ const StatisticsSection = () => {
     return (
         <SectionContainer>
             <TitleText className="robuxtitle">
-                Robux.io стремится помочь вам получить робуксы более доступным путем с конечной целью — получить хорошую незабываемые впечатления от игры в любимых режимах.
+                Статистика нашего сайта
             </TitleText>
             <CardsWrapper>
-                <CounterCard end={2.5} text="Проданных робуксов" suffix="M" />
-                <CounterCard end={1.2} text="Довольных клиентов" suffix="K" />
-                <CounterCard end={5} text="Среднее время ожидания" suffix="м" />
-                <CounterCard end={2} text="Опыт продажи робуксов" suffix="года" />
+                <CounterCard end={1.35} text="Курс за 1 рубль" suffix="" />
+                <CounterCard end={160} text="Робуксов куплено" suffix="M+" />
+                <CounterCard end={150} text="Покупок" suffix="K+" />
             </CardsWrapper>
         </SectionContainer>
     );

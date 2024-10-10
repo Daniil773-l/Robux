@@ -5,7 +5,7 @@ import Tick from '../assets/img/TickIcon.svg';
 import Money from '../assets/img/Money.svg';
 import Time from '../assets/img/Time.svg';
 
-// Define keyframes for the fade-in and move-up animation
+// Анимация для плавного появления и движения вверх
 const fadeInUp = keyframes`
     0% {
         opacity: 0;
@@ -21,9 +21,10 @@ const WhyUsContainer = styled.div`
     ${tw`flex flex-col items-center mx-auto`}
     max-width: 1250px;
     padding: 60px 20px;
+    background: #151515; /* Задний фон изменен на темный #151515 */
 
     @media (max-width: 768px) {
-        padding: 40px 10px; /* Adjust padding for mobile */
+        padding: 40px 10px; /* Уменьшение отступов для мобильной версии */
     }
 `;
 
@@ -33,13 +34,13 @@ const Title = styled.h2`
     font-weight: 700;
     line-height: 1.3em;
     letter-spacing: -1.92px;
-    color: white;
+    color: #ffffff; /* Белый цвет текста для заголовка */
     margin-bottom: 40px;
-    animation: ${fadeInUp} 1.2s ease-out; /* Apply the fadeInUp animation */
+    animation: ${fadeInUp} 1.2s ease-out; /* Применение анимации */
 
     @media (max-width: 768px) {
-        font-size: 32px; /* Reduce font size for mobile */
-        margin-bottom: 20px; /* Adjust margin for mobile */
+        font-size: 32px; /* Уменьшение размера шрифта на мобильных */
+        margin-bottom: 20px;
     }
 `;
 
@@ -47,7 +48,7 @@ const CardsWrapper = styled.div`
     ${tw`flex justify-between space-x-8 w-full`}
 
     @media (max-width: 768px) {
-    ${tw`flex-col space-x-0 space-y-8`} /* Stack cards vertically and adjust spacing */
+    ${tw`flex-col space-x-0 space-y-8`} /* Выравнивание карточек вертикально на мобильных */
 }
 `;
 
@@ -55,52 +56,52 @@ const Card = styled.div`
     z-index: 5;
     padding: 30px;
     border-radius: 16px;
-    background:#015c2b;
+    background:#1f1f1f; /* Темно-серый фон карточек */
     ${tw`flex flex-col items-start`}
 
     @media (max-width: 768px) {
-    padding: 20px; /* Adjust padding for mobile */
+    padding: 20px; /* Корректировка отступов для мобильной версии */
 }
 `;
 
 const IconWrapper = styled.div`
-    ${tw`text-4xl mb-2`} /* Reduced margin below the icon */
+    ${tw`text-4xl mb-2`} /* Добавление отступа под иконкой */
     color: white;
 
     img {
-        ${tw`w-8 h-8`} /* Adjust the icon size if needed */
+        ${tw`w-8 h-8`} /* Размер иконки */
+        filter: brightness(1.5); /* Увеличение яркости иконок, чтобы они лучше смотрелись на темном фоне */
 
         @media (max-width: 768px) {
-        ${tw`w-6 h-6`} /* Reduce icon size for mobile */
-    }
+            ${tw`w-6 h-6`} /* Изменение размера иконок на мобильных */
+        }
     }
 `;
 
 const CardTitle = styled.h3`
-    ${tw`text-white text-lg mb-4`} /* Reduced margin below the title */
+    ${tw`text-white text-lg mb-4`} /* Белый цвет текста заголовка */
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: 120%;
 
     @media (max-width: 768px) {
-        font-size: 18px; /* Adjust font size for mobile */
-        margin-bottom: 10px; /* Adjust margin below title for mobile */
+        font-size: 18px;
+        margin-bottom: 10px;
     }
 `;
 
 const CardText = styled.p`
-    color: #9698a7;
+    color: #cfcfcf; /* Более светлый серый для текста карточек */
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     margin-top: 0px;
 
     @media (max-width: 768px) {
-        font-size: 14px; /* Adjust font size for mobile */
+        font-size: 14px; /* Уменьшение размера текста на мобильных */
     }
 `;
-
 
 const WhyUs = () => {
     return (

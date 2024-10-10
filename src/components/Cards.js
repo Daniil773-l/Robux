@@ -37,6 +37,7 @@ const CardsContainer = styled.div`
     ${tw`flex flex-col space-y-8 mx-auto`}
     max-width: 1250px;
     padding: 20px;
+    background-color: #151515; /* Установлен темный задний фон для секции */
 
     @media (max-width: 768px) {
         padding: 10px;
@@ -44,9 +45,8 @@ const CardsContainer = styled.div`
     }
 `;
 
-
 const Label = styled.div`
-    color: #8990a9;
+    color: #cccccc;
     font-size: 17px;
     padding-left: 5px;
     font-weight: 500;
@@ -54,27 +54,27 @@ const Label = styled.div`
 `;
 
 const Card = styled.div`
-    ${tw`flex justify-between items-center p-6 rounded-lg bg-[#015c2b]`}
+    ${tw`flex justify-between items-center p-6 rounded-lg`}
     min-width: 1250px;
     border-radius: 24px;
     position: relative;
+    background-color: #1f1f1f; /* Темно-серый фон карточек */
 
     @media (max-width: 768px) {
-        flex-direction: column; /* Stack content vertically on mobile */
+        flex-direction: column;
         padding: 15px;
-        min-width: auto; /* Remove fixed width for mobile */
-        align-items: center; /* Center align items */
+        min-width: auto;
+        align-items: center;
     }
 `;
-
 
 const IconWrapper = styled.div`
     ${tw`flex items-center relative`}
 
     @media (max-width: 768px) {
-    flex-direction: column; /* Stack icon and text vertically */
+    flex-direction: column;
     justify-content: center;
-    margin-bottom: 15px; /* Add margin below the icon for spacing */
+    margin-bottom: 15px;
 }
 `;
 
@@ -86,7 +86,7 @@ const Icon = styled.img`
     @media (max-width: 768px) {
         width: 80px;
         padding-top: 30px;
-        height: 60px; /* Smaller icon size on mobile */
+        height: 60px;
     }
 `;
 
@@ -94,8 +94,8 @@ const TextWrapper = styled.div`
     ${tw`ml-4 text-center`}
 
     @media (max-width: 768px) {
-    margin-left: 0; /* Reset margin for mobile */
-    margin-bottom: 15px; /* Add space between text and button */
+    margin-left: 0;
+    margin-bottom: 15px;
 }
 `;
 
@@ -105,8 +105,8 @@ const Title = styled.h3`
     font-size: 20px;
 
     @media (max-width: 768px) {
-        font-size: 18px; /* Slightly smaller font on mobile */
-        text-align: center; /* Center text on mobile */
+        font-size: 18px;
+        text-align: center;
     }
 `;
 
@@ -115,20 +115,19 @@ const RobuxIconImage = styled.img`
 `;
 
 const Description = styled.p`
-    ${tw`text-gray-400`}
-    color: #8990a9;
+    color: #aaaaaa;
     font-weight: 500;
     font-size: 18px;
     margin-top: 0px;
 
     @media (max-width: 768px) {
-        text-align: center; /* Center text on mobile */
-        font-size: 16px; /* Smaller font size on mobile */
+        text-align: center;
+        font-size: 16px;
     }
 `;
 
 const ActionIcon = styled.div`
-    ${tw`text-2xl py-2 px-6 text-gray-400`}
+    ${tw`text-2xl py-2 px-6 text-white`}
     cursor: pointer;
     border-radius: 12px;
     align-items: center;
@@ -138,14 +137,14 @@ const ActionIcon = styled.div`
     display: flex;
 
     @media (max-width: 768px) {
-        width: 280px; /* Fixed width for button */
-        height: 30px; /* Adjust button height */
-        justify-content: center; /* Center the icon inside the button */
-        margin-top: 10px; /* Space between text and button */
+        width: 280px;
+        height: 30px;
+        justify-content: center;
+        margin-top: 10px;
     }
 
     &:hover {
-        color: white;
+        color: #ffffff;
     }
 `;
 

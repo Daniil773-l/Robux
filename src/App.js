@@ -13,7 +13,7 @@ import tw from 'twin.macro';
 
 // Styled div for app container
 const AppContainer = styled.div`
-    ${tw`bg-[rgb(11,35,22)] min-h-screen`} // Background color and minimum height
+    ${tw`bg-[rgb(21, 21, 21)] min-h-screen`} // Background color and minimum height
     display: flex;
     flex-direction: column;
     justify-content: space-between;
