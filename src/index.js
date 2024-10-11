@@ -10,6 +10,7 @@ import PrivacyPage from "./PrivacyPage";
 import AgreementPage from "./AgreementPage";
 import Stats from "./components/Stats";
 import SwitcherBot from "./components/SwitchBot";
+import MyTransfer from "./components/MyTransfer";
 
 const RootApp = () => {
 
@@ -26,6 +27,7 @@ const RootApp = () => {
                 <Route path="/PrivacyPage" element={<PrivacyPage/>} />
                 <Route path="/AgreementPage" element={<AgreementPage/>} />
                 <Route path="/SwitcherBot" element={<SwitcherBot />}/>
+                <Route path="/Mytransfer" element={<MyTransfer logginInUser={loggedInUser}/>}/>
             </Routes>
         </Router>
     )

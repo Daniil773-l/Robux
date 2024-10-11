@@ -15,6 +15,7 @@ import env from 'react-dotenv';
 
 const HeaderContainer = styled.header`
     ${tw`bg-[rgb(11,35,22)] py-4 fixed top-0 w-full z-50`}
+    max-width: 100%;
     overflow-x: hidden;
     @media (max-width: 768px) {
         ${tw`py-3`}
@@ -426,7 +427,7 @@ const Header = ({loggedInUser, setLoggedInUser}) => {
                                     </NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href="#">
+                                    <NavLink href="Mytransfer">
                                         <img src={Purchase} alt="Мои покупки" />
                                         Мои покупки
                                     </NavLink>
