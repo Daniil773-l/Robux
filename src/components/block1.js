@@ -12,6 +12,7 @@ import ArrowIcon from '../assets/img/ArrowIcon.svg'; // Import the arrow icon
 import Robuxmini from '../assets/img/ROBUXMINI.SVG';
 import ClockIcon from '../assets/img/clock.svg';
 import Star from '../assets/img/star.svg'
+import { FaLock } from 'react-icons/fa';
 import AtomicSpinner from "atomic-spinner";
 import { useLocation, useParams } from 'react-router-dom';
 // Define keyframes for the fade-in and move-up animation
@@ -354,6 +355,83 @@ const StyledInput = styled.input`
         padding: 12px;
         font-size: 14px;
     }
+`;
+
+const StyledScroll = styled.input.attrs({ type: 'range' })`
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    margin-top: 20px;
+    background: linear-gradient(
+    to right,
+    #fbbf24 ${(props) => (props.value - props.min) / (props.max - props.min) * 100}%,
+    #3a3a3a ${(props) => (props.value - props.min) / (props.max - props.min) * 100}%
+    );
+    border-radius: 12px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 80px;
+        height: 9px;
+        background: #fbbf24;
+        border-radius: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: black;
+        font-size: 1em;
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+        position: relative;
+        //top: -16px; /* Корректируем положение бегунка */
+        //padding-left: 10px; /* Дополнительный отступ для выравнивания текста */
+    }
+
+    &::-moz-range-thumb {
+        width: 80px;
+        height: 9px;
+        background: #fbbf24;
+        border-radius: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: black;
+        font-size: 1em;
+        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+        position: relative;
+        //top: -16px; /* Корректируем положение бегунка */
+        //padding-left: 10px; /* Дополнительный отступ для выравнивания текста */
+    }
+
+    &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8px;
+        background: transparent;
+        border-radius: 12px;
+    }
+    // &::after {
+    //     content: "${(props) => props.value} R$"; /* Отображаем значение внутри бегунка */
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    //     font-size: 1em;
+    //     background-color: transparent;
+    //     color: black;
+    // }
+`;
+
+const SliderContainer = styled.div`
+    position: relative;
+    width: 100%;
 `;
 
 
@@ -762,7 +840,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [promocode, setPromocode] = useState('')
     const [promocodeMsg, setPromocodeMsg] = useState(null)
     let location = useLocation();
-    let state = location.state 
+    let state = location.state
 
     // 3. Fetch bonuses on page load
     useEffect(() => {
@@ -797,6 +875,9 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         fetchBonuses();
     }, [loggedInUser]);
 
+    const handleChange = (e) => {
+        setRobuxesCount(parseInt(e.target.value, 10) || 0); // Защита от некорректного ввода
+    };
 
     const handlePromocode = async () => {
         if (loggedInUser) {
@@ -1023,7 +1104,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             {!buyMenu ? 
             <>
             <StepCaption style={{justifyContent: "space-between"}}>
-                <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#ffffff' }}>(R$)</span></StyledLabel>
+                <StyledLabel htmlFor="rublesToPay">Заплачу <span style={{ color: '#ffffff' }}>(₽)</span></StyledLabel>
                 <AvailabilityText id="instockGamePass">
                     В наличии {botRobuxAmount}
                     <img src={Robuxmini} alt="Robux Mini Icon" style={{ marginLeft: '8px' }} />
@@ -1033,39 +1114,49 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             <BuyForm>
                 <InputBlock>
                     <InputWrapper>
-
-                        <StyledInput
-                            placeholder="Получаете R$"
-                            id="robuxesCount"
-                            type="number"
-                            value={robuxesCount}
-                            onInput={(e) => {
-                                setRobuxesCount(parseInt(e.target.value))
-                            }}
-                        />
-                    </InputWrapper>
-                </InputBlock>
-                <InputBlock>
-                <StyledLabel htmlFor="rublesToPay">Заплачу <span style={{ color: '#ffffff' }}>(₽)</span></StyledLabel>
-                    <InputWrapper>
                         <StyledInput
                             placeholder="Отдаёте ₽"
                             id="rublesToPay"
                             type="number"
                             value={rublesToPay}
-                            onInput={(e) => { 
-                                setRublesToPay(parseInt(e.target.value))
-                                setRobuxesCount(Math.round(parseInt(e.target.value) / 0.7))
-                            }}
+                            // onInput={(e) => {
+                            //     // setRublesToPay(parseInt(e.target.value))
+                            //     setRobuxesCount(Math.round(parseInt(e.target.value) / 0.7))
+                            // }}
                         />
                     </InputWrapper>
                 </InputBlock>
+                {/*<InputBlock>*/}
+                    <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#ffffff' }}>(R$)</span></StyledLabel>
+                    {/*<InputWrapper>*/}
+                <StyledInput
+                    // id="robuxesCount"
+                    // type="number"
+                    value={robuxesCount}
+                    onChange={handleChange}
+                />
+                <SliderContainer>
+                    <StyledScroll
+                        min="210"
+                        max="5000"
+                        value={robuxesCount}
+                        onChange={handleChange}
+                    />
+                    <div style={{ position: 'absolute', left: `${(robuxesCount - 210) / (5000 - 210) * 100}%`, transform: 'translateX(-50%)', pointerEvents: 'none' }}>
+                        <div style={{ background: '#fbbf24', borderRadius: '20px', padding: '5px 10px', display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: '1em' }}>
+                            {robuxesCount}
+                            <FaLock style={{ marginLeft: '5px' }} />
+                        </div>
+                    </div>
+                </SliderContainer>
+                {/*    </InputWrapper>*/}
+                {/*</InputBlock>*/}
                 <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
-                {promocodeMsg !== null ? <MinRobuxText>{promocodeMsg}</MinRobuxText> : null }
+                {promocodeMsg !== null ? <MinRobuxText>{promocodeMsg}</MinRobuxText> : null}
                 <BuyButton onClick={() => {
-                    if (robuxesCount !== '' && rublesToPay !== '' && parseInt(robuxesCount) >= 210) {  
+                    if (robuxesCount !== '' && rublesToPay !== '' && parseInt(robuxesCount) >= 210) {
                         setOpenBuyMenu(true)
-                    } 
+                    }
                 }}>Купить</BuyButton>
                 <PromoLink id="open-modal-btn" onClick={() => setPromocodeMenu(true)}>Использовать промокод</PromoLink>
             </BuyForm>

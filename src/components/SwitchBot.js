@@ -4,7 +4,7 @@ import tw from 'twin.macro';
 
 const OuterContainer = styled.div`
   ${tw`w-full`}
-  background-color: #028824; /* Зеленый фон */
+  background-color: #212121; /* Зеленый фон */
   min-height: 100vh; /* Растягиваем по высоте */
   display: flex;
   justify-content: center;
@@ -13,7 +13,7 @@ const OuterContainer = styled.div`
 `;
 
 const SwitcherContainer = styled.div`
-     ${tw`bg-[rgb(1, 92, 43)] p-8 rounded-lg shadow-lg flex flex-col`}
+     ${tw`bg-[rgb(41,41,41)] p-8 rounded-lg shadow-lg flex flex-col`}
     max-width: 800px;
     width: 100%;
     height: 80vh;
@@ -53,14 +53,17 @@ const NicknameInput = styled.input`
 `;
 
 const Button = styled.button`
-    ${tw`bg-blue-500 text-white px-4 py-2 rounded-lg m-2`}
+    ${tw`text-white px-4 py-2 rounded-lg m-2`}
+    background: linear-gradient(90deg, #6b3fa0, #2563eb);
+    border: none;   
+    transition: background-color 0.3s ease;
     &:hover {
         background-color: #2563eb;
     }
 `;
 
 const ListItem = styled.div`
-    ${tw`bg-gray-800 p-4 rounded-lg flex justify-between items-center mb-2`}
+    ${tw`bg-gray-900 p-4 rounded-lg flex justify-between items-center mb-2`}
 `;
 
 const EditInput = styled.input`
