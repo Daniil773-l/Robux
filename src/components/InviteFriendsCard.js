@@ -9,7 +9,7 @@ import BonusType from './BonusTypes'; // Assuming you have an enum defined elsew
 
 
 const CardContainer = styled.div`
-    ${tw`bg-[#151515] p-8 rounded-lg shadow-lg flex flex-col`}; // Change background color here
+    ${tw`bg-[#333333] p-8 rounded-lg shadow-lg flex flex-col`}; // Change background color here
     max-width: 1070px;
     width: 100%;
     border-radius: 24px;

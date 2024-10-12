@@ -462,7 +462,7 @@ const PurpleLineContainer = styled.div`
 
 const PurpleLine = styled.div`
 
-    background-color: #77D241;
+    background-color: #3a3939;
     ${tw`rounded h-1`}
 `;
 
@@ -558,7 +558,7 @@ const ModalText = styled.p`
 `;
 const ModalButton = styled.button`
     ${tw`w-full py-4 rounded-lg mt-5 font-bold border-none cursor-pointer`}
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     color: #fff;
     font-size: 16px;
     opacity: 0.5;
@@ -1275,11 +1275,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         <PurpleLineContainer onClick={handlePurpleLineClick}>
                             <PurpleLine />
                         </PurpleLineContainer>
-                        <TelegramContainer isVisible={isExpanded}>
-                            <TelegramLink href="https://t.me/robuxio/27" isVisible={isExpanded}>
-                                https://t.me/robuxio/27
-                            </TelegramLink>
-                        </TelegramContainer>
                     </SubTitle>
                 </TitleArea>
                 <NavContainer>
@@ -1290,13 +1285,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         <img src={ClockIcon} alt="Clock Icon" style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                         Стандартный трансфер
                     </NavButton>
-                    <NavButton
-                        active={activeButton === 'instant'}
-                        onClick={() => setActiveButton('instant')}
-                    >
-                        <img src={Star} alt="Star Icon" style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-                        Моментальный гифт
-                    </NavButton>
+
                 </NavContainer>
                 <PricingArea>
                     {activeButton === 'standard' ? renderStandardForm() : renderGiftForm()}

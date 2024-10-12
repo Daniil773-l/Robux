@@ -11,7 +11,7 @@ const CardWrapper = styled.div`
 `;
 
 const Card = styled.div`
-    ${tw`flex justify-between items-center p-6 rounded-lg bg-[#015c2b]`}
+    ${tw`flex justify-between items-center p-6 rounded-lg bg-[ #333333]`}
 
     max-width: 1080px;
     width: 100%;
@@ -52,7 +52,7 @@ const ActionIcon = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: #038741;
+    background: #333333;
     display: flex;
     &:hover {
         color: white;

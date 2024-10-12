@@ -14,13 +14,17 @@ import MobileHeader from "../components/MobileHeader";
 import env from 'react-dotenv';
 
 const HeaderContainer = styled.header`
-    ${tw`bg-[rgb(11,35,22)] py-4 fixed top-0 w-full z-50`}
+    ${tw`bg-[rgb(21, 21, 21)] py-4 fixed top-0 w-full z-50`}
     max-width: 100%;
     overflow-x: hidden;
     @media (max-width: 768px) {
         ${tw`py-3`}
     }
 `;
+const IconStyle = {
+    color: 'white', // Задаем цвет иконок
+    fontSize: '24px', // Размер иконок, можете настроить по желанию
+};
 
 const HeaderWrapper = styled.div`
     ${tw`container mx-auto flex items-center justify-between`}
@@ -106,7 +110,7 @@ const IconLink = tw.a`text-[#4caf50] hover:text-[#81c784] w-8 h-6`;
 
 const LoginButton = styled.button`
     ${tw`text-white px-5 py-3 rounded-md text-sm border-none cursor-pointer font-bold`}
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     transition: opacity 0.3s ease-in-out;
     border-radius: 12px;
     font-size: 16px;
@@ -307,7 +311,7 @@ const ModalText = styled.p`
 
 const ModalButton = styled.button`
     ${tw`w-full py-4 rounded-lg mt-5 font-bold border-none cursor-pointer`}
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     color: #fff;
     font-size: 16px;
     opacity: 0.5;
@@ -464,13 +468,13 @@ const Header = ({loggedInUser, setLoggedInUser}) => {
                             <>
                                 <IconArea>
                                     <IconLink href="#">
-                                        <FaDiscord />
+                                        <FaDiscord style={IconStyle}/>
                                     </IconLink>
                                     <IconLink href="#">
-                                        <FaVk />
+                                        <FaVk style={IconStyle}/>
                                     </IconLink>
                                     <IconLink href="#">
-                                        <FaTelegramPlane />
+                                        <FaTelegramPlane style={IconStyle}   />
                                     </IconLink>
                                 </IconArea>
                                 <LoginButton onClick={toggleLogin}>Войти</LoginButton>
