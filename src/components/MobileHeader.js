@@ -68,7 +68,7 @@ const IconLink = styled.a`
 
 const LoginButton = styled.button`
     ${tw`text-white px-3 py-2 rounded-md text-sm font-bold mb-4`}
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     transition: opacity 0.3s ease-in-out;
     border-radius: 12px;
     border: none;
@@ -139,6 +139,10 @@ const DropdownContent = styled.ul`
 const DropdownIcon = styled.span`
     ${tw`mr-12`}
 `;
+const IconStyle = {
+    color: 'white', // Задаем цвет иконок
+    fontSize: '24px', // Размер иконок, можете настроить по желанию
+};
 
 const SocialLinks = styled.div`
     ${tw`flex flex-col items-start ml-8 mt-8 w-full`}
@@ -434,10 +438,10 @@ const MobileHeader = ({ handleLogout, loggedInUser, setLoggedInUser }) => {
                     </LogoArea>
                     <IconArea>
                         <IconLink href="#">
-                            <FaDiscord />
+                            <FaDiscord style={IconStyle}/>
                         </IconLink>
                         <IconLink href="#">
-                            <FaTelegramPlane />
+                            <FaTelegramPlane style={IconStyle} />
                         </IconLink>
                         {loggedInUser ? (
                                 <HeaderUserCardContainer>
@@ -467,43 +471,23 @@ const MobileHeader = ({ handleLogout, loggedInUser, setLoggedInUser }) => {
                             <span>
                                 <img src={Buy} alt="Buy Robux" /> Покупка робуксов
                             </span>
-                            <DropdownIcon>{dropdowns.buy ? <FiChevronUp /> : <FiChevronDown />}</DropdownIcon>
                         </NavLink>
-                        <DropdownContent isOpen={dropdowns.buy}>
-                            <li>
-                                <StyledLink to="/"> {/* Link to Game Pass */}
-                                    Game Pass
-                                </StyledLink>
-                            </li>
-                            <li>
-                                <StyledLink to="/"> {/* Link to Plugin Method */}
-                                    Plugin Method
-                                </StyledLink>
-                            </li>
-                            <li>
-                                <StyledLink to="/"> {/* Link to Gift Cards */}
-                                    Gift Cards
-                                </StyledLink>
-                            </li>
-                        </DropdownContent>
+
                     </NavItem>
 
                     {/* Purchase Dropdown */}
                     <NavItem>
-                        <NavLink onClick={() => toggleDropdown('purchase')}>
-                            <span>
-                                <img src={Purchase} alt="Мои покупки" /> Мои покупки
-                            </span>
-                            <DropdownIcon>{dropdowns.purchase ? <FiChevronUp /> : <FiChevronDown />}</DropdownIcon>
+                        <NavLink as={StyledLink} to="/Mytransfer" onClick={(e) => {
+                            toggleDropdown('purchase');
+                            e.preventDefault(); // Прекращает стандартное поведение, чтобы выполнить логику и затем перейти по ссылке
+                            window.location.href = '/Mytransfer'; // Программно задаем переход
+                        }}>
+        <span>
+            <img src={Purchase} alt="Мои покупки" /> Мои покупки
+        </span>
                         </NavLink>
-                        <DropdownContent isOpen={dropdowns.purchase}>
-                            <li>
-                                <StyledLink to="/"> {/* Link to purchase history */}
-                                    Скоро
-                                </StyledLink>
-                            </li>
-                        </DropdownContent>
                     </NavItem>
+
 
                     {/* FAQ Link */}
                     <NavItem>
@@ -531,11 +515,6 @@ const MobileHeader = ({ handleLogout, loggedInUser, setLoggedInUser }) => {
                                 </StyledLink>
                             </li>
                             <li>
-                                <StyledLink to="/promo-codes"> {/* Promo Code page */}
-                                    Промокод: ROBUX10
-                                </StyledLink>
-                            </li>
-                            <li>
                                 <StyledLink to="https://t.me/robuxio/27"> {/* Telegram link */}
                                     Telegram
                                 </StyledLink>
@@ -545,17 +524,7 @@ const MobileHeader = ({ handleLogout, loggedInUser, setLoggedInUser }) => {
                 </NavList>
 
                 {/* Social Links */}
-                <SocialLinks>
-                    <SocialIcons>
-                        <IconLink href="#">
-                            <FaDiscord />
-                        </IconLink>
-                        <IconLink href="#">
-                            <FaTelegramPlane />
-                        </IconLink>
-                    </SocialIcons>
-                    <SocialLabel>Discord | Telegram</SocialLabel>
-                </SocialLinks>
+
             </Sidebar>
 
             {/* Login Modal */}

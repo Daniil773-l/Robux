@@ -75,17 +75,18 @@ const BannerArea = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: auto; /* Изменено на auto */
+    padding-top: 50px; /* Добавим отступ сверху для поднятия содержимого */
+    padding-bottom: 20px; /* Добавлен отступ снизу */
 
     @media (max-width: 768px) {
         flex-direction: column;
         padding-left: 20px;
         padding-right: 20px;
+        padding-top: 20px; /* Для мобильных уменьшаем отступ */
         height: auto;
-        padding-top: 20px;
     }
 `;
-
 const MainChar = styled.img`
     ${tw`absolute`}
     height: 600px;
@@ -101,13 +102,14 @@ const MainChar = styled.img`
 
 const TitleArea = styled.div`
     ${tw`w-full text-center mb-8`}
+    margin-top: -30px; /* Поднимаем заголовок вверх */
     animation: ${fadeInUp} 1.2s ease-out;
 
     @media (max-width: 768px) {
+        margin-top: 0; /* Убираем отрицательный отступ на мобильных */
         margin-bottom: 20px;
     }
 `;
-
 const Title = styled.h2`
     ${tw`text-4xl font-bold text-white`}
     margin-bottom: 10px !important;
@@ -116,9 +118,10 @@ const Title = styled.h2`
 
     @media (max-width: 768px) {
         font-size: 36px;
-        padding-top: 50px;
+        padding-top: 20px; /* Поднимаем заголовок на мобильных */
     }
 `;
+
 
 const Exchange = styled.h2`
     ${tw`text-2xl text-white`}
@@ -141,15 +144,18 @@ const Subtitle = styled.h2`
 
     @media (max-width: 768px) {
         font-size: 24px;
+        margin-top: 10px; /* Добавляем небольшой отступ сверху на мобильных */
     }
 `;
+
 
 const TitleLine = styled.div`
     ${tw`inline-block relative w-full text-center flex items-center justify-center`}
     margin: auto;
     @media (max-width: 768px) {
-    flex-direction: column;
-}
+        flex-direction: column;
+        margin-top: 20px; /* Добавляем отступ для мобильных устройств */
+    }
 `;
 
 const Word = styled.div`
