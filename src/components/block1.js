@@ -659,7 +659,7 @@ const ModalButton = styled.button`
 
 const ModalLink = styled.a`
     ${tw`w-full py-4 rounded-lg mt-5 font-bold border-none cursor-pointer`}
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     color: #fff;
     font-size: 16px;
     opacity: 0.5;
@@ -744,6 +744,7 @@ const GamePassLabel = styled.label`
 
 const GamePassInput = styled.input`
   ${tw`w-full p-4 mb-4 rounded-lg border border-none`}
+  background-color: #212121 !important;
     
     &::after { 
       border-color: #013d1d;
@@ -767,7 +768,7 @@ const LoginModal = styled.div`
 
 const ModalContent = styled.div`
     ${tw`p-8 rounded-lg shadow-lg text-white relative`}
-    background:#015c2b;
+    background:#313131;
     border-radius: 24px;
     width: 420px;
     max-width: 100%;
@@ -801,7 +802,7 @@ const LabelText = styled.p`
 
 const ModalInput = styled.input`
     ${tw`w-full p-3 rounded-lg border-none mt-2 text-white`}
-    background-color: #038741 !important;
+    background-color: #414141 !important;
     width: 95%;
     font-size: 18px;
     font-weight: 500;

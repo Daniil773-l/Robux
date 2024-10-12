@@ -194,9 +194,11 @@ const UserCardContainer = styled.div`
 const UserCard = styled.div`
     ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
     &:hover {
-        background-color: #3C3555;
+        background-color: #414141;
     }
+    background: #212121;
     width: 120px; /* Фиксируем ширину карточки */
+    height: auto;
     text-align: center;
 `;
 
@@ -248,7 +250,7 @@ const LoginModal = styled.div`
 
 const ModalContent = styled.div`
     ${tw`p-8 rounded-lg shadow-lg text-white relative`}
-    background:#015c2b;
+    background:#313131;
     border-radius: 24px;
     width: 420px;
     max-width: 100%;
@@ -282,7 +284,7 @@ const LabelText = styled.p`
 
 const ModalInput = styled.input`
     ${tw`w-full p-3 rounded-lg border-none mt-2 text-white`}
-    background-color: #038741 !important;
+    background-color: #313131 !important;
     width: 95%;
     font-size: 18px;
     font-weight: 500;
@@ -291,7 +293,7 @@ const ModalInput = styled.input`
     border-radius: 12px;
     filter: brightness(115%);
     &::placeholder {
-        color: #6f7489;
+        color: #313131;
     }
 `;
 
