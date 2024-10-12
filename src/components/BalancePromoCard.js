@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 const gradientPurple = 'conic-gradient(from -125deg at 50% 50%, #5c76eb 0deg, #9465ca 65deg, #6f65ca 100deg, #5c76eb 360deg)';
 
 const CardContainer = styled.div`
-    ${tw`bg-[#015c2b] p-6 rounded-lg shadow-lg flex justify-between items-center relative`};
+    ${tw`bg-[#333333] p-6 rounded-lg shadow-lg flex justify-between items-center relative`};
     max-width: 1050px;
     border-radius: 24px;
     z-index: 1;
@@ -30,7 +30,7 @@ const CardContainer = styled.div`
 const ShadowPoint = styled.div`
     display: inline-flex;
     width: 135px;
-    background-color: #00ff21;
+    background-color: #ffffff;
     height: 110px;
     position: absolute;
     filter: blur(90px);
@@ -107,14 +107,12 @@ const BalanceAmount = styled.div`
 
 const WithdrawButton = styled.button`
     ${tw`text-white px-4 py-2 rounded-lg text-sm font-semibold`};
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     border: none;
     border-radius: 12px;
     cursor: pointer; 
 
-    &:hover {   
-        background: linear-gradient(75.7deg, rgb(25, 118, 24) 3.8%, rgb(80, 150, 10) 87.1%);
-    }
+
 `;
 
 const RightSection = styled.div`
@@ -174,25 +172,25 @@ const SocialButtonsWrapper = styled.div`
 
 const SocialButtonContainer = styled.div`
     ${tw`flex items-center justify-center text-white font-semibold`};
-    background-color: #038741;
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     font-weight: 800;
     font-size: 16px;
-    color: #07ff7d;
+    color: #ffffff;
     line-height: 120%;
     text-decoration: none;
     border-radius: 12px;
     padding: 8px 12px;
     height: 35px;
     width: 240px; /* Fixed width */
-    cursor: pointer; 
+    cursor: pointer;
 
     @media (max-width: 768px) {
         width: 90%; /* Full width on mobile */
-        
+
     }
 
-    &:hover { 
-        background-color: #039752;
+    &:hover {
+        background-color: #000000;
     }
 `;
 

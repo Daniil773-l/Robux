@@ -76,17 +76,18 @@ const BannerArea = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: auto; /* Изменено на auto */
+    padding-top: 50px; /* Добавим отступ сверху для поднятия содержимого */
+    padding-bottom: 20px; /* Добавлен отступ снизу */
 
     @media (max-width: 768px) {
         flex-direction: column;
         padding-left: 20px;
         padding-right: 20px;
+        padding-top: 20px; /* Для мобильных уменьшаем отступ */
         height: auto;
-        padding-top: 20px;
     }
 `;
-
 const MainChar = styled.img`
     ${tw`absolute`}
     height: 600px;
@@ -102,13 +103,14 @@ const MainChar = styled.img`
 
 const TitleArea = styled.div`
     ${tw`w-full text-center mb-8`}
+    margin-top: -30px; /* Поднимаем заголовок вверх */
     animation: ${fadeInUp} 1.2s ease-out;
 
     @media (max-width: 768px) {
+        margin-top: 0; /* Убираем отрицательный отступ на мобильных */
         margin-bottom: 20px;
     }
 `;
-
 const Title = styled.h2`
     ${tw`text-4xl font-bold text-white`}
     margin-bottom: 10px !important;
@@ -117,9 +119,10 @@ const Title = styled.h2`
 
     @media (max-width: 768px) {
         font-size: 36px;
-        padding-top: 50px;
+        padding-top: 20px; /* Поднимаем заголовок на мобильных */
     }
 `;
+
 
 const Exchange = styled.h2`
     ${tw`text-2xl text-white`}
@@ -142,15 +145,18 @@ const Subtitle = styled.h2`
 
     @media (max-width: 768px) {
         font-size: 24px;
+        margin-top: 10px; /* Добавляем небольшой отступ сверху на мобильных */
     }
 `;
+
 
 const TitleLine = styled.div`
     ${tw`inline-block relative w-full text-center flex items-center justify-center`}
     margin: auto;
     @media (max-width: 768px) {
-    flex-direction: column;
-}
+        flex-direction: column;
+        margin-top: 20px; /* Добавляем отступ для мобильных устройств */
+    }
 `;
 
 const Word = styled.div`
@@ -540,7 +546,7 @@ const PurpleLineContainer = styled.div`
 
 const PurpleLine = styled.div`
 
-    background-color: #77D241;
+    background-color: #3a3939;
     ${tw`rounded h-1`}
 `;
 
@@ -636,7 +642,7 @@ const ModalText = styled.p`
 `;
 const ModalButton = styled.button`
     ${tw`w-full py-4 rounded-lg mt-5 font-bold border-none cursor-pointer`}
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     color: #fff;
     font-size: 16px;
     opacity: 0.5;
@@ -1366,11 +1372,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         <PurpleLineContainer onClick={handlePurpleLineClick}>
                             <PurpleLine />
                         </PurpleLineContainer>
-                        <TelegramContainer isVisible={isExpanded}>
-                            <TelegramLink href="https://t.me/robuxio/27" isVisible={isExpanded}>
-                                https://t.me/robuxio/27
-                            </TelegramLink>
-                        </TelegramContainer>
                     </SubTitle>
                 </TitleArea>
                 <NavContainer>
@@ -1381,13 +1382,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         <img src={ClockIcon} alt="Clock Icon" style={{ marginRight: '8px', verticalAlign: 'middle' }} />
                         Стандартный трансфер
                     </NavButton>
-                    <NavButton
-                        active={activeButton === 'instant'}
-                        onClick={() => setActiveButton('instant')}
-                    >
-                        <img src={Star} alt="Star Icon" style={{ marginRight: '8px', verticalAlign: 'middle' }} />
-                        Моментальный гифт
-                    </NavButton>
+
                 </NavContainer>
                 <PricingArea>
                     {activeButton === 'standard' ? renderStandardForm() : renderGiftForm()}

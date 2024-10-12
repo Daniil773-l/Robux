@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import tw from 'twin.macro';
 
 const AppContainer = styled.div`
-    ${tw`bg-[rgb(11,35,22)] min-h-screen`}
+    ${tw`bg-[rgb(21,21,21)] min-h-screen`}
     display: flex;
     flex-direction: column;
     justify-content: space-between;

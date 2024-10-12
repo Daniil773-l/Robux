@@ -59,14 +59,14 @@ const FAQMainText = styled.h1`
 `;
 
 const FAQSubText = styled.span`
-    color: #03c362;
+    color: #ffffff;
     font-size: 80px;
     font-style: normal;
     font-weight: 700;
     line-height: 100%;
     margin-top: -40px;
     padding-bottom: 5%;
-    @media (max-width: 768px)  {
+    @media (max-width: 768px) {
         font-size: 40px;
         padding-top: 20px;
     }
@@ -89,13 +89,15 @@ const FAQItem = styled.div`
     margin-bottom: 20px;
     border-radius: 16px;
     border: none;
-    background: #015c2b;
+    background: #222;;
     transition: background-color 0.3s ease;
     width: 60%; /* Reduced width for FAQ items */
     max-width: 800px; /* Maximum width for larger screens */
+
     &:hover {
-        background-color: #015c2b;
+        background-color: #434040;;
     }
+
     animation: ${fadeIn} 0.8s ease forwards;
 `;
 
