@@ -133,7 +133,7 @@ const ActionIcon = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: #038741;
+    background: #2b2b2b;
     display: flex;
 
     @media (max-width: 768px) {

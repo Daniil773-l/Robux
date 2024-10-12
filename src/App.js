@@ -23,7 +23,7 @@ const App = ({loggedInUser, setLoggedInUser}) => {
     return (
         <div>
             <AppContainer>
-                <Buy loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
+                   <Buy loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
                 <Cards />
                 <GiftCards />
                 <Why />

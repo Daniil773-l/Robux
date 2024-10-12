@@ -14,9 +14,11 @@ import AtomicSpinner from 'atomic-spinner';
 import Exit from "../assets/img/Exit.svg";
 
 const HeaderContainer = styled.header`
-    ${tw`bg-[rgb(11,35,22)] py-2 top-0 w-full z-50`}
-    overflow-x: hidden; 
+    background-color: #151515; // Измените цвет фона здесь
+    ${tw`py-2 top-0 w-full z-50`}
+    overflow-x: hidden;
 `;
+
 
 const HeaderWrapper = styled.div`
     ${tw`container mx-auto flex items-center justify-between`}

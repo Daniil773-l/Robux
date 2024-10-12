@@ -47,12 +47,12 @@ const ScrollWrapper = styled.div`
 
   /* Цвет бегунка (ползунка) */
     &::-webkit-scrollbar-thumb {
-    background-color: #90ee90; /* Светло-зелёный цвет бегунка */
+    background-color: #1a1a1a; /* Светло-зелёный цвет бегунка */
     border-radius: 10px; /* Скругление краев */
   }
 
     &::-webkit-scrollbar-thumb:hover {
-    background-color: #77dd77; /* Более насыщенный зеленый при наведении */
+    background-color: #1a1a1a /* Более насыщенный зеленый при наведении */
   }
 
     &::-webkit-scrollbar-track {
@@ -68,7 +68,7 @@ const Content = styled.div`
 
 const BannerArea = styled.div`
     ${tw`relative`}
-    background: rgb(11,35,22);
+    background: rgb(21, 21, 21);
     padding-left: 50px;
     padding-right: 30px;
     z-index: 10;
@@ -166,7 +166,7 @@ const Word = styled.div`
 
 const GreenText = styled(Word)`
     ${tw`text-4xl font-bold`}
-    color: #77d241;
+    color: #7c7a7a;
     font-size: 54px;
     animation: ${fadeInUp} 1.2s ease-out;
 
@@ -217,7 +217,7 @@ const InfoIcon = styled.img`
 
 const NavContainer = styled.div`
     ${tw`mt-4 flex justify-center `}
-    background-color: #015c2b !important;
+    background-color: #333 !important; // Change from #222 to #333
     border-radius: 16px;
     margin-bottom: 20px;
 
@@ -229,7 +229,7 @@ const NavContainer = styled.div`
 
 const NavButton = styled.button`
     ${tw`py-3 m-2 w-full text-white rounded-lg font-semibold`}
-    background: ${({ active }) => (active ? '#418756' : '#015c2b')};
+    background: ${({ active }) => (active ? '#1a1a1a' : '#222')};
     cursor: pointer;
     border: none;
     border-radius: 16px;
@@ -257,6 +257,8 @@ const SaleContainer = styled.div`
 
 const PricingArea = styled.div`
     ${tw` p-6 rounded-lg shadow-lg bg-[rgb(1, 92, 43)]`}
+    background-color: #333; // Change this to your desired color
+
 
     border: none;
     border-radius: 24px;
@@ -282,7 +284,7 @@ const StepCaption = styled.div`
 const AvailabilityText = styled.span`
     ${tw` ml-2 mb-4 font-medium`}
     margin-left: 15px;
-color: rgb(119, 210, 65);
+    color: rgb(255, 255, 255);
     @media (max-width: 768px) {
         margin-left: 0;
     }
@@ -337,7 +339,7 @@ const StyledInput = styled.input`
     font-size: 1.1em;
     width: 90%;
     border-radius: 12px;
-    background-color:#013d1d !important;
+    background-color:#222!important;
     filter: brightness(115%);
     padding-right: 20px;
     appearance: none;
@@ -408,7 +410,7 @@ const BuyButton = styled.button`
     ${tw`bg-purple-500 text-white rounded py-3 rounded`}
     font-size: 1.1em;
     border: none;
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     border-radius: 12px;
     cursor: pointer; 
     &:disabled {
@@ -416,17 +418,16 @@ const BuyButton = styled.button`
         cursor: not-allowed;
     }
 
-    &:hover { 
-        background: linear-gradient(75.7deg, rgb(45, 140, 50) 3.8%, rgb(110, 172, 27) 87.1%);
+    &:hover {
+        background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     }
 `;
-
 const StyledPlace = styled.div`
     ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
     &:hover {
-        background-color: #6eaa5e;
+        background-color: #333; // Change from #222 to #333
     }
-    background-color: rgb(1 92 43);
+    background-color: #333; // Change from #222 to #333
     display: flex;
     text-align: center;
 `;
@@ -440,7 +441,7 @@ const PlaceTitle = styled.div`
 `;
 
 const PromoLink = styled.a`
-    ${tw`mt-3 text-green-300 text-center cursor-pointer`}
+    ${tw`mt-3 text-white text-center cursor-pointer`}
     font-size: 1.1em;
 
     @media (max-width: 768px) {
@@ -1022,7 +1023,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             {!buyMenu ? 
             <>
             <StepCaption style={{justifyContent: "space-between"}}>
-                <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#77D241' }}>(R$)</span></StyledLabel>
+                <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#ffffff' }}>(R$)</span></StyledLabel>
                 <AvailabilityText id="instockGamePass">
                     В наличии {botRobuxAmount}
                     <img src={Robuxmini} alt="Robux Mini Icon" style={{ marginLeft: '8px' }} />
@@ -1045,7 +1046,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                     </InputWrapper>
                 </InputBlock>
                 <InputBlock>
-                <StyledLabel htmlFor="rublesToPay">Заплачу <span style={{ color: '#77D241' }}>(₽)</span></StyledLabel>
+                <StyledLabel htmlFor="rublesToPay">Заплачу <span style={{ color: '#ffffff' }}>(₽)</span></StyledLabel>
                     <InputWrapper>
                         <StyledInput
                             placeholder="Отдаёте ₽"

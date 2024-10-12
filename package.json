@@ -27,6 +27,7 @@
     "roblox-bat": "^0.4.0",
     "styled-components": "^6.1.12",
     "twin.macro": "^3.4.1",
+    "web-streams-polyfill": "^4.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -60,6 +61,8 @@
     "tailwindcss": "^3.4.9"
   },
   "react-dotenv": {
-    "whitelist": ["BACKEND_HOST"]
+    "whitelist": [
+      "BACKEND_HOST"
+    ]
   }
 }

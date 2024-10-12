@@ -6,29 +6,32 @@ import Photo from "../assets/img/logo.svg";
 
 const FooterContainer = styled.footer`
     ${tw`relative`}
-    padding: 32px 24px; /* Чуть увеличены отступы */
+    padding: 32px 24px;
     border-radius: 32px 32px 0 0;
     background: #151515;
-    margin-top: 30px; /* Чуть увеличен отступ сверху */
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    color: rgba(255, 255, 255, 0.9); /* Прозрачный белый цвет */
-    width: 100vw;
+    color: rgba(255, 255, 255, 0.9);
+    width: 100%; /* Изменено на 100% */
+    box-sizing: border-box; /* Добавлено свойство */
 `;
 
 const FooterContent = styled.div`
     ${tw`flex justify-between w-full`}
     flex-wrap: wrap;
     max-width: 1400px;
-    gap: 32px; /* Чуть увеличено расстояние между колонками */
+    gap: 32px;
 `;
 
 const Column = styled.div`
-    ${tw`flex flex-col mb-6`} /* Увеличен отступ снизу */
+    ${tw`flex flex-col mb-6`}
     flex: ${({ small }) => (small ? '0 0 auto' : '1')};
-    padding: 0 20px; /* Чуть увеличены внутренние отступы */
+    padding: 0 20px;
+    max-width: 100%; /* Ограничивает ширину столбца */
 `;
+
 
 const LogoImage = styled.img`
     ${tw`h-10`} /* Чуть увеличен размер логотипа */
