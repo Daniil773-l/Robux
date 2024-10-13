@@ -341,14 +341,45 @@ const SecondStyledLabel = styled.label`
     }
 `;
 
+const ButtonGroup = styled.div`
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+`;
+const StyledButtonForMoney = styled.button`
+    padding: 8px 16px; /* Уменьшил размеры кнопки */
+    font-size: 16px; /* Уменьшил размер шрифта */
+    background-color: #333;
+    border: 2px solid #6a0dad;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #6a0dad;
+    }
+
+    &:focus {
+        outline: none;
+    }
+`;
+
+const IconWrapper = styled.div`
+    position: absolute;
+    right: 10px; /* Расположение иконки справа */
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Иконка не будет блокировать ввод */
+`;
+
 const StyledInput = styled.input`
     ${tw`w-full p-4 rounded bg-gray-700 text-white border-none`}
     font-size: 1.1em;
     width: 90%;
     border-radius: 12px;
-    background-color:#222!important;
+    background-color: #222 !important;
     filter: brightness(115%);
-    padding-right: 20px;
+    padding-right: 40px; /* Добавляем отступ для иконки */
     appearance: none;
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -440,6 +471,18 @@ const SliderContainer = styled.div`
     width: 100%;
 `;
 
+const RubleIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path fill="#ffffff" d="M12 2h2v6h2V6h4v2h-4v4h2v-2h2v2h-2v2h-2v-2h-2v2h2v2h-2v2h-2v-2h-2v2h-2v-2h2v-2H6v-2h6v-2H6v-2h6V2z"/>
+    </svg>
+);
+
+// SVG для Robux
+const RobuxIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <path fill="#ffffff" d="M12 2l10 5v10l-10 5-10-5V7l10-5zm0 2L4.5 7.5v9L12 20l7.5-3.5v-9L12 4zM10 9l4 2-4 2-4-2 4-2zm0 4l4 2-4 2-4-2 4-2z"/>
+    </svg>
+);
 
 const SecondStyledInput = styled.input`
     ${tw`w-full p-4 rounded bg-gray-700 text-white border-none mt-4`}
@@ -816,8 +859,7 @@ const ModalInput = styled.input`
 `;
 
 
-const courseRobuxToRubles = 0.7 
-
+const courseRobuxToRubles =  0.74
 const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
 
@@ -1106,6 +1148,11 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         }
     }
 
+    const handleButtonClick = (amount) => {
+        setRublesToPay(amount);
+        setRobuxesCount(Math.round(amount / 0.74)); // пересчёт Robux
+    };
+
     const renderStandardForm = () => (
         <>
             {!buyMenu ? 
@@ -1126,12 +1173,19 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             id="rublesToPay"
                             type="number"
                             value={rublesToPay}
+                            readOnly
                             // onInput={(e) => {
                             //     // setRublesToPay(parseInt(e.target.value))
                             //     setRobuxesCount(Math.round(parseInt(e.target.value) / 0.7))
                             // }}
                         />
                     </InputWrapper>
+                    <ButtonGroup>
+                        <StyledButtonForMoney onClick={() => handleButtonClick(160)}>160₽</StyledButtonForMoney>
+                        <StyledButtonForMoney onClick={() => handleButtonClick(250)}>250₽</StyledButtonForMoney>
+                        <StyledButtonForMoney onClick={() => handleButtonClick(500)}>500₽</StyledButtonForMoney>
+                        <StyledButtonForMoney onClick={() => handleButtonClick(1000)}>1000₽</StyledButtonForMoney>
+                    </ButtonGroup>
                 </InputBlock>
                 {/*<InputBlock>*/}
                     <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#ffffff' }}>(R$)</span></StyledLabel>
