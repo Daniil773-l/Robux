@@ -4,7 +4,7 @@ import Buy from './components/block1';
 import Footer from './components/Footer';
 import Cards from './components/Cards';
 import Stats from './components/Stats';
-import GiftCards from './components/GiftCards';
+// import GiftCards from './components/GiftCards';
 import Why from './components/WhyUs';
 import Goal from './components/Goal';
 import styled from 'styled-components';
@@ -25,7 +25,7 @@ const App = ({loggedInUser, setLoggedInUser}) => {
             <AppContainer>
                    <Buy loggedInUser={loggedInUser} setLoggedInUser={setLoggedInUser} />
                 <Cards />
-                <GiftCards />
+                {/*<GiftCards />*/}
                 <Why />
                 <Goal />
                 <Footer />

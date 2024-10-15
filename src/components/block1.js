@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import tw from 'twin.macro';
-import DragonImage from '../assets/img/char2.png';
+// import DragonImage from '../assets/img/char2.png';
 import Robux from '../assets/img/RobuxIcon.svg';
 import Sign from '../assets/img/Sign.svg';
 import sphere from '../assets/img/sphere-one.png';
@@ -88,18 +88,18 @@ const BannerArea = styled.div`
         height: auto;
     }
 `;
-const MainChar = styled.img`
-    ${tw`absolute`}
-    height: 600px;
-    right: 0;
-    z-index: 1;
-    margin-top: 70px;
-
-    @media (max-width: 768px) {
-        @media (max-width: 768px) {
-            display: none;
-        }
-`;
+// const MainChar = styled.img`
+//     ${tw`absolute`}
+//     height: 600px;
+//     right: 0;
+//     z-index: 1;
+//     margin-top: 70px;
+//
+//     @media (max-width: 768px) {
+//         @media (max-width: 768px) {
+//             display: none;
+//         }
+// `;
 
 const TitleArea = styled.div`
     ${tw`w-full text-center mb-8`}
@@ -124,18 +124,30 @@ const Title = styled.h2`
 `;
 
 
-const Exchange = styled.h2`
-    ${tw`text-2xl text-white`}
-    font-family: Arial, Helvetica, sans-serif;
-    letter-spacing: 1px;
-    font-weight: 600;
-    line-height: 1.2;
-    font-size: 30px;
-    animation: ${fadeInUp} 1.2s ease-out;
-
-    @media (max-width: 768px) {
-        font-size: 18px;
+const glowAnimation = keyframes`
+    0% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.3);
     }
+    50% {
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.7), 0 0 45px rgba(255, 255, 255, 0.5);
+    }
+    100% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.7), 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+`;
+
+const Exchange = styled.h2`
+  ${tw`text-2xl text-white`}
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
+  font-weight: 600;
+  line-height: 1.2;
+  font-size: 30px;
+  animation: ${glowAnimation} 2s infinite ease-in-out;
+
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const Subtitle = styled.h2`
@@ -305,19 +317,6 @@ const BuyForm = styled.div`
 }
 `;
 
-const InputBlock = styled.div`
-    ${tw`flex flex-col space-y-4`} /* Increased spacing between label and input */
-    margin-bottom: 24px;
-
-    @media (max-width: 768px) {
-        margin-bottom: 20px;
-    }
-`;
-
-const InputWrapper = styled.div`
-    ${tw`w-full`}
-`;
-
 const StyledLabel = styled.label`
     ${tw`text-white font-semibold mb-3`}
     font-size: 1.1em;
@@ -341,11 +340,71 @@ const SecondStyledLabel = styled.label`
     }
 `;
 
+const InputBlockContainer = styled.div`
+    ${tw`flex flex-col space-y-4`} /* Основной контейнер для input и кнопок */
+`;
+
+const InputBlock = styled.div`
+    ${tw`flex items-center space-y-4`} /* Flex контейнер для input и иконки */
+    border-radius: 12px; /* Округленные края */
+    border: 1px solid #1B1B1B; /* Общий бордер для input и иконки */
+    background-color: #313131; /* Фон для общего контейнера */
+    padding-right: 12px; /* Отступ справа для иконки */
+    width: 100%; /* Общая ширина */
+
+    @media (max-width: 768px) {
+        margin-bottom: 20px;
+    }
+`;
+
+const InputWrapper = styled.div`
+    ${tw`w-full flex items-center`} /* Flex-контейнер для выравнивания иконки */
+`;
+
+const StyledInput = styled.input`
+    ${tw`w-full p-4 text-white border-none`} /* Убираем бордер у самого input */
+    font-size: 1.1em;
+    background-color: transparent;
+    appearance: none;
+    padding-right: 40px; /* Отступ для иконки */
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    -moz-appearance: textfield;
+
+    @media (max-width: 768px) {
+        padding: 12px;
+        font-size: 14px;
+    }
+`;
+
+const IconWrapper = styled.div`
+    ${tw`flex items-center justify-center`} /* Центрирование иконки */
+    width: 40px; /* Ширина для иконки */
+    height: 100%; /* Высота контейнера совпадает с высотой input */
+    display: flex; /* Убедимся, что flex работает для центрирования */
+    align-items: center; /* Выровняем иконку по вертикали */
+    justify-content: center; /* Выровняем иконку по горизонтали */
+    pointer-events: none; /* Иконка не блокирует ввод */
+`;
+
+const RubleIcon = styled.svg`
+    width: 24px; /* Ширина иконки */
+    height: 24px; /* Высота иконки */
+    fill: #ffffff; /* Цвет иконки */
+    padding-bottom: 20px;
+`;
+
 const ButtonGroup = styled.div`
     display: flex;
     gap: 10px;
     margin-top: 10px;
 `;
+
 const StyledButtonForMoney = styled.button`
     padding: 8px 16px; /* Уменьшил размеры кнопки */
     font-size: 16px; /* Уменьшил размер шрифта */
@@ -361,36 +420,6 @@ const StyledButtonForMoney = styled.button`
 
     &:focus {
         outline: none;
-    }
-`;
-
-const IconWrapper = styled.div`
-    position: absolute;
-    right: 10px; /* Расположение иконки справа */
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none; /* Иконка не будет блокировать ввод */
-`;
-
-const StyledInput = styled.input`
-    ${tw`w-full p-4 rounded bg-gray-700 text-white border-none`}
-    font-size: 1.1em;
-    width: 90%;
-    border-radius: 12px;
-    background-color: #222 !important;
-    filter: brightness(115%);
-    padding-right: 40px; /* Добавляем отступ для иконки */
-    appearance: none;
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    -moz-appearance: textfield;
-
-    @media (max-width: 768px) {
-        padding: 12px;
-        font-size: 14px;
     }
 `;
 
@@ -471,28 +500,16 @@ const SliderContainer = styled.div`
     width: 100%;
 `;
 
-const RubleIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path fill="#ffffff" d="M12 2h2v6h2V6h4v2h-4v4h2v-2h2v2h-2v2h-2v-2h-2v2h2v2h-2v2h-2v-2h-2v2h-2v-2h2v-2H6v-2h6v-2H6v-2h6V2z"/>
-    </svg>
-);
-
-// SVG для Robux
-const RobuxIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path fill="#ffffff" d="M12 2l10 5v10l-10 5-10-5V7l10-5zm0 2L4.5 7.5v9L12 20l7.5-3.5v-9L12 4zM10 9l4 2-4 2-4-2 4-2zm0 4l4 2-4 2-4-2 4-2z"/>
-    </svg>
-);
-
 const SecondStyledInput = styled.input`
     ${tw`w-full p-4 rounded bg-gray-700 text-white border-none mt-4`}
     font-size: 1.1em;
     width: 90%;
     border-radius: 12px;
-    background-color:#013d1d!important;
+    background-color: #013d1d !important;
     filter: brightness(115%);
     padding-right: 20px;
     appearance: none;
+
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -1166,36 +1183,48 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
             </StepCaption>
             <BuyForm>
-                <InputBlock>
-                    <InputWrapper>
+                <InputBlockContainer>
+                    <InputBlock>
                         <StyledInput
                             placeholder="Отдаёте ₽"
                             id="rublesToPay"
                             type="number"
                             value={rublesToPay}
                             readOnly
-                            // onInput={(e) => {
-                            //     // setRublesToPay(parseInt(e.target.value))
-                            //     setRobuxesCount(Math.round(parseInt(e.target.value) / 0.7))
-                            // }}
                         />
-                    </InputWrapper>
+                        <IconWrapper>
+                            <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path d="M291.75,308.1a105.8,105.8,0,1,0,0-211.6H136v32h39.943V276.1H136v32h39.943V352H136v32h39.943v56h32V384H304V352H207.943V308.1ZM207.943,128.5H291.75a73.8,73.8,0,1,1,0,147.6H207.943Z"/>
+                            </RubleIcon>
+                        </IconWrapper>
+                    </InputBlock>
+
                     <ButtonGroup>
-                        <StyledButtonForMoney onClick={() => handleButtonClick(160)}>160₽</StyledButtonForMoney>
                         <StyledButtonForMoney onClick={() => handleButtonClick(250)}>250₽</StyledButtonForMoney>
                         <StyledButtonForMoney onClick={() => handleButtonClick(500)}>500₽</StyledButtonForMoney>
                         <StyledButtonForMoney onClick={() => handleButtonClick(1000)}>1000₽</StyledButtonForMoney>
                     </ButtonGroup>
-                </InputBlock>
+                </InputBlockContainer>
                 {/*<InputBlock>*/}
                     <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#ffffff' }}>(R$)</span></StyledLabel>
                     {/*<InputWrapper>*/}
-                <StyledInput
-                    // id="robuxesCount"
-                    // type="number"
-                    value={robuxesCount}
-                    onChange={handleChange}
-                />
+                <InputBlockContainer>
+                    <InputBlock>
+                        <StyledInput
+                            // id="robuxesCount"
+                            // type="number"
+                            value={robuxesCount}
+                            onChange={handleChange}
+                        />
+                        <IconWrapper>
+                            <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 40">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M20.5251 0.696094C18.9688 -0.232031 17.0313 -0.232031 15.4751 0.696094L3.02507 8.09609C1.45007 9.04922 0.490693 10.7586 0.500068 12.5992V27.3992C0.500068 29.2555 1.46257 30.9742 3.02507 31.9023L15.4751 39.3023C17.0313 40.2305 18.9688 40.2305 20.5251 39.3023L32.9751 31.9023C34.5501 30.9492 35.5094 29.2398 35.5001 27.3992V12.5992C35.5001 10.743 34.5376 9.02422 32.9751 8.09609L20.5251 0.696094ZM14.2501 13.7492C12.8688 13.7492 11.7501 14.868 11.7501 16.2492V23.7492C11.7501 25.1305 12.8688 26.2492 14.2501 26.2492H21.7501C23.1313 26.2492 24.2501 25.1305 24.2501 23.7492V16.2492C24.2501 14.868 23.1313 13.7492 21.7501 13.7492H14.2501Z"
+                                      fill="#FFFF"/>
+                            </RubleIcon>
+                        </IconWrapper>
+                    </InputBlock>
+                </InputBlockContainer>
                 <SliderContainer>
                     <StyledScroll
                         min="210"
@@ -1203,8 +1232,20 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         value={robuxesCount}
                         onChange={handleChange}
                     />
-                    <div style={{ position: 'absolute', left: `${(robuxesCount - 210) / (5000 - 210) * 100}%`, transform: 'translateX(-50%)', pointerEvents: 'none' }}>
-                        <div style={{ background: '#fbbf24', borderRadius: '20px', padding: '5px 10px', display: 'flex', alignItems: 'center', fontWeight: 'bold', fontSize: '1em' }}>
+                    <div style={{
+                        position: 'absolute',
+                        left: `${(robuxesCount - 210) / (5000 - 210) * 100}%`,
+                        transform: 'translateX(-50%)',
+                        pointerEvents: 'none'
+                    }}>
+                        <div style={{
+                            background: '#fbbf24',
+                            borderRadius: '20px',
+                            padding: '5px 10px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            fontWeight: 'bold',
+                            fontSize: '1em' }}>
                             {robuxesCount}
                             <FaLock style={{ marginLeft: '5px' }} />
                         </div>
@@ -1421,7 +1462,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                     </Subtitle>
                     <SubTitle>
                         <Exchange>
-                            Реальный курс
+                            Лучший курс
                             <InfoIcon src={Sign} alt="Info Icon" />
                         </Exchange>
                         <PurpleLineContainer onClick={handlePurpleLineClick}>
@@ -1443,7 +1484,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                     {activeButton === 'standard' ? renderStandardForm() : renderGiftForm()}
                 </PricingArea>
             </SaleContainer>
-            <MainChar src={DragonImage} alt="Dragon Character" />
+            {/*<MainChar src={DragonImage} alt="Dragon Character" />*/}
         </BannerArea>
     );
 

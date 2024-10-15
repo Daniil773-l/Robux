@@ -186,7 +186,7 @@ const StatisticsSection = () => {
                 Статистика нашего сайта
             </TitleText>
             <CardsWrapper>
-                <CounterCard end={0.7} text="Курс за 1 рубль" suffix="" isVisible={isVisible} />
+                <CounterCard end={0.74} text="Курс за 1 рубль" suffix="" isVisible={isVisible} />
                 <CounterCard end={160} text="Робуксов куплено" suffix="M+" isVisible={isVisible} />
                 <CounterCard end={150} text="Покупок" suffix="K+" isVisible={isVisible} />
             </CardsWrapper>
