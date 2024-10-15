@@ -60,17 +60,20 @@ const LogoImage = styled.img`
 `;
 
 const Nav = styled.nav`
-    ${tw`flex items-center`}
-    @media (max-width: 768px) {
-    ${tw`flex-col w-full mt-4`}
+    ${tw`flex items-center w-full`}
+    @media (min-width: 768px) {
+    ${tw`grid grid-cols-2 gap-4`}
 }
 `;
 
 const NavList = styled.ul`
-    ${tw`flex space-x-6 list-none`}
-    @media (max-width: 768px) {
-    ${tw`space-x-0 w-full flex-col space-y-2`}
+    ${tw`flex space-x-6 list-none w-full`}
+    @media (min-width: 768px) {
+    ${tw`grid grid-cols-2 gap-4 w-full`}
 }
+    @media (max-width: 768px) {
+        ${tw`flex-col`}
+    }
 `;
 
 const NavItem = styled.li`
