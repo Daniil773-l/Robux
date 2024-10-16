@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 // Обертка для всей страницы
 const CardWrapper = styled.div`
@@ -171,13 +172,14 @@ const MyTransfer = ({ logginInUser }) => {
                     transactions.map((transaction, index) => (
                         <TransactionSection key={index}>
                             <p>
-                                <strong>Транзакция #{index + 1}:</strong> <br />
-                                Количество: {transaction.amount} <br />
-                                Robux: {transaction.robux_amount} <br />
-                                Игра: {transaction.game_id} <br />
-                                Email: {transaction.email} <br />
-                                Статус: {transaction.status} <br />
-                                Имя пользователя: {transaction.roblox_username}
+                                <strong>Транзакция #{index + 1}:</strong> <br/>
+                                Количество: {transaction.amount} <br/>
+                                Robux: {transaction.robux_amount} <br/>
+                                Игра: {transaction.game_id} <br/>
+                                Email: {transaction.email} <br/>
+                                Статус: {transaction.status} <br/>
+                                Имя пользователя: {transaction.roblox_username} <br/>
+                                Время покупки: {moment(transaction.created_at).format('DD/MM/YYYY HH:mm:ss')}
                             </p>
                         </TransactionSection>
                     ))
