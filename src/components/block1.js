@@ -10,6 +10,7 @@ import smallcoin from '../assets/img/05.png';
 import biggercoin from '../assets/img/BiggerCoin.png';
 import ArrowIcon from '../assets/img/ArrowIcon.svg'; // Import the arrow icon
 import Robuxmini from '../assets/img/ROBUXMINI.SVG';
+import Search from '../assets/img/search_4270453.png';
 import ClockIcon from '../assets/img/clock.svg';
 import Star from '../assets/img/star.svg'
 import { FaLock } from 'react-icons/fa';
@@ -60,6 +61,8 @@ const ScrollWrapper = styled.div`
     background-color: #1a1a1a; /* Цвет фона */
   }
 `;
+
+
 
 const Content = styled.div`
   height: 600px; /* Пример контента, чтобы появился скроллбар */
@@ -215,8 +218,9 @@ const SubTitle = styled.h4`
     }
 `;
 const PlaceImage = styled.img`
-    width: 100%;
-    height: auto;
+    max-width: 90px;
+    max-height: 90px;
+    
     border-radius: 8px;
 `;
 const InfoButton = styled.div`
@@ -290,7 +294,8 @@ const PricingArea = styled.div`
 `;
 
 const StepCaption = styled.div`
-    ${tw`mt-3 text-white flex items-center`}
+    ${tw`mt-3 text-white items-center`}
+    
     font-size: 1.1em;
 
     @media (max-width: 768px) {
@@ -358,15 +363,18 @@ const InputBlock = styled.div`
 `;
 
 const InputWrapper = styled.div`
-    ${tw`w-full flex items-center`} /* Flex-контейнер для выравнивания иконки */
+    ${tw`w-full flex items-center `} /* Flex-контейнер для выравнивания иконки */
+    border-radius: 24px;
+    
 `;
 
 const StyledInput = styled.input`
     ${tw`w-full p-4 text-white border-none`} /* Убираем бордер у самого input */
     font-size: 1.1em;
-    background-color: transparent;
+    
+    background: #262626;
     appearance: none;
-    padding-right: 40px; /* Отступ для иконки */
+    border-radius: 20px;
 
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
@@ -382,8 +390,31 @@ const StyledInput = styled.input`
     }
 `;
 
+const SSecondStyledInput = styled.input`
+    ${tw`w-full p-4 text-white border-none`} /* Убираем бордер у самого input */
+    font-size: 1.1em;
+    
+    background: #262626;
+    appearance: none;
+    border-radius: 20px;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    -moz-appearance: textfield;
+
+    @media (max-width: 768px) {
+        padding: 12px;
+        font-size: 14px;
+    }
+`;
+
+
 const IconWrapper = styled.div`
-    ${tw`flex items-center justify-center`} /* Центрирование иконки */
+    ${tw`flex items-center justify-center mb-3`} /* Центрирование иконки */
     width: 40px; /* Ширина для иконки */
     height: 100%; /* Высота контейнера совпадает с высотой input */
     display: flex; /* Убедимся, что flex работает для центрирования */
@@ -579,6 +610,7 @@ const StyledPlace = styled.div`
 const PlaceTitle = styled.div`
     margin-top: 10px;
     font-size: 16px;
+    padding-left: 20px;
     font-weight: bold;
     color: #fff;
     text-align: center;
@@ -783,15 +815,15 @@ const GamePassWrapper = styled.div`
 `;
 
 const GamePassTitle = styled.h2`
-  ${tw`text-2xl mb-5`}
+  ${tw`text-2xl mb-5 text-white`}
 `;
 
 const GamePassAttention = styled.div`
-  ${tw`mb-5`}
+  ${tw`mb-5 text-gray-400 `}
 `;
 
 const GamePassInstruction = styled.a`
-  ${tw`text-blue-400 underline`}
+  ${tw`text-blue-400 underline text-gray-400 `}
 `;
 
 const GamePassLink = styled.a`
@@ -799,12 +831,19 @@ const GamePassLink = styled.a`
 `;
 
 const GamePassLabel = styled.label`
-  ${tw`block mb-2`}
+  ${tw`block mb-2 text-gray-400`}
+  input[type="checkbox"] {
+      margin-left: 10px; /* Отступ между текстом и чекбоксом */
+      width: 18px; /* Ширина чекбокса */
+      height: 18px; /* Высота чекбокса */
+      accent-color: #6a0dad; /* Цвет чекбокса */
+  }
 `;
 
 const GamePassInput = styled.input`
   ${tw`w-full p-4 mb-4 rounded-lg border border-none`}
   background-color: #212121 !important;
+    
     
     &::after { 
       border-color: #013d1d;
@@ -815,6 +854,11 @@ const GamePassInput = styled.input`
 
 const GamePassCheckboxContainer = styled.div`
   ${tw`mt-4 mb-6`}
+    
+    input {
+      width: 25px;
+      height: 25px;
+  }
 `;
 
 const GamePassButtonContainer = styled.div`
@@ -838,13 +882,6 @@ const ModalContent = styled.div`
     justify-content: space-between;
 `;
 
-const CloseButton = styled.button`
-    ${tw`absolute top-3 right-3 text-white`}
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-`;
 
 const ModalTitle = styled.h2`
     ${tw`text-lg font-semibold mb-4`}
@@ -875,11 +912,255 @@ const ModalInput = styled.input`
     }
 `;
 
+////
+
+const StepsContainer = styled.div`
+    display: flex;
+    flex-direction: row; /* По умолчанию расположение шагов и формы по горизонтали */
+    @media (max-width: 768px) {
+        flex-direction: column; /* На мобильных устройствах меняем на вертикальное расположение */
+        align-items: center; /* Центрируем элементы */
+    }
+`;
+
+const StepsSidebar = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    height: 230px;
+    border-radius: 24px;
+    background: #1b1b1b;
+    padding: 15px;
+    
+    top: 20px; /* Чтобы оставался в видимой области экрана */
+
+    @media (max-width: 768px) {
+        flex-direction: row; /* Горизонтальное расположение шагов на мобильных */
+        justify-content: space-between; /* Равномерное распределение шагов */
+        align-items: center; /* Центрируем шаги */
+        margin-right: 0;
+        margin-top: 300px;
+        position: static;
+        margin-bottom: 20px;
+        height: auto; /* Высота автоматически подстраивается под содержимое */
+        width: 100%; /* На мобильных шаги займут всю ширину */
+        padding: 0; /* Убираем внутренние отступы для мобильных */
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+
+        @media (max-width: 768px) {
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+        }
+    }
+
+    .step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+
+        @media (max-width: 768px) {
+            flex-direction: row; /* Горизонтальное направление шагов */
+            margin-bottom: 0;
+            gap: 10px; /* Добавим отступы между шагами */
+        }
+    }
+
+    .step-item.active > span {
+        background: #993de1; /* Фиолетовый цвет для активного шага */
+    }
+
+    .step-item.completed > span {
+        background: #993de1; /* Фиолетовый цвет для выполненного шага */
+    }
+`;
+
+const StepNumber = styled.span`
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #444; /* Цвет для неактивных шагов */
+    color: white;
+    text-align: center;
+    line-height: 40px;
+    font-weight: bold;
+    margin-bottom: 5px;
+
+    &.completed {
+        background-color: #6a0dad; /* Цвет для выполненных шагов */
+    }
+`;
+
+const StepLine = styled.div`
+    width: 2px;
+    height: 40px; /* Высота полоски между шагами */
+    background-color: #444; /* Цвет для неактивных полос */
+
+    @media (max-width: 768px) {
+        width: 60px; /* Делаем полоски длиннее на мобильных устройствах */
+        padding-left: 50px;
+        height: 2px; /* Горизонтальное расположение полос */
+    }
+
+    &.active-line {
+        background-color: #6a0dad; /* Цвет для активных полос */
+    }
+`;
+
+const StepForm = styled.div`
+    display: flex;
+    padding: 20px;
+    z-index: 20;
+    width: 535px;
+    border-radius: 24px;
+    height: 100%;
+    flex-direction: column;
+    background: #1b1b1b;
+
+    @media (max-width: 768px) {
+        width: 90%; /* Уменьшаем ширину формы на мобильных устройствах */
+        padding: 15px; /* Уменьшаем отступы */
+       
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+
+        @media (max-width: 768px) {
+            font-size: 18px; /* Уменьшаем размер шрифта заголовка */
+        }
+    }
+
+    input {
+        padding: 10px;
+        margin-bottom: 20px;
+        width: 460px;
+
+        @media (max-width: 768px) {
+            width: 100%; /* Ширина input теперь 100% на мобильных */
+        }
+    }
+
+    label {
+        margin-bottom: 20px;
+
+        @media (max-width: 768px) {
+            font-size: 14px; /* Уменьшаем размер шрифта на мобильных */
+        }
+    }
+`;
+const StepButton = styled.button`
+    padding: 10px 20px;
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 24px;
+
+    &:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+`;
+
+const PurchaseContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+
+    @media (max-width: 768px) {
+        flex-direction: column; /* Переходим на вертикальное расположение на мобильных */
+        height: auto; /* Высота подстраивается автоматически */
+    }
+`;
+
+const FormOverlay = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const StepTitle = styled.h2`
+    color: #fff;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 38px;
+    margin-bottom: 10px;
+`;
+
+const StepSubtitle = styled.p`
+    color: #a8a8a8;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 20px;
+`;
+
+const CloseButton = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+        padding-left: 10px;
+    }
+`;
+
+const GrayText = styled.p`
+    color: #A8A8A8; /* Светло-серый цвет текста */
+    font-size: 16px; /* Размер текста */
+    line-height: 24px; /* Межстрочный интервал */
+    margin: 0; /* Убираем отступы */
+    font-weight: 400; /* Обычный вес шрифта */
+
+    @media (max-width: 768px) {
+        font-size: 14px; /* Размер текста для мобильных устройств */
+    }
+`;
+
+
+const StepHeader = styled.div`
+    display: flex;
+    align-items: center; /* Центрируем по вертикали */
+    justify-content: space-between; /* Размещаем заголовок слева, кнопку закрытия справа */
+    width: 100%; /* Заголовок и кнопка занимают всю ширину */
+`;
+
+const CheckboxWrapper = styled.label`
+    display: flex;
+    align-items: center; /* Выровнять элементы по вертикали */
+    margin-left: 10px;
+    color: #A8A8A8; /* Цвет текста */
+
+    input[type="checkbox"] {
+        margin-left: 10px; /* Отступ между текстом и чекбоксом */
+        width: 18px; /* Ширина чекбокса */
+        height: 18px; /* Высота чекбокса */
+        accent-color: #6a0dad; /* Цвет чекбокса */
+    }
+`;
 
 const courseRobuxToRubles =  0.74
+
 const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
-
-
     const [withdrawId, setWithdrawId] = useState(null)
     const [activeButton, setActiveButton] = useState('standard');
     const [rublesToPay, setRublesToPay] = useState('');
@@ -905,6 +1186,9 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [bonusBalance, setBonusBalance] = useState(0);
     const [promocode, setPromocode] = useState('')
     const [promocodeMsg, setPromocodeMsg] = useState(null)
+    const [currentStep, setCurrentStep] = useState(1);
+
+
     let location = useLocation();
     let state = location.state
 
@@ -1170,6 +1454,24 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         setRobuxesCount(Math.round(amount / 0.74)); // пересчёт Robux
     };
 
+    const handleBuyClick = () => {
+        setOpenBuyMenu(true);
+        setCurrentStep(1); // Переход на первый шаг (ввод никнейма)
+    };
+
+    const handleNextStep = () => {
+        if (currentStep < 5) {
+            setCurrentStep(currentStep + 1); // Переход на следующий шаг
+        }
+    };
+
+    const handlePreviousStep = () => {
+        if (currentStep > 1) {
+            setCurrentStep(currentStep - 1); // Возврат на предыдущий шаг
+        }
+    };
+
+
     const renderStandardForm = () => (
         <>
             {!buyMenu ? 
@@ -1287,86 +1589,86 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             </>
             : loggedInUser === null || loggedInUser === undefined ?
             <>
-                <StepCaption style={{display: "flex", marginTop: 0}} onClick={() => setOpenBuyMenu(false)}>
-                
-                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>
-                          <g clip-path="url(#clip0_76_1619)">
-                              <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>
-                          </g>
-                          <defs>
-                              <clipPath id="clip0_76_1619">
-                                  <rect width="21" height="21" fill="currentColor"></rect>
-                              </clipPath>
-                          </defs>
-                      </svg>
-                    <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}} >Назад</BuyButton>
-                </StepCaption>
-                <InputWrapper style={{marginTop: "20px"}}>
-                        <StyledInput
-                            placeholder="Поиск Игрока"
-                            id="SearchRequest"
-                            type="text"
-                            value={inputValue}
-                            onInput={(e ) => setInputValue(e.target.value)}
-                        />
-                    {isLoading && (
-                        <LoadingSpinner>
-                            <AtomicSpinner />
-                        </LoadingSpinner>
-                    )}
-                    {!isLoading && users.length > 0 && (
-                        <UserCardContainer>
-                            {users.map((user) => (
-                                <UserCard key={user.id} onClick={() => handleLogin(user)}>
-                                    <UserAvatar src={user.avatar_url} alt={user.name} />
-                                    <UserInfo>
-                                        <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>
-                                        <UserUsername>@{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>
-                                    </UserInfo>
-                                </UserCard>
-                            ))}
-                        </UserCardContainer>
-                    )}
-                    {error && <ModalText>{error}</ModalText>}
-                    {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}
-                    <ModalButton onClick={() => handleLogin(users[0])}>Войти</ModalButton>
+                {/*<StepCaption style={{display: "flex", marginTop: 0}} onClick={() => setOpenBuyMenu(false)}>*/}
 
-                    </InputWrapper>
+                {/*    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>*/}
+                {/*          <g clip-path="url(#clip0_76_1619)">*/}
+                {/*              <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>*/}
+                {/*          </g>*/}
+                {/*          <defs>*/}
+                {/*              <clipPath id="clip0_76_1619">*/}
+                {/*                  <rect width="21" height="21" fill="currentColor"></rect>*/}
+                {/*              </clipPath>*/}
+                {/*          </defs>*/}
+                {/*      </svg>*/}
+                {/*    <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}} >Назад</BuyButton>*/}
+                {/*</StepCaption>*/}
+                {/*<InputWrapper style={{marginTop: "20px"}}>*/}
+                {/*        <StyledInput*/}
+                {/*            placeholder="Поиск Игрока"*/}
+                {/*            id="SearchRequest"*/}
+                {/*            type="text"*/}
+                {/*            value={inputValue}*/}
+                {/*            onInput={(e ) => setInputValue(e.target.value)}*/}
+                {/*        />*/}
+                {/*    {isLoading && (*/}
+                {/*        <LoadingSpinner>*/}
+                {/*            <AtomicSpinner />*/}
+                {/*        </LoadingSpinner>*/}
+                {/*    )}*/}
+                {/*    {!isLoading && users.length > 0 && (*/}
+                {/*        <UserCardContainer>*/}
+                {/*            {users.map((user) => (*/}
+                {/*                <UserCard key={user.id} onClick={() => handleLogin(user)}>*/}
+                {/*                    <UserAvatar src={user.avatar_url} alt={user.name} />*/}
+                {/*                    <UserInfo>*/}
+                {/*                        <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>*/}
+                {/*                        <UserUsername>@{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>*/}
+                {/*                    </UserInfo>*/}
+                {/*                </UserCard>*/}
+                {/*            ))}*/}
+                {/*        </UserCardContainer>*/}
+                {/*    )}*/}
+                {/*    {error && <ModalText>{error}</ModalText>}*/}
+                {/*    {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}*/}
+                {/*    <ModalButton onClick={() => handleLogin(users[0])}>Войти</ModalButton>*/}
+
+                {/*    </InputWrapper>*/}
             </>: gameId === null || gameId === undefined || gameId === "" ? <>
 
                         {/*<StepCaption style={{display: "flex"}}>*/}
                         {/*    <BuyButton onClick={() => setOpenBuyMenu(false)}>Назад</BuyButton>*/}
                         {/*    <StyledLabel htmlFor="robuxesCount"></StyledLabel>*/}
                         {/*</StepCaption>*/}
-                        <StepCaption style={{display: "flex", marginTop: 0}} onClick={() => {setGameId(null); setOpenBuyMenu(false)}}>
-                    
-                            <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>
-                                <g clip-path="url(#clip0_76_1619)">
-                                    <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>
-                                </g>
-                                <defs>
-                                    <clipPath id="clip0_76_1619">
-                                        <rect width="21" height="21" fill="currentColor"></rect>
-                                    </clipPath>
-                                </defs>
-                            </svg>
-                            <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}}>Назад</BuyButton>
-                        </StepCaption>
-                        <InputWrapper style={{marginTop: "20px"}}>
-                            <ScrollWrapper style={{overflowY: "scroll", height: "50vh"}}>
-                                {games.map((game) => (
-                                    <StyledPlace onClick={() => handlePlaceChoice(game)} style={{cursor: "pointer"}}>
-                                    <PlaceImage src={game.icon_url} alt={game.name} style={{height: '180px', width: '210px'}}/>
-                                    <PlaceTitle style={{marginLeft: "20px"}}>{game.name}</PlaceTitle>
-                                    </StyledPlace>
-                                ))}
-                            </ScrollWrapper>
-                        </InputWrapper>
+                        {/*<StepCaption style={{display: "flex", marginTop: 0}} onClick={() => {setGameId(null); setOpenBuyMenu(false)}}>*/}
+
+                        {/*    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>*/}
+                        {/*        <g clip-path="url(#clip0_76_1619)">*/}
+                        {/*            <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>*/}
+                        {/*        </g>*/}
+                        {/*        <defs>*/}
+                        {/*            <clipPath id="clip0_76_1619">*/}
+                        {/*                <rect width="21" height="21" fill="currentColor"></rect>*/}
+                        {/*            </clipPath>*/}
+                        {/*        </defs>*/}
+                        {/*    </svg>*/}
+                        {/*    <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}}>Назад</BuyButton>*/}
+                        {/*</StepCaption>*/}
+                        {/*<InputWrapper style={{marginTop: "20px"}}>*/}
+                        {/*    <ScrollWrapper style={{overflowY: "scroll", height: "50vh"}}>*/}
+                        {/*        {games.map((game) => (*/}
+                        {/*            <StyledPlace onClick={() => handlePlaceChoice(game)} style={{cursor: "pointer"}}>*/}
+                        {/*            <PlaceImage src={game.icon_url} alt={game.name} style={{height: '180px', width: '210px'}}/>*/}
+                        {/*            <PlaceTitle style={{marginLeft: "20px"}}>{game.name}</PlaceTitle>*/}
+                        {/*            </StyledPlace>*/}
+                        {/*        ))}*/}
+                        {/*    </ScrollWrapper>*/}
+                        {/*</InputWrapper>*/}
                         {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                     </> : <>
                         <GamePassWrapper style={{maxWidth: "100%", boxSizing: "border-box"}}>
                             <StepCaption style={{display: "flex", marginTop: 0}} onClick={() => setGameId(null)}>
-                    
+
                                 <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>
                                     <g clip-path="url(#clip0_76_1619)">
                                         <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>
@@ -1417,7 +1719,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
                             <GamePassButtonContainer>
                                 <ModalLink href={`https://create.roblox.com/dashboard/creations/experiences/${gameId}/associated-items?activeTab=Pass`}>Создать GamePass</ModalLink>
-                                {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck} disabled={isLoading}>Проверить</ModalButton> :  
+                                {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck} disabled={isLoading}>Проверить</ModalButton> :
                                     <ModalButton style={{marginLeft: "100px"}} onClick={sendForm} disabled={isLoading}>Отправить</ModalButton> }
                             </GamePassButtonContainer>
                             {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
@@ -1426,6 +1728,172 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                     </>}
         </>
     );
+
+    const renderStepsSidebar = () => (
+        <StepsSidebar>
+            <ul>
+                {Array.from({ length: 3 }, (_, index) => (
+                    <li key={index} className={`step-item ${currentStep === index + 1 ? 'active' : ''}`}>
+                        <StepNumber className={`${currentStep >= index + 1 ? 'completed' : ''}`}>{index + 1}</StepNumber>
+                        {index < 2 && <StepLine className={`${currentStep > index + 1 ? 'active-line' : ''}`} />} {/* Полоска между шагами */}
+                    </li>
+                ))}
+            </ul>
+        </StepsSidebar>
+    );
+
+    const renderStepContent = () => {
+        switch (currentStep) {
+            case 1:
+                return (
+                    <StepForm>
+                        <StepCaption onClick={() => setOpenBuyMenu(false)}>
+                            <StepHeader>
+                                <StepTitle>Выберите ваш профиль</StepTitle>
+                                <CloseButton onClick={() => setOpenBuyMenu(false)}>
+                                    <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
+                                        <g clipPath="url(#clip0_76_1619)">
+                                            <circle cx="10.5" cy="10.5" r="10.5" fill="#6a0dad" />
+                                            <path d="M14 7L7 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M7 7L14 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        </g>
+                                    </svg>
+                                </CloseButton>
+                            </StepHeader>
+                            <StepSubtitle>Чтобы продолжить, вам нужно выбрать профиль</StepSubtitle>
+
+                        </StepCaption>
+                        <InputWrapper>
+                            <IconWrapper>
+                                <img src={Search} alt="Search Icon" style={{ width: "24px", marginRight: "10px" }} />
+                            </IconWrapper>
+                            <StyledInput
+                                placeholder="Введите никнейм"
+                                id="SearchRequest"
+                                type="text"
+                                value={inputValue}
+                                onInput={(e) => setInputValue(e.target.value)}
+                            />
+                            {isLoading && <LoadingSpinner>Загрузка...</LoadingSpinner>}
+                            {!isLoading && users.length > 0 && (
+                                <UserCardContainer>
+                                    {users.map((user) => (
+                                        <UserCard key={user.id} onClick={() => handleNextStep()}>
+                                            <UserAvatar src={user.avatar_url} alt={user.name} />
+                                            <UserInfo>
+                                                <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>
+                                                <UserUsername>@{user.name}</UserUsername>
+                                            </UserInfo>
+                                        </UserCard>
+                                    ))}
+                                </UserCardContainer>
+                            )}
+
+                        </InputWrapper>
+                        {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}
+                        <ModalButton onClick={handleNextStep}>Далее</ModalButton>
+                    </StepForm>
+                );
+            case 2:
+                return (
+                    <StepForm>
+                        <StepHeader>
+                            <StepTitle>Выберите ваш Place</StepTitle>
+                            <CloseButton onClick={() => setOpenBuyMenu(false)}>
+                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
+                                    <g clipPath="url(#clip0_76_1619)">
+                                        <circle cx="10.5" cy="10.5" r="10.5" fill="#6a0dad" />
+                                        <path d="M14 7L7 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M7 7L14 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </g>
+                                </svg>
+                            </CloseButton>
+                        </StepHeader>
+                        <StepSubtitle>Чтобы продолжить, вам нужно выбрать имеющийся Place</StepSubtitle>
+                        <InputWrapper>
+
+                                {games.map((game) => (
+                                    <StyledPlace onClick={() => handleNextStep()} style={{ cursor: "pointer" }}>
+                                        <PlaceImage src={game.icon_url} alt={game.name} style={{ height: '180px', width: '210px' }} />
+                                        <PlaceTitle>{game.name}</PlaceTitle>
+                                    </StyledPlace>
+                                ))}
+
+                        </InputWrapper>
+                        <StepButton onClick={handleNextStep}>Далее</StepButton>
+                        {error !== '' && <MinRobuxText>{error}</MinRobuxText>}
+                    </StepForm>
+                );
+            case 3:
+                return (
+                    <StepForm>
+                        <StepCaption style={{display: "flex", marginTop: 0}} onClick={() => setGameId(null)}>
+
+                        </StepCaption>
+                        <StepHeader>
+                            <GamePassTitle>Создайте новый GamePass с ценой {Math.round(robuxesCount * 1.429)} (R$)</GamePassTitle>
+                            <CloseButton onClick={() => setOpenBuyMenu(false)}>
+                                <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
+                                    <g clipPath="url(#clip0_76_1619)">
+                                        <circle cx="10.5" cy="10.5" r="10.5" fill="#6a0dad" />
+                                        <path d="M14 7L7 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M7 7L14 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                    </g>
+                                </svg>
+                            </CloseButton>
+                        </StepHeader>
+
+
+                        <GamePassAttention>
+                            <strong style={{}}>Внимание </strong>
+                            <GamePassInstruction href="/path/to/instruction.pdf">Инструкция.pdf</GamePassInstruction>
+                            <p>
+                                Обязательно каждый раз создавайте новый геймпасс. Робуксы доставляются методом Transfer в течение 5-7 дней с момента оплаты. Проверить статус робуксов можно в поле Pending Robux —{' '}
+                                <GamePassLink href="https://www.roblox.com/transactions" target="_blank" rel="noopener noreferrer">
+                                    https://www.roblox.com/transactions
+                                </GamePassLink>
+                            </p>
+                        </GamePassAttention>
+
+                        <div>
+                            <GamePassLabel htmlFor="email">Почта</GamePassLabel>
+                            <GamePassInput
+                                style={{width: "94%", color: "rgb(255 255 255 / var(--tw-text-opacity)", backgroundColor: "#013d1d"}}
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Введите свою почту"
+                            />
+
+                            <GrayText>Вводя свою почту, вы соглашаетесь с тем, что на неё будет отправлен чек и информация о заказе.</GrayText>
+                        </div>
+
+                        <GamePassCheckboxContainer style={{display: "flex"}}>
+
+                            <GamePassLabel htmlFor="agreement">
+                                Согласен с{' '}
+                                <GamePassLink href="/PrivacyPage">Публичной офертой</GamePassLink> и{' '}
+                                <GamePassLink href="/AgreementPage">Пользовательским соглашением</GamePassLink>
+                                <input type="checkbox" id="agreement" onChange={() => setAgreement(!agreement)} />
+                            </GamePassLabel>
+                        </GamePassCheckboxContainer>
+
+                        <GamePassButtonContainer>
+                            <ModalLink href={`https://create.roblox.com/dashboard/creations/experiences/${gameId}/associated-items?activeTab=Pass`}>Создать GamePass</ModalLink>
+                            {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck} disabled={isLoading}>Проверить</ModalButton> :
+                                <ModalButton style={{marginLeft: "100px"}} onClick={sendForm} disabled={isLoading}>Отправить</ModalButton> }
+                        </GamePassButtonContainer>
+                        {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
+                        {bonusBalance !== 0 ? <MinRobuxText htmlFor="bonusBalanceInfo">Вы выводите бонусы с своего аккаунта!</MinRobuxText> : null}
+                    </StepForm>
+
+                );
+            default:
+                return null;
+        }
+    };
+
 
     const renderGiftForm = () => (
         <>
@@ -1483,10 +1951,19 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                 <PricingArea>
                     {activeButton === 'standard' ? renderStandardForm() : renderGiftForm()}
                 </PricingArea>
+                    {buyMenu && (
+                        <FormOverlay>
+                            <StepsContainer>
+                                {renderStepsSidebar()}
+                                {renderStepContent()}
+                            </StepsContainer>
+                        </FormOverlay>
+                    )}
             </SaleContainer>
             {/*<MainChar src={DragonImage} alt="Dragon Character" />*/}
         </BannerArea>
     );
+
 
 };
 
