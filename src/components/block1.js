@@ -84,10 +84,10 @@ const BannerArea = styled.div`
     padding-bottom: 20px; /* Добавлен отступ снизу */
 
     @media (max-width: 768px) {
-        flex-direction: column;
+        flex-direction: column; 
         padding-left: 20px;
         padding-right: 20px;
-        padding-top: 20px; /* Для мобильных уменьшаем отступ */
+        padding-top: 0px; /* Для мобильных уменьшаем отступ */
         height: auto;
     }
 `;
@@ -160,23 +160,26 @@ const Subtitle = styled.h2`
 
     @media (max-width: 768px) {
         font-size: 24px;
-        margin-top: 10px; /* Добавляем небольшой отступ сверху на мобильных */
+        margin-top: 10px;
     }
 `;
 
-
 const TitleLine = styled.div`
-    ${tw`inline-block relative w-full text-center flex items-center justify-center`}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row; /* Явно указываем горизонтальное размещение */
     margin: auto;
+
     @media (max-width: 768px) {
         flex-direction: column;
-        margin-top: 20px; /* Добавляем отступ для мобильных устройств */
+        margin-top: 20px;
     }
 `;
 
 const Word = styled.div`
-    ${tw`ml-2 inline-block text-4xl font-bold`}
-    transform: translate(0px, 0%);
+    ${tw`inline-block text-4xl font-bold`}
+    margin-right: 10px; /* Отступ справа для иконки */
     font-size: 54px;
     animation: ${fadeInUp} 1.2s ease-out;
 
@@ -186,8 +189,19 @@ const Word = styled.div`
     }
 `;
 
-const GreenText = styled(Word)`
-    ${tw`text-4xl font-bold`}
+const CurrencyIcon = styled.img`
+    width: 35px;
+    height: 35px;
+    display: inline-block; /* Убедимся, что элемент в одном ряду */
+    margin-left: 8px; /* Добавляем отступ слева для иконки */
+
+    @media (max-width: 768px) {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+`;
+
+const GreenText = styled.div`
     color: #7c7a7a;
     font-size: 54px;
     animation: ${fadeInUp} 1.2s ease-out;
@@ -197,16 +211,6 @@ const GreenText = styled(Word)`
     }
 `;
 
-const CurrencyIcon = styled.img`
-    margin-left: 8px;
-    width: 35px;
-    height: 35px;
-
-    @media (max-width: 768px) {
-        margin-left: 0;
-        margin-top: 10px;
-    }
-`;
 
 const SubTitle = styled.h4`
     ${tw`text-lg font-semibold block text-white`}
@@ -307,10 +311,10 @@ const StepCaption = styled.div`
 
 const AvailabilityText = styled.span`
     ${tw` ml-2 mb-4 font-medium`}
-    margin-left: 15px;
+    margin-left: 170px;
     color: rgb(255, 255, 255);
     @media (max-width: 768px) {
-        margin-left: 0;
+        margin-left: 80px;
     }
 `;
 
@@ -372,7 +376,7 @@ const StyledInput = styled.input`
     ${tw`w-full p-4 text-white border-none`} /* Убираем бордер у самого input */
     font-size: 1.1em;
     
-    background: #262626;
+    background: transparent;
     appearance: none;
     border-radius: 20px;
 
