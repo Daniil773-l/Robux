@@ -166,7 +166,7 @@ const LoginModal = styled.div`
 
 const ModalContent = styled.div`
     ${tw`rounded-lg shadow-lg relative text-white`}
-    background: #015c2b; // Your modal's background color
+    background:#313131; // Your modal's background color
     border-radius: 24px;
     width: auto; // Adjust width as needed
     padding: 20px; // Adjust padding as needed
@@ -200,13 +200,14 @@ const LabelText = styled.p`
 
 const ModalInput = styled.input`
     ${tw`w-full p-3 rounded-lg border-none mt-2 text-white`}
-    background-color: #038741 !important;
+    background-color: #313131 !important;
     width: 95%;
     font-size: 18px;
     font-weight: 500;
     height: 30px;
     border: none;
     border-radius: 12px;
+    filter: brightness(115%);
     &::placeholder {
         color: #6f7489;
     }
@@ -214,8 +215,9 @@ const ModalInput = styled.input`
 
 const ModalButton = styled.button`
     ${tw`w-full py-4 rounded-lg mt-5 font-bold border-none cursor-pointer`}
-    background: linear-gradient(75.7deg, rgb(34, 126, 34) 3.8%, rgb(99, 162, 17) 87.1%);
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     color: #fff;
+    
     font-size: 16px;
     opacity: 0.5;
     &:hover {

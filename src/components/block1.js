@@ -768,10 +768,11 @@ const ModalLink = styled.a`
 
 const UserCardContainer = styled.div`
     ${tw`flex flex-wrap justify-center mt-4`};
-    max-height: 300px; /* Ограничиваем высоту контейнера карточек */
+    max-height: 200px; /* Ограничиваем высоту контейнера карточек */
     overflow-y: auto; /* Включаем вертикальную прокрутку */
     padding-right: 8px; /* Добавляем отступ для скролла */
     width: 100%; /* Для адаптивности */
+    margin-top: 20px; /* Добавим отступ сверху */
     &::-webkit-scrollbar {
         width: 6px;
     }
@@ -787,12 +788,12 @@ const UserCardContainer = styled.div`
 `;
 
 const UserCard = styled.div`
-    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
+    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`};
+    width: 250px; /* Увеличиваем ширину карточки */
+    text-align: left; /* Текст выровнен по левому краю */
     &:hover {
         background-color: #3C3555;
     }
-    width: 120px; /* Фиксируем ширину карточки */
-    text-align: center;
 `;
 
 const UserAvatar = styled.img`
@@ -1368,13 +1369,14 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     }, [loggedInUser]); // Empty dependency array ensures it runs only once on mount
 
     useEffect(() => {
-        console.log("multiplying robuxes to rubles")
+        console.log("multiplying robuxes to rubles");
         if (parseInt(robuxesCount) >= 210) {
-            setRublesToPay(String((robuxesCount * course).toFixed(1)))
+            setRublesToPay(String(Math.round(robuxesCount * course))); // Используем Math.round для округления
         } else {
-            setRublesToPay("")
+            setRublesToPay("");
         }
-    }, [robuxesCount])
+    }, [robuxesCount]);
+
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -1751,7 +1753,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             case 1:
                 return (
                     <StepForm>
-                        <StepCaption onClick={() => setOpenBuyMenu(false)}>
+                        <StepCaption>
                             <StepHeader>
                                 <StepTitle>Выберите ваш профиль</StepTitle>
                                 <CloseButton onClick={() => setOpenBuyMenu(false)}>
@@ -1765,7 +1767,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                 </CloseButton>
                             </StepHeader>
                             <StepSubtitle>Чтобы продолжить, вам нужно выбрать профиль</StepSubtitle>
-
                         </StepCaption>
                         <InputWrapper>
                             <IconWrapper>
@@ -1779,21 +1780,22 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                 onInput={(e) => setInputValue(e.target.value)}
                             />
                             {isLoading && <LoadingSpinner>Загрузка...</LoadingSpinner>}
-                            {!isLoading && users.length > 0 && (
-                                <UserCardContainer>
-                                    {users.map((user) => (
-                                        <UserCard key={user.id} onClick={() => handleNextStep()}>
-                                            <UserAvatar src={user.avatar_url} alt={user.name} />
-                                            <UserInfo>
-                                                <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>
-                                                <UserUsername>@{user.name}</UserUsername>
-                                            </UserInfo>
-                                        </UserCard>
-                                    ))}
-                                </UserCardContainer>
-                            )}
-
                         </InputWrapper>
+
+                        {/* Перемещаем список карточек под инпут */}
+                        {!isLoading && users.length > 0 && (
+                            <UserCardContainer>
+                                {users.map((user) => (
+                                    <UserCard key={user.id} onClick={() => handleNextStep()}>
+                                        <UserAvatar src={user.avatar_url} alt={user.name} />
+                                        <UserInfo>
+                                            <UserName>{user.name}</UserName>
+                                            <UserUsername>@{user.username}</UserUsername>
+                                        </UserInfo>
+                                    </UserCard>
+                                ))}
+                            </UserCardContainer>
+                        )}
                         {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}
                         <ModalButton onClick={handleNextStep}>Далее</ModalButton>
                     </StepForm>
