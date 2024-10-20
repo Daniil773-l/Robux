@@ -770,6 +770,7 @@ const UserCardContainer = styled.div`
     ${tw`flex flex-wrap justify-center mt-4`};
     max-height: 200px; /* Ограничиваем высоту контейнера карточек */
     overflow-y: auto; /* Включаем вертикальную прокрутку */
+    overflow-x: visible;
     padding-right: 8px; /* Добавляем отступ для скролла */
     width: 100%; /* Для адаптивности */
     margin-top: 20px; /* Добавим отступ сверху */
@@ -791,8 +792,11 @@ const UserCard = styled.div`
     ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`};
     width: 250px; /* Увеличиваем ширину карточки */
     text-align: left; /* Текст выровнен по левому краю */
+    border-radius: 20%;
+    //box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: visible; /* Избегаем обрезки */
     &:hover {
-        background-color: #3C3555;
+        background-color: #3C3555;  
     }
 `;
 
@@ -1779,10 +1783,11 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                 value={inputValue}
                                 onInput={(e) => setInputValue(e.target.value)}
                             />
-                            {isLoading && <LoadingSpinner>Загрузка...</LoadingSpinner>}
+                            {/*{isLoading && <LoadingSpinner>Загрузка...</LoadingSpinner>}*/}
                         </InputWrapper>
 
                         {/* Перемещаем список карточек под инпут */}
+                        {/* Список Игроков */}
                         {!isLoading && users.length > 0 && (
                             <UserCardContainer>
                                 {users.map((user) => (
