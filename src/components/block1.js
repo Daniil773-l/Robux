@@ -1469,10 +1469,11 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         setCurrentStep(1); // Переход на первый шаг (ввод никнейма)
     };
 
-    const handleNextStep = () => {
+    const handleNextStep = (game) => {
         if (currentStep < 5) {
             setCurrentStep(currentStep + 1); // Переход на следующий шаг
         }
+        setGameId(game.id)
     };
 
     const handlePreviousStep = () => {
@@ -1824,7 +1825,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         <InputWrapper>
 
                                 {games.map((game) => (
-                                    <StyledPlace onClick={() => handleNextStep()} style={{ cursor: "pointer" }}>
+                                    <StyledPlace onClick={() => handleNextStep(game)} style={{ cursor: "pointer" }}>
                                         <PlaceImage src={game.icon_url} alt={game.name} style={{ height: '180px', width: '210px' }} />
                                         <PlaceTitle>{game.name}</PlaceTitle>
                                     </StyledPlace>
