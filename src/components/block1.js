@@ -1307,6 +1307,10 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                 setError("Создайте геймпасс с указанным количеством робуксов")
                 return 
             }
+            if (response.status == 422) { 
+                setError("Неправильный формат отправки")
+                return 
+            }
 
             const data = await response.text();
             
