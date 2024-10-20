@@ -172,7 +172,7 @@ const TitleLine = styled.div`
     margin: auto;
 
     @media (max-width: 768px) {
-        flex-direction: column;
+        flex-direction: row;
         margin-top: 20px;
     }
 `;
@@ -180,7 +180,7 @@ const TitleLine = styled.div`
 const Word = styled.div`
     ${tw`inline-block text-4xl font-bold`}
     margin-right: 10px; /* Отступ справа для иконки */
-    font-size: 54px;
+    font-size: 50px;
     animation: ${fadeInUp} 1.2s ease-out;
 
     @media (max-width: 768px) {
@@ -196,18 +196,21 @@ const CurrencyIcon = styled.img`
     margin-left: 8px; /* Добавляем отступ слева для иконки */
 
     @media (max-width: 768px) {
-        margin-left: 0;
-        margin-top: 10px;
+        margin-left: 10px;
+        margin-top: 8px;
     }
 `;
 
 const GreenText = styled.div`
+    ${tw`mt-8`}
     color: #7c7a7a;
-    font-size: 54px;
+    margin-left: 20px;
+    font-size: 50px;
     animation: ${fadeInUp} 1.2s ease-out;
 
     @media (max-width: 768px) {
-        font-size: 28px;
+        font-size: 32px;
+        margin-top: 40px;
     }
 `;
 
@@ -245,7 +248,7 @@ const InfoIcon = styled.img`
 const NavContainer = styled.div`
     ${tw`mt-4 flex justify-center `}
     background-color: #333 !important; // Change from #222 to #333
-    border-radius: 16px;
+    border-radius: 19px;
     margin-bottom: 20px;
 
     @media (max-width: 768px) {
@@ -265,7 +268,8 @@ const NavButton = styled.button`
     transition: background-color 0.3s ease;
 
     @media (max-width: 768px) {
-        margin: 5px 0;
+        margin: 5px;
+        width: 97%;
         padding: 10px;
         font-size: 12px;
     }
@@ -299,19 +303,20 @@ const PricingArea = styled.div`
 
 const StepCaption = styled.div`
     ${tw`mt-3 text-white items-center`}
-    
+    display: inline-block;
     font-size: 1.1em;
 
     @media (max-width: 768px) {
         font-size: 14px;
+        padding-bottom: 30px;
         flex-direction: column;
         align-items: flex-start;
     }
 `;
 
 const AvailabilityText = styled.span`
-    ${tw` ml-2 mb-4 font-medium`}
-    margin-left: 170px;
+    ${tw`ml-2 mb-4 font-medium`}
+    margin-left: 160px;
     color: rgb(255, 255, 255);
     @media (max-width: 768px) {
         margin-left: 80px;
@@ -458,17 +463,36 @@ const StyledButtonForMoney = styled.button`
     }
 `;
 
+const SliderValue = styled.div`
+  position: absolute;
+  left: ${(props) => (props.value - props.min) / (props.max - props.min) * 100}%;
+  transform: translateX(-50%);
+  top: -45px;
+  pointer-events: none;
+`;
+
+const ValueDisplay = styled.div`
+    background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
+  border-radius: 20px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1em;
+  color: black;
+`;
+
 const StyledScroll = styled.input.attrs({ type: 'range' })`
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
     height: 8px;
-    margin-top: 20px;
-    background: linear-gradient(
-    to right,
-    #fbbf24 ${(props) => (props.value - props.min) / (props.max - props.min) * 100}%,
-    #3a3a3a ${(props) => (props.value - props.min) / (props.max - props.min) * 100}%
-    );
+    // background: linear-gradient(
+    // to right,
+    // #fbbf24 ${(props) => (props.value - props.min) / (props.max - props.min) * 100}%,
+    // #3a3a3a ${(props) => (props.value - props.min) / (props.max - props.min) * 100}%
+    // );
+    background-color: #3a3a3a;
     border-radius: 12px;
     outline: none;
     cursor: pointer;
@@ -478,8 +502,8 @@ const StyledScroll = styled.input.attrs({ type: 'range' })`
         -webkit-appearance: none;
         appearance: none;
         width: 80px;
-        height: 9px;
-        background: #fbbf24;
+        height: 25px;
+        background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
         border-radius: 20px;
         cursor: pointer;
         display: flex;
@@ -490,14 +514,13 @@ const StyledScroll = styled.input.attrs({ type: 'range' })`
         font-size: 1em;
         box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
         position: relative;
-        //top: -16px; /* Корректируем положение бегунка */
-        //padding-left: 10px; /* Дополнительный отступ для выравнивания текста */
+        top: -8px; /* для центрирования бегунка */
     }
 
     &::-moz-range-thumb {
         width: 80px;
-        height: 9px;
-        background: #fbbf24;
+        height: 25px;
+        background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
         border-radius: 20px;
         cursor: pointer;
         display: flex;
@@ -508,8 +531,7 @@ const StyledScroll = styled.input.attrs({ type: 'range' })`
         font-size: 1em;
         box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
         position: relative;
-        //top: -16px; /* Корректируем положение бегунка */
-        //padding-left: 10px; /* Дополнительный отступ для выравнивания текста */
+        top: -8px; /* для центрирования бегунка */
     }
 
     &::-webkit-slider-runnable-track {
@@ -518,21 +540,12 @@ const StyledScroll = styled.input.attrs({ type: 'range' })`
         background: transparent;
         border-radius: 12px;
     }
-    // &::after {
-    //     content: "${(props) => props.value} R$"; /* Отображаем значение внутри бегунка */
-    //     position: absolute;
-    //     top: 50%;
-    //     left: 50%;
-    //     transform: translate(-50%, -50%);
-    //     font-size: 1em;
-    //     background-color: transparent;
-    //     color: black;
-    // }
 `;
 
 const SliderContainer = styled.div`
     position: relative;
     width: 100%;
+    margin-top: 20px;
 `;
 
 const SecondStyledInput = styled.input`
@@ -674,6 +687,15 @@ const MinRobuxText = styled.p`
     }
 `;
 
+const RobuxMini = styled.img`
+    display: inline-block; /* Картинка будет отображаться на одной строке с текстом */
+    margin-left: 8px; /* Отступ слева для соответствия макету */
+
+    @media (max-width: 768px) {
+        /* Если нужны изменения для маленьких экранов, можно добавить их тут */
+    }
+`;
+
 const Sphere = styled.img`
     width: 4%;
     position: absolute;
@@ -789,10 +811,9 @@ const UserCardContainer = styled.div`
 `;
 
 const UserCard = styled.div`
-    ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`};
-    width: 250px; /* Увеличиваем ширину карточки */
+    ${tw`flex items-center p-3 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`};
+    width: 300px; /* Увеличиваем ширину карточки */
     text-align: left; /* Текст выровнен по левому краю */
-    border-radius: 20%;
     //box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     overflow: visible; /* Избегаем обрезки */
     &:hover {
@@ -1495,7 +1516,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                 <StyledLabel htmlFor="rublesToPay">Заплачу <span style={{ color: '#ffffff' }}>(₽)</span></StyledLabel>
                 <AvailabilityText id="instockGamePass">
                     В наличии {botRobuxAmount}
-                    <img src={Robuxmini} alt="Robux Mini Icon" style={{ marginLeft: '8px' }} />
+                    <RobuxMini src={Robuxmini} alt="Robux Mini Icon" />
                 </AvailabilityText>
 
             </StepCaption>
@@ -1548,25 +1569,18 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         max="5000"
                         value={robuxesCount}
                         onChange={handleChange}
+
                     />
-                    <div style={{
-                        position: 'absolute',
-                        left: `${(robuxesCount - 210) / (5000 - 210) * 100}%`,
-                        transform: 'translateX(-50%)',
-                        pointerEvents: 'none'
-                    }}>
-                        <div style={{
-                            background: '#fbbf24',
-                            borderRadius: '20px',
-                            padding: '5px 10px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            fontWeight: 'bold',
-                            fontSize: '1em' }}>
+                    <SliderValue
+                        value={robuxesCount}
+                        min="210"
+                        max="5000"
+                    >
+                        <ValueDisplay>
                             {robuxesCount}
                             <FaLock style={{ marginLeft: '5px' }} />
-                        </div>
-                    </div>
+                        </ValueDisplay>
+                    </SliderValue>
                 </SliderContainer>
                 {/*    </InputWrapper>*/}
                 {/*</InputBlock>*/}
@@ -1699,48 +1713,49 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
                             <GamePassTitle>Создайте новый GamePass с ценой {Math.round(robuxesCount * 1.429)} (R$)</GamePassTitle>
 
-                            <GamePassAttention>
-                                <strong style={{}}>Внимание </strong>
-                                <GamePassInstruction href="/path/to/instruction.pdf">Инструкция.pdf</GamePassInstruction>
-                                <p>
-                                    Обязательно каждый раз создавайте новый геймпасс. Робуксы доставляются методом Transfer в течение 5-7 дней с момента оплаты. Проверить статус робуксов можно в поле Pending Robux —{' '}
-                                    <GamePassLink href="https://www.roblox.com/transactions" target="_blank" rel="noopener noreferrer">
-                                        https://www.roblox.com/transactions
-                                    </GamePassLink>
-                                </p>
-                            </GamePassAttention>
+                            {/*<GamePassAttention>*/}
+                            {/*    <strong style={{}}>Внимание </strong>*/}
+                            {/*    <GamePassInstruction href="/path/to/instruction.pdf">Инструкция.pdf</GamePassInstruction>*/}
+                            {/*    <p>*/}
+                            {/*        Обязательно каждый раз создавайте новый геймпасс. Робуксы доставляются методом Transfer в течение 5-7 дней с момента оплаты. Проверить статус робуксов можно в поле Pending Robux —{' '}*/}
+                            {/*        <GamePassLink href="https://www.roblox.com/transactions" target="_blank" rel="noopener noreferrer">*/}
+                            {/*            https://www.roblox.com/transactions*/}
+                            {/*        </GamePassLink>*/}
+                            {/*    </p>*/}
+                            {/*</GamePassAttention>*/}
 
-                            <div>
-                                <GamePassLabel htmlFor="email">Почта</GamePassLabel>
-                                <GamePassInput
-                                    style={{width: "94%", color: "rgb(255 255 255 / var(--tw-text-opacity)", backgroundColor: "#013d1d"}}
-                                    type="email"
-                                    id="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="Введите свою почту"
-                                />
-                                <p>Вводя свою почту, вы соглашаетесь с тем, что на неё будет отправлен чек и информация о заказе.</p>
-                            </div>
+                            {/*<div>*/}
+                            {/*    <GamePassLabel htmlFor="email">Почта</GamePassLabel>*/}
+                            {/*    <GamePassInput*/}
+                            {/*        style={{width: "94%", color: "rgb(255 255 255 / var(--tw-text-opacity)", backgroundColor: "#013d1d"}}*/}
+                            {/*        type="email"*/}
+                            {/*        id="email"*/}
+                            {/*        value={email}*/}
+                            {/*        onChange={(e) => setEmail(e.target.value)}*/}
+                            {/*        placeholder="Введите свою почту"*/}
+                            {/*    />*/}
+                            {/*    <p>Вводя свою почту, вы соглашаетесь с тем, что на неё будет отправлен чек и информация о заказе.</p>*/}
+                            {/*</div>*/}
 
-                            <GamePassCheckboxContainer style={{display: "flex"}}>
-                                <input type="checkbox" id="agreement" onChange={() => setAgreement(!agreement)}/>
-                                <GamePassLabel htmlFor="agreement" style={{marginLeft: "10px"}}>
-                                    Согласен с{' '}
-                                    <GamePassLink href="/PrivacyPage">Публичной офертой</GamePassLink> и{' '}
-                                    <GamePassLink href="/AgreementPage">Пользовательским соглашением</GamePassLink>
-                                </GamePassLabel>
-                            </GamePassCheckboxContainer>
+                            {/*<GamePassCheckboxContainer style={{display: "flex"}}>*/}
+                            {/*    <input type="checkbox" id="agreement" onChange={() => setAgreement(!agreement)}/>*/}
+                            {/*    <GamePassLabel htmlFor="agreement" style={{marginLeft: "10px"}}>*/}
+                            {/*        Согласен с{' '}*/}
+                            {/*        <GamePassLink href="/PrivacyPage">Публичной офертой</GamePassLink> и{' '}*/}
+                            {/*        <GamePassLink href="/AgreementPage">Пользовательским соглашением</GamePassLink>*/}
+                            {/*    </GamePassLabel>*/}
+                            {/*</GamePassCheckboxContainer>*/}
 
-                            <GamePassButtonContainer>
-                                <ModalLink href={`https://create.roblox.com/dashboard/creations/experiences/${gameId}/associated-items?activeTab=Pass`}>Создать GamePass</ModalLink>
-                                {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck} disabled={isLoading}>Проверить</ModalButton> :
-                                    <ModalButton style={{marginLeft: "100px"}} onClick={sendForm} disabled={isLoading}>Отправить</ModalButton> }
-                            </GamePassButtonContainer>
+                            {/*<GamePassButtonContainer>*/}
+                            {/*    <ModalLink href={`https://create.roblox.com/dashboard/creations/experiences/${gameId}/associated-items?activeTab=Pass`}>Создать GamePass</ModalLink>*/}
+                            {/*    {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck} disabled={isLoading}>Проверить</ModalButton> :*/}
+                            {/*        <ModalButton style={{marginLeft: "100px"}} onClick={sendForm} disabled={isLoading}>Отправить</ModalButton> }*/}
+                            {/*</GamePassButtonContainer>*/}
                             {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                             {bonusBalance !== 0 ? <MinRobuxText htmlFor="bonusBalanceInfo">Вы выводите бонусы с своего аккаунта!</MinRobuxText> : null}
                         </GamePassWrapper>
-                    </>}
+                    </>
+            }
         </>
     );
 
@@ -1936,10 +1951,12 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             <BiggerCoin src={biggercoin} alt="Floating Coin" />
             <SaleContainer>
                 <TitleArea>
-                    <Title>Покупай</Title>
+                    <TitleLine>
+                        <Title>Покупай</Title>
+                        <GreenText>по курсу</GreenText>
+                    </TitleLine>
                     <Subtitle>
                         <TitleLine>
-                            <GreenText>по курсу</GreenText>
                             <Word>{course}</Word>
                             <CurrencyIcon src={Robux} alt="Robux Icon" />
                         </TitleLine>
