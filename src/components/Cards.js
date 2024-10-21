@@ -41,7 +41,7 @@ const CardsContainer = styled.div`
 
     @media (max-width: 768px) {
         padding: 10px;
-        max-width: 100%;
+        max-width: 90%;
     }
 `;
 
@@ -64,6 +64,7 @@ const Card = styled.div`
         flex-direction: column;
         padding: 15px;
         min-width: auto;
+        
         align-items: center;
     }
 `;
@@ -137,7 +138,7 @@ const ActionIcon = styled.div`
     display: flex;
 
     @media (max-width: 768px) {
-        width: 280px;
+        width: 200px;
         height: 30px;
         justify-content: center;
         margin-top: 10px;

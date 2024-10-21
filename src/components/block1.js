@@ -287,13 +287,13 @@ const SaleContainer = styled.div`
 `;
 
 const PricingArea = styled.div`
-    ${tw` p-6 rounded-lg shadow-lg bg-[rgb(1, 92, 43)]`}
+    ${tw` p-6 rounded-lg shadow-lg bg-[rgb(1, 92, 43)] `}
     background-color: #333; // Change this to your desired color
 
 
     border: none;
     border-radius: 24px;
-    min-height: 450px; /* Ensure the form maintains a static height */
+    min-height: 550px; /* Ensure the form maintains a static height */
 
     @media (max-width: 768px) {
         padding: 20px;
@@ -476,6 +476,7 @@ const ValueDisplay = styled.div`
   border-radius: 20px;
   padding: 5px 10px;
   display: flex;
+    margin-top: 43px;
   align-items: center;
   font-weight: bold;
   font-size: 1em;
@@ -503,16 +504,16 @@ const StyledScroll = styled.input.attrs({ type: 'range' })`
         appearance: none;
         width: 80px;
         height: 25px;
-        background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
+       
         border-radius: 20px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: bold;
-        color: black;
+        
         font-size: 1em;
-        box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+        
         position: relative;
         top: -8px; /* для центрирования бегунка */
     }
@@ -1118,14 +1119,8 @@ const PurchaseContainer = styled.div`
 `;
 
 const FormOverlay = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    ${tw`fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 `}
+   
 `;
 
 const StepTitle = styled.h2`
@@ -1618,81 +1613,10 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             </>
             : loggedInUser === null || loggedInUser === undefined ?
             <>
-                {/*<StepCaption style={{display: "flex", marginTop: 0}} onClick={() => setOpenBuyMenu(false)}>*/}
 
-                {/*    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>*/}
-                {/*          <g clip-path="url(#clip0_76_1619)">*/}
-                {/*              <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>*/}
-                {/*          </g>*/}
-                {/*          <defs>*/}
-                {/*              <clipPath id="clip0_76_1619">*/}
-                {/*                  <rect width="21" height="21" fill="currentColor"></rect>*/}
-                {/*              </clipPath>*/}
-                {/*          </defs>*/}
-                {/*      </svg>*/}
-                {/*    <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}} >Назад</BuyButton>*/}
-                {/*</StepCaption>*/}
-                {/*<InputWrapper style={{marginTop: "20px"}}>*/}
-                {/*        <StyledInput*/}
-                {/*            placeholder="Поиск Игрока"*/}
-                {/*            id="SearchRequest"*/}
-                {/*            type="text"*/}
-                {/*            value={inputValue}*/}
-                {/*            onInput={(e ) => setInputValue(e.target.value)}*/}
-                {/*        />*/}
-                {/*    {isLoading && (*/}
-                {/*        <LoadingSpinner>*/}
-                {/*            <AtomicSpinner />*/}
-                {/*        </LoadingSpinner>*/}
-                {/*    )}*/}
-                {/*    {!isLoading && users.length > 0 && (*/}
-                {/*        <UserCardContainer>*/}
-                {/*            {users.map((user) => (*/}
-                {/*                <UserCard key={user.id} onClick={() => handleLogin(user)}>*/}
-                {/*                    <UserAvatar src={user.avatar_url} alt={user.name} />*/}
-                {/*                    <UserInfo>*/}
-                {/*                        <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>*/}
-                {/*                        <UserUsername>@{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>*/}
-                {/*                    </UserInfo>*/}
-                {/*                </UserCard>*/}
-                {/*            ))}*/}
-                {/*        </UserCardContainer>*/}
-                {/*    )}*/}
-                {/*    {error && <ModalText>{error}</ModalText>}*/}
-                {/*    {!isLoading && users.length === 0 && !error && <ModalText>Данные появятся после ввода никнейма...</ModalText>}*/}
-                {/*    <ModalButton onClick={() => handleLogin(users[0])}>Войти</ModalButton>*/}
-
-                {/*    </InputWrapper>*/}
             </>: gameId === null || gameId === undefined || gameId === "" ? <>
 
-                        {/*<StepCaption style={{display: "flex"}}>*/}
-                        {/*    <BuyButton onClick={() => setOpenBuyMenu(false)}>Назад</BuyButton>*/}
-                        {/*    <StyledLabel htmlFor="robuxesCount"></StyledLabel>*/}
-                        {/*</StepCaption>*/}
-                        {/*<StepCaption style={{display: "flex", marginTop: 0}} onClick={() => {setGameId(null); setOpenBuyMenu(false)}}>*/}
 
-                        {/*    <svg width="21" height="21" viewBox="0 0 21 21" fill="none" style={{color: "var(--color-body)"}}>*/}
-                        {/*        <g clip-path="url(#clip0_76_1619)">*/}
-                        {/*            <path d="M21 9.4501H3.99L9.87 3.5701L8.4 2.1001L0 10.5001L8.4 18.9001L9.87 17.4301L3.99 11.5501H21V9.4501Z" fill="currentColor"></path>*/}
-                        {/*        </g>*/}
-                        {/*        <defs>*/}
-                        {/*            <clipPath id="clip0_76_1619">*/}
-                        {/*                <rect width="21" height="21" fill="currentColor"></rect>*/}
-                        {/*            </clipPath>*/}
-                        {/*        </defs>*/}
-                        {/*    </svg>*/}
-                        {/*    <BuyButton style={{background: "none", padding: 0, paddingLeft: "10px"}}>Назад</BuyButton>*/}
-                        {/*</StepCaption>*/}
-                        {/*<InputWrapper style={{marginTop: "20px"}}>*/}
-                        {/*    <ScrollWrapper style={{overflowY: "scroll", height: "50vh"}}>*/}
-                        {/*        {games.map((game) => (*/}
-                        {/*            <StyledPlace onClick={() => handlePlaceChoice(game)} style={{cursor: "pointer"}}>*/}
-                        {/*            <PlaceImage src={game.icon_url} alt={game.name} style={{height: '180px', width: '210px'}}/>*/}
-                        {/*            <PlaceTitle style={{marginLeft: "20px"}}>{game.name}</PlaceTitle>*/}
-                        {/*            </StyledPlace>*/}
-                        {/*        ))}*/}
-                        {/*    </ScrollWrapper>*/}
-                        {/*</InputWrapper>*/}
                         {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                     </> : <>
                         <GamePassWrapper style={{maxWidth: "100%", boxSizing: "border-box"}}>
@@ -1713,44 +1637,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
                             <GamePassTitle>Создайте новый GamePass с ценой {Math.round(robuxesCount * 1.429)} (R$)</GamePassTitle>
 
-                            {/*<GamePassAttention>*/}
-                            {/*    <strong style={{}}>Внимание </strong>*/}
-                            {/*    <GamePassInstruction href="/path/to/instruction.pdf">Инструкция.pdf</GamePassInstruction>*/}
-                            {/*    <p>*/}
-                            {/*        Обязательно каждый раз создавайте новый геймпасс. Робуксы доставляются методом Transfer в течение 5-7 дней с момента оплаты. Проверить статус робуксов можно в поле Pending Robux —{' '}*/}
-                            {/*        <GamePassLink href="https://www.roblox.com/transactions" target="_blank" rel="noopener noreferrer">*/}
-                            {/*            https://www.roblox.com/transactions*/}
-                            {/*        </GamePassLink>*/}
-                            {/*    </p>*/}
-                            {/*</GamePassAttention>*/}
-
-                            {/*<div>*/}
-                            {/*    <GamePassLabel htmlFor="email">Почта</GamePassLabel>*/}
-                            {/*    <GamePassInput*/}
-                            {/*        style={{width: "94%", color: "rgb(255 255 255 / var(--tw-text-opacity)", backgroundColor: "#013d1d"}}*/}
-                            {/*        type="email"*/}
-                            {/*        id="email"*/}
-                            {/*        value={email}*/}
-                            {/*        onChange={(e) => setEmail(e.target.value)}*/}
-                            {/*        placeholder="Введите свою почту"*/}
-                            {/*    />*/}
-                            {/*    <p>Вводя свою почту, вы соглашаетесь с тем, что на неё будет отправлен чек и информация о заказе.</p>*/}
-                            {/*</div>*/}
-
-                            {/*<GamePassCheckboxContainer style={{display: "flex"}}>*/}
-                            {/*    <input type="checkbox" id="agreement" onChange={() => setAgreement(!agreement)}/>*/}
-                            {/*    <GamePassLabel htmlFor="agreement" style={{marginLeft: "10px"}}>*/}
-                            {/*        Согласен с{' '}*/}
-                            {/*        <GamePassLink href="/PrivacyPage">Публичной офертой</GamePassLink> и{' '}*/}
-                            {/*        <GamePassLink href="/AgreementPage">Пользовательским соглашением</GamePassLink>*/}
-                            {/*    </GamePassLabel>*/}
-                            {/*</GamePassCheckboxContainer>*/}
-
-                            {/*<GamePassButtonContainer>*/}
-                            {/*    <ModalLink href={`https://create.roblox.com/dashboard/creations/experiences/${gameId}/associated-items?activeTab=Pass`}>Создать GamePass</ModalLink>*/}
-                            {/*    {!availabilityChecked ? <ModalButton style={{marginLeft: "100px"}} onClick={sendCheck} disabled={isLoading}>Проверить</ModalButton> :*/}
-                            {/*        <ModalButton style={{marginLeft: "100px"}} onClick={sendForm} disabled={isLoading}>Отправить</ModalButton> }*/}
-                            {/*</GamePassButtonContainer>*/}
                             {error !== '' ? <><MinRobuxText htmlFor="robuxesCount">{error}</MinRobuxText></> : null}
                             {bonusBalance !== 0 ? <MinRobuxText htmlFor="bonusBalanceInfo">Вы выводите бонусы с своего аккаунта!</MinRobuxText> : null}
                         </GamePassWrapper>

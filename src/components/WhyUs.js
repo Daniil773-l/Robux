@@ -25,6 +25,7 @@ const WhyUsContainer = styled.div`
 
     @media (max-width: 768px) {
         padding: 40px 10px; /* Уменьшение отступов для мобильной версии */
+        
     }
 `;
 
@@ -61,6 +62,7 @@ const Card = styled.div`
 
     @media (max-width: 768px) {
     padding: 20px; /* Корректировка отступов для мобильной версии */
+    min-width: auto !important;
 }
 `;
 
