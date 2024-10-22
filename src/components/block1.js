@@ -115,14 +115,18 @@ const TitleArea = styled.div`
     }
 `;
 const Title = styled.h2`
-    ${tw`text-4xl font-bold text-white`}
-    margin-bottom: 10px !important;
+    ${tw`text-3xl font-bold text-white`}
+    margin-bottom: 0px !important;
     font-size: 54px;
     animation: ${fadeInUp} 1.2s ease-out;
+    padding: 0;
+    position: relative; /* Устанавливаем точное положение */
+    top: 10px; /* Регулируем высоту для перемещения текста вниз */
 
     @media (max-width: 768px) {
         font-size: 36px;
-        padding-top: 20px; /* Поднимаем заголовок на мобильных */
+        padding-top: 0px;
+        top: 5px; /* Можно уменьшить для мобильных устройств */
     }
 `;
 
@@ -168,8 +172,11 @@ const TitleLine = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: row; /* Явно указываем горизонтальное размещение */
+    flex-direction: row;
     margin: auto;
+    padding: 0;
+    white-space: nowrap; /* Текст не переносится */
+    position: relative; /* Для точного управления позиционированием */
 
     @media (max-width: 768px) {
         flex-direction: row;
@@ -202,19 +209,20 @@ const CurrencyIcon = styled.img`
 `;
 
 const GreenText = styled.div`
-    ${tw`mt-8`}
-    color: #7c7a7a;
-    margin-left: 20px;
-    font-size: 50px;
+    ${tw`text-4xl font-bold text-white`}
+    margin-left: 10px;
+    font-size: 54px;
     animation: ${fadeInUp} 1.2s ease-out;
+    padding: 0;
+    position: relative;
+    top: 30px; /* Синхронизируем высоту с заголовком */
 
     @media (max-width: 768px) {
         font-size: 32px;
-        margin-top: 40px;
+        margin-top: 20px;
+        top: 10px; /* Регулируем положение для мобильных устройств */
     }
 `;
-
-
 const SubTitle = styled.h4`
     ${tw`text-lg font-semibold block text-white`}
     font-family: Manrope;
@@ -302,10 +310,9 @@ const PricingArea = styled.div`
 `;
 
 const StepCaption = styled.div`
-    ${tw`mt-3 text-white items-center`}
-    display: inline-block;
+    ${tw`mt-3 text-white flex items-center`}
     font-size: 1.1em;
-    padding-bottom: 30px;
+
     @media (max-width: 768px) {
         font-size: 14px;
         flex-direction: column;
@@ -314,13 +321,16 @@ const StepCaption = styled.div`
 `;
 
 const AvailabilityText = styled.span`
-    ${tw`ml-2 mb-4 font-medium`}
-    margin-left: 160px;
+    ${tw` text-xl ml-2 mb-4 font-medium`}
+    margin-left: 15px;
     color: rgb(255, 255, 255);
     @media (max-width: 768px) {
-        margin-left: 80px;
+        margin-left: auto;
+        margin-top: -42px;
     }
 `;
+
+
 
 const BuyForm = styled.div`
     ${tw`flex flex-col space-y-8`}
@@ -331,11 +341,11 @@ const BuyForm = styled.div`
 `;
 
 const StyledLabel = styled.label`
-    ${tw`text-white font-semibold mb-3`}
+    ${tw`text-white  text-2xl font-semibold mb-3`}
     font-size: 1.1em;
 
     @media (max-width: 768px) {
-        font-size: 14px;
+        font-size: 18px;
      
     }
 `;
@@ -354,11 +364,11 @@ const SecondStyledLabel = styled.label`
 `;
 
 const InputBlockContainer = styled.div`
-    ${tw`flex flex-col space-y-4`} /* Основной контейнер для input и кнопок */
+    ${tw`flex flex-col space-y-2`} /* Основной контейнер для input и кнопок */
 `;
 
 const InputBlock = styled.div`
-    ${tw`flex items-center space-y-4`} /* Flex контейнер для input и иконки */
+    ${tw`flex items-center space-y-1`} /* Flex контейнер для input и иконки */
     border-radius: 12px; /* Округленные края */
     border: 1px solid #1B1B1B; /* Общий бордер для input и иконки */
     background-color: #313131; /* Фон для общего контейнера */
@@ -441,9 +451,9 @@ const RubleIcon = styled.svg`
 const ButtonGroup = styled.div`
     display: flex;
     gap: 10px;
-    margin-top: 10px;
-    
+    margin-bottom: -5px; /* Уменьшил отступ снизу */
 `;
+
 
 const StyledButtonForMoney = styled.button`
     padding: 8px 16px; /* Уменьшил размеры кнопки */
@@ -641,7 +651,7 @@ const PlaceTitle = styled.div`
 `;
 
 const PromoLink = styled.a`
-    ${tw`mt-3 text-white text-center cursor-pointer`}
+    ${tw`mt-2 text-white text-center cursor-pointer`}
     font-size: 1.1em;
 
     @media (max-width: 768px) {
@@ -1523,17 +1533,19 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
     const renderStandardForm = () => (
         <>
-        <div style={{height: '600px'}}>
+        <div style={{height: '500px'}}>
             {!buyMenu ?
                 <>
                     <div  style={{ display: isStandardFormVisible ? 'block' : 'none' }}>
                         <StepCaption style={{justifyContent: "space-between"}}>
-                            <StyledLabel htmlFor="rublesToPay">Заплачу <span style={{ color: '#ffffff' }}>(₽)</span></StyledLabel>
+                            <StyledLabel htmlFor="robuxesCount">Заплатишь <span style={{ color: '#ffffff' }}>(R$)</span></StyledLabel>
                             <AvailabilityText id="instockGamePass">
                                 В наличии {botRobuxAmount}
-                                <RobuxMini src={Robuxmini} alt="Robux Mini Icon" />
+                                <img src={Robuxmini} alt="Robux Mini Icon" style={{ marginLeft: '8px' }} />
                             </AvailabilityText>
+
                         </StepCaption>
+
                         <BuyForm>
                             <InputBlockContainer>
                                 <InputBlock>
@@ -1545,75 +1557,88 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                         readOnly
                                     />
                                     <IconWrapper>
-                                        <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path d="M291.75,308.1a105.8,105.8,0,1,0,0-211.6H136v32h39.943V276.1H136v32h39.943V352H136v32h39.943v56h32V384H304V352H207.943V308.1ZM207.943,128.5H291.75a73.8,73.8,0,1,1,0,147.6H207.943Z"/>
+                                        <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg"
+                                                   viewBox="0 0 512 512">
+                                            <path
+                                                d="M291.75,308.1a105.8,105.8,0,1,0,0-211.6H136v32h39.943V276.1H136v32h39.943V352H136v32h39.943v56h32V384H304V352H207.943V308.1ZM207.943,128.5H291.75a73.8,73.8,0,1,1,0,147.6H207.943Z"/>
                                         </RubleIcon>
                                     </IconWrapper>
                                 </InputBlock>
 
                                 <ButtonGroup>
-                                    <StyledButtonForMoney onClick={() => handleButtonClick(250)}>250₽</StyledButtonForMoney>
-                                    <StyledButtonForMoney onClick={() => handleButtonClick(500)}>500₽</StyledButtonForMoney>
-                                    <StyledButtonForMoney onClick={() => handleButtonClick(1000)}>1000₽</StyledButtonForMoney>
+                                    <StyledButtonForMoney
+                                        onClick={() => handleButtonClick(250)}>250₽</StyledButtonForMoney>
+                                    <StyledButtonForMoney
+                                        onClick={() => handleButtonClick(500)}>500₽</StyledButtonForMoney>
+                                    <StyledButtonForMoney
+                                        onClick={() => handleButtonClick(1000)}>1000₽</StyledButtonForMoney>
                                 </ButtonGroup>
                             </InputBlockContainer>
                             {/*<InputBlock>*/}
-                            <StyledLabel htmlFor="robuxesCount">Получу <span style={{ color: '#ffffff' }}>(R$)</span></StyledLabel>
+                            <div style={{marginTop: '12px', marginBottom: '5px'}}>
+                                <StyledLabel htmlFor="robuxesCount">Получу <span style={{color: '#ffffff'}}>(R$)</span></StyledLabel>
+                            </div>
+
                             {/*<InputWrapper>*/}
-                            <InputBlockContainer>
-                                <InputBlock>
-                                    <StyledInput
-                                        // id="robuxesCount"
-                                        // type="number"
+                            <div style={{marginTop: '5px', marginBottom: '5px'}}>
+                                <InputBlockContainer>
+                                    <InputBlock>
+                                        <StyledInput
+                                            // id="robuxesCount"
+                                            // type="number"
+                                            value={robuxesCount}
+                                            onChange={handleChange}
+                                        />
+                                        <IconWrapper>
+                                            <RubleIcon style={{paddingBottom: "10px"}}
+                                                       xmlns="http://www.w3.org/2000/svg"
+                                                       viewBox="0 0 36 40">
+                                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                                      d="M20.5251 0.696094C18.9688 -0.232031 17.0313 -0.232031 15.4751 0.696094L3.02507 8.09609C1.45007 9.04922 0.490693 10.7586 0.500068 12.5992V27.3992C0.500068 29.2555 1.46257 30.9742 3.02507 31.9023L15.4751 39.3023C17.0313 40.2305 18.9688 40.2305 20.5251 39.3023L32.9751 31.9023C34.5501 30.9492 35.5094 29.2398 35.5001 27.3992V12.5992C35.5001 10.743 34.5376 9.02422 32.9751 8.09609L20.5251 0.696094ZM14.2501 13.7492C12.8688 13.7492 11.7501 14.868 11.7501 16.2492V23.7492C11.7501 25.1305 12.8688 26.2492 14.2501 26.2492H21.7501C23.1313 26.2492 24.2501 25.1305 24.2501 23.7492V16.2492C24.2501 14.868 23.1313 13.7492 21.7501 13.7492H14.2501Z"
+                                                      fill="#FFFF"/>
+                                            </RubleIcon>
+                                        </IconWrapper>
+                                    </InputBlock>
+                                </InputBlockContainer>
+                            </div>
+                                <SliderContainer>
+                                    <StyledScroll
+                                        min="210"
+                                        max="5000"
                                         value={robuxesCount}
                                         onChange={handleChange}
-                                    />
-                                    <IconWrapper>
-                                        <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 40">
-                                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                                  d="M20.5251 0.696094C18.9688 -0.232031 17.0313 -0.232031 15.4751 0.696094L3.02507 8.09609C1.45007 9.04922 0.490693 10.7586 0.500068 12.5992V27.3992C0.500068 29.2555 1.46257 30.9742 3.02507 31.9023L15.4751 39.3023C17.0313 40.2305 18.9688 40.2305 20.5251 39.3023L32.9751 31.9023C34.5501 30.9492 35.5094 29.2398 35.5001 27.3992V12.5992C35.5001 10.743 34.5376 9.02422 32.9751 8.09609L20.5251 0.696094ZM14.2501 13.7492C12.8688 13.7492 11.7501 14.868 11.7501 16.2492V23.7492C11.7501 25.1305 12.8688 26.2492 14.2501 26.2492H21.7501C23.1313 26.2492 24.2501 25.1305 24.2501 23.7492V16.2492C24.2501 14.868 23.1313 13.7492 21.7501 13.7492H14.2501Z"
-                                                  fill="#FFFF"/>
-                                        </RubleIcon>
-                                    </IconWrapper>
-                                </InputBlock>
-                            </InputBlockContainer>
-                            <SliderContainer>
-                                <StyledScroll
-                                    min="210"
-                                    max="5000"
-                                    value={robuxesCount}
-                                    onChange={handleChange}
 
-                                />
-                                <SliderValue
-                                    value={robuxesCount}
-                                    min="210"
-                                    max="5000"
-                                >
-                                    <ValueDisplay>
-                                        {robuxesCount}
-                                        <FaLock style={{ marginLeft: '5px' }} />
-                                    </ValueDisplay>
-                                </SliderValue>
-                            </SliderContainer>
-                            {/*    </InputWrapper>*/}
-                            {/*</InputBlock>*/}
-                            <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
-                            {promocodeMsg !== null ? <MinRobuxText>{promocodeMsg}</MinRobuxText> : null}
-                            <BuyButton onClick={() => {
-                                if (robuxesCount !== '' && rublesToPay !== '' && parseInt(robuxesCount) >= 210) {
-                                    setOpenBuyMenu(true)
-                                    setActiveButton('standard'); // Устанавливаем активную форму как стандартную
-                                    setIsStandardFormVisible(true);
-                                }
-                            }}>Купить</BuyButton>
-                            <PromoLink id="open-modal-btn" onClick={() => setPromocodeMenu(true)}>Использовать промокод</PromoLink>
+                                    />
+                                    <SliderValue
+                                        value={robuxesCount}
+                                        min="210"
+                                        max="5000"
+                                    >
+                                        <ValueDisplay>
+                                            {robuxesCount}
+                                            <FaLock style={{marginLeft: '5px'}}/>
+                                        </ValueDisplay>
+                                    </SliderValue>
+                                </SliderContainer>
+                                {/*    </InputWrapper>*/}
+                                {/*</InputBlock>*/}
+                                <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
+                                {promocodeMsg !== null ? <MinRobuxText>{promocodeMsg}</MinRobuxText> : null}
+                                <BuyButton onClick={() => {
+                                    if (robuxesCount !== '' && rublesToPay !== '' && parseInt(robuxesCount) >= 210) {
+                                        setOpenBuyMenu(true)
+                                        setActiveButton('standard'); // Устанавливаем активную форму как стандартную
+                                        setIsStandardFormVisible(true);
+                                    }
+                                }}>Купить</BuyButton>
+                                <PromoLink id="open-modal-btn" onClick={() => setPromocodeMenu(true)}>Использовать
+                                    промокод</PromoLink>
                         </BuyForm>
                     </div>
 
                     <LoginModal $show={promocodeMenu} onClick={closeToggleMenu}>
                         <ModalContent>
-                            <CloseButton onClick={togglePromocodeMenu}>&times;</CloseButton>
+                        <CloseButton onClick={togglePromocodeMenu}>&times;</CloseButton>
                             <ModalTitle>Активация промокода</ModalTitle>
                             <LabelText>Введите промокод</LabelText>
                             <ModalInput
