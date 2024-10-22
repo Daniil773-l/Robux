@@ -16,6 +16,12 @@ const FooterContainer = styled.footer`
     color: rgba(255, 255, 255, 0.9);
     width: 100%; /* Изменено на 100% */
     box-sizing: border-box; /* Добавлено свойство */
+
+    @media (max-width: 768px) {
+        padding: 24px 16px; /* Уменьшаем отступы на мобильных устройствах */
+       
+    }
+    
 `;
 
 const FooterContent = styled.div`
@@ -136,7 +142,7 @@ const Footer = () => {
                 <Column small>
                     <LinksSection>
                         <LinksTitle>Сотрудничество</LinksTitle>
-                        <Link href="#">Запиши видео о сайте и получи 100 робуксов</Link>
+                        <Link href="#">Запиши видео о сайте <br/> и получи 100 робуксов</Link>
                         <Link href="#">Пишите</Link>
                     </LinksSection>
                 </Column>

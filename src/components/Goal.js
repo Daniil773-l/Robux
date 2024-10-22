@@ -23,6 +23,7 @@ const SectionContainer = styled.div`
 
     @media (max-width: 768px) {
         padding: 40px 10px;
+        max-width: 70%;
     }
 `;
 
