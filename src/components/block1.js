@@ -454,15 +454,17 @@ const ButtonGroup = styled.div`
     margin-bottom: -5px; /* Уменьшил отступ снизу */
 `;
 
-
 const StyledButtonForMoney = styled.button`
     padding: 8px 16px; /* Уменьшил размеры кнопки */
     font-size: 16px; /* Уменьшил размер шрифта */
     background-color: #333;
     border: 2px solid #6a0dad;
-    border-radius: 5px;
+    border-radius: 10px;
     color: white;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    animation: pulse 1.5s infinite; /* Пульсация бордера всегда активна */
 
     &:hover {
         background-color: #6a0dad;
@@ -471,12 +473,25 @@ const StyledButtonForMoney = styled.button`
     &:focus {
         outline: none;
     }
-    
+
     @media (max-width: 450px) {
         width: 70px;
     }
-    
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(106, 13, 173, 0.7);
+        }
+        50% {
+            box-shadow: 0 0 0 10px rgba(106, 13, 173, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(106, 13, 173, 0);
+        }
+    }
 `;
+
+
 
 const SliderValue = styled.div`
     position: absolute;
