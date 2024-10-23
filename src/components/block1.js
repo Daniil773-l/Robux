@@ -1802,8 +1802,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                     <UserCard key={user.id} onClick={() => handleNextStep()}>
                                         <UserAvatar src={user.avatar_url} alt={user.name} />
                                         <UserInfo>
-                                            <UserName>{user.name}</UserName>
-                                            <UserUsername>@{user.username}</UserUsername>
+                                            <UserName>{user.display_name}</UserName>
+                                            <UserUsername>@{user.name}</UserUsername>
                                         </UserInfo>
                                     </UserCard>
                                 ))}

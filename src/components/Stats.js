@@ -510,7 +510,7 @@ const Header = ({loggedInUser, setLoggedInUser}) => {
                                     <UserAvatar src={user.avatar_url} alt={user.name} />
                                     <UserInfo>
                                         <UserName>{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserName>
-                                        <UserUsername>@{user.name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>
+                                        <UserUsername>@{user.display_name.length > 8 ? user.name.slice(0, 8) + ".." : user.name}</UserUsername>
                                     </UserInfo>
                                 </UserCard>
                             ))}
