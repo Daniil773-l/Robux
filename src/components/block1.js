@@ -1241,6 +1241,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [debouncedValue, setDebouncedValue] = useState('');
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [currentUser, setCurrentUser] = useState(loggedInUser); 
     const [users, setUsers] = useState([]);
     const [showLogin, setShowLogin] = useState(false);
     const [games, setGames] = useState([]);
@@ -1355,7 +1356,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             game_id: parseInt(gameId),
             robux_amount: parseInt(robuxesCount),
             paid_amount: parseInt(rublesToPay) || 0,
-            roblox_username: loggedInUser.name, 
+            roblox_username: currentUser.name, 
             bonus_withdrawal_id: withdrawId,  
             bonus_username: promocode, 
         } 
@@ -1389,13 +1390,14 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     }
 
     const fetchGames = async () => {
-        if (loggedInUser === null || loggedInUser === undefined) {return}
+        console.log("Fetching games")
+        if (currentUser === null || currentUser === undefined) {return}
         setIsLoading(true); // Set loading to true when fetch starts
         setError(null); // Reset the error state in case of previous errors
 
         try {
-            console.log(loggedInUser)
-            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/games?player_id=${loggedInUser.user_id}`, ); // Replace with actual API endpoint
+            console.log(currentUser)
+            const response = await fetch(`${window.env.BACKEND_HOST}/api/search/games?player_id=${currentUser.user_id}`, ); // Replace with actual API endpoint
 
             if (!response.ok) {
                 throw new Error('Failed to fetch games'); // Handle non-200 responses
@@ -1433,7 +1435,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     // useEffect hook to fetch games when the component mounts
     useEffect(() => {
         fetchGames();
-    }, [loggedInUser]); // Empty dependency array ensures it runs only once on mount
+    }, [currentUser]); // Empty dependency array ensures it runs only once on mount
 
     useEffect(() => {
         console.log("multiplying robuxes to rubles");
@@ -1485,7 +1487,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             game_id: parseInt(gameId),
             robux_amount: parseInt(robuxesCount),
             paid_amount: parseInt(rublesToPay),
-            roblox_username: loggedInUser.name, 
+            roblox_username: currentUser.name, 
             email: email, 
             bonus_withdrawal_id: withdrawId,  
             bonus_username: promocode, 
@@ -1536,7 +1538,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         if (currentStep < 5) {
             setCurrentStep(currentStep + 1); // Переход на следующий шаг
         }
-        setGameId(game.id)
     };
 
     const handlePreviousStep = () => {
@@ -1674,7 +1675,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         </ModalContent>
                     </LoginModal>
                 </>
-                : loggedInUser === null || loggedInUser === undefined ?
+                : currentUser === null || currentUser === undefined ?
                     <>
                     </>: gameId === null || gameId === undefined || gameId === "" ? <>
 
@@ -1799,7 +1800,10 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         {!isLoading && users.length > 0 && (
                             <UserCardContainer>
                                 {users.map((user) => (
-                                    <UserCard key={user.id} onClick={() => handleNextStep()}>
+                                    <UserCard key={user.id} onClick={() => { 
+                                        handleNextStep()
+                                        setCurrentUser(user)
+                                    }}>
                                         <UserAvatar src={user.avatar_url} alt={user.name} />
                                         <UserInfo>
                                             <UserName>{user.display_name}</UserName>
@@ -1832,7 +1836,10 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                         <InputWrapper>
 
                                 {games.map((game) => (
-                                    <StyledPlace onClick={() => handleNextStep(game)} style={{ cursor: "pointer" }}>
+                                    <StyledPlace onClick={() => {
+                                        handleNextStep()
+                                        handlePlaceChoice(game)
+                                    }} style={{ cursor: "pointer" }}>
                                         <PlaceImage src={game.icon_url} alt={game.name} style={{ height: '180px', width: '210px' }} />
                                         <PlaceTitle>{game.name}</PlaceTitle>
                                     </StyledPlace>
