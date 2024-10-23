@@ -445,7 +445,7 @@ const Header = () => {
                                     <UserAvatar src={user.avatar_url} alt={user.name} />
                                     <UserInfo>
                                         <UserName>{user.name}</UserName>
-                                        <UserUsername>@{user.name}</UserUsername>
+                                        <UserUsername>@{user.display_name}</UserUsername>
                                     </UserInfo>
                                 </UserCard>
                             ))}
