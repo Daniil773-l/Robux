@@ -476,6 +476,7 @@ const StyledButtonForMoney = styled.button`
 
     @media (max-width: 450px) {
         width: 70px;
+        margin-right: auto;
     }
 
     @keyframes pulse {
@@ -569,7 +570,7 @@ const StyledScroll = styled.input.attrs({ type: 'range' })`
     &::-webkit-slider-runnable-track {
         width: 100%;
         height: 8px;
-        background: transparent;
+       
         border-radius: 12px;
     }
 `;
