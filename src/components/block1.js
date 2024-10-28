@@ -516,8 +516,8 @@ const ValueDisplay = styled.div`
 `;
 
 const StyledScroll = styled.input.attrs({ type: 'range' })`
-    //-webkit-appearance: none;
-    //appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
     width: 100%;
     height: 8px;
     // background: linear-gradient(
