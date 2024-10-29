@@ -455,8 +455,11 @@ const ButtonGroup = styled.div`
 `;
 
 const StyledButtonForMoney = styled.button`
-    padding: 8px 16px; /* Уменьшил размеры кнопки */
-    font-size: 16px; /* Уменьшил размер шрифта */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    font-size: 16px;
     background-color: #333;
     border: 2px solid #6a0dad;
     border-radius: 10px;
@@ -464,7 +467,7 @@ const StyledButtonForMoney = styled.button`
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    animation: pulse 1.5s infinite; /* Пульсация бордера всегда активна */
+    animation: pulse 1.5s infinite;
 
     &:hover {
         background-color: #6a0dad;
@@ -491,6 +494,7 @@ const StyledButtonForMoney = styled.button`
         }
     }
 `;
+
 
 
 
@@ -1296,8 +1300,19 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     }, [loggedInUser]);
 
     const handleChange = (e) => {
-        setRobuxesCount(parseInt(e.target.value, 10) || 0); // Защита от некорректного ввода
+        const { id, value } = e.target;
+
+        if (id === 'rublesToPay') {
+            const rubles = parseFloat(value) || 0;
+            setRublesToPay(rubles);
+            setRobuxesCount(Math.round(rubles / course));
+        } else if (id === 'robuxesCount') {
+            const robuxes = parseInt(value, 10) || 0;
+            setRobuxesCount(robuxes);
+            setRublesToPay(robuxes * course);
+        }
     };
+
 
     const handlePromocode = async () => {
         if (loggedInUser) {
@@ -1350,6 +1365,29 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         // Сохраняем информацию о пользователе в localStorage
         localStorage.setItem('loggedInUser', JSON.stringify(user));
     };
+    useEffect(() => {
+        if (rublesToPay !== '') {
+            const numericRubles = parseFloat(rublesToPay);
+            if (!isNaN(numericRubles)) {
+                setRobuxesCount(String(Math.round(numericRubles / course)));
+            }
+        } else {
+            setRobuxesCount('');
+        }
+    }, [rublesToPay]);
+
+    // Обновляем rublesToPay, когда изменяется robuxesCount
+    useEffect(() => {
+        if (robuxesCount !== '') {
+            const numericRobuxes = parseInt(robuxesCount, 10);
+            if (!isNaN(numericRobuxes)) {
+                setRublesToPay(String(numericRobuxes * course));
+            }
+        } else {
+            setRublesToPay('');
+        }
+    }, [robuxesCount]);
+
 
     const sendCheck = async () => { 
         setIsLoading(true)
@@ -1547,6 +1585,33 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         }
     };
 
+    const handleRublesChange = (e) => {
+        const rubles = e.target.value;
+
+        // Если поле пустое, просто обновляем значение
+        if (rubles === '') {
+            setRublesToPay('');
+            setRobuxesCount('');
+            return;
+        }
+
+        // Проверяем, что введено число
+        const numericValue = parseFloat(rubles);
+        if (!isNaN(numericValue) && numericValue >= 0) {
+            setRublesToPay(numericValue);
+            setRobuxesCount(Math.round(numericValue / 0.74)); // Обновляем связанное поле
+        }
+    };
+
+    const handleRobuxChange = (e) => {
+        const robuxes = e.target.value;
+        setRobuxesCount(robuxes); // обновляем поле сразу
+
+        if (!isNaN(robuxes) && robuxes >= 0) {
+            const rubles = robuxes * 0.74; // конвертация
+            setRublesToPay(rubles);
+        }
+    };
 
     const renderStandardForm = () => (
         <>
@@ -1567,11 +1632,10 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             <InputBlockContainer>
                                 <InputBlock>
                                     <StyledInput
-                                        placeholder="Отдаёте ₽"
-                                        id="rublesToPay"
                                         type="number"
                                         value={rublesToPay}
-                                        readOnly
+                                        onChange={handleRublesChange}
+                                        placeholder="Введите сумму в рублях"
                                     />
                                     <IconWrapper>
                                         <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg"
@@ -1600,11 +1664,13 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             <div style={{marginTop: '5px', marginBottom: '5px'}}>
                                 <InputBlockContainer>
                                     <InputBlock>
+
                                         <StyledInput
-                                            // id="robuxesCount"
-                                            // type="number"
+                                            id="robuxesCount"
+                                            placeholder="Получите R$"
+                                            type="number"
                                             value={robuxesCount}
-                                            onChange={handleChange}
+                                            onChange={handleRobuxChange}
                                         />
                                         <IconWrapper>
                                             <RubleIcon style={{paddingBottom: "10px"}}
@@ -1618,27 +1684,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                     </InputBlock>
                                 </InputBlockContainer>
                             </div>
-                                <SliderContainer>
-                                    <StyledScroll
-                                        min="210"
-                                        max="5000"
-                                        value={robuxesCount}
-                                        onChange={handleChange}
 
-                                    />
-                                    <SliderValue
-                                        value={robuxesCount}
-                                        min="210"
-                                        max="5000"
-                                    >
-                                        <ValueDisplay>
-                                            {robuxesCount}
-                                            <FaLock style={{marginLeft: '5px'}}/>
-                                        </ValueDisplay>
-                                    </SliderValue>
-                                </SliderContainer>
-                                {/*    </InputWrapper>*/}
-                                {/*</InputBlock>*/}
+
                                 <MinRobuxText>Минимальное число робуксов: 210</MinRobuxText>
                                 {promocodeMsg !== null ? <MinRobuxText>{promocodeMsg}</MinRobuxText> : null}
                                 <BuyButton onClick={() => {
@@ -1659,11 +1706,10 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             <ModalTitle>Активация промокода</ModalTitle>
                             <LabelText>Введите промокод</LabelText>
                             <ModalInput
-                                type="text"
-                                placeholder="Введите промокод"
-                                style={{color: "white"}}
-                                value={promocode}
-                                onChange={(e) => setPromocode(e.target.value)}
+                                type="number"
+                                value={robuxesCount}
+                                onChange={handleRobuxChange}
+                                placeholder="Введите количество робуксов"
                             />
 
                             {isLoading && (
