@@ -301,8 +301,7 @@ const PricingArea = styled.div`
 
     border: none;
     border-radius: 24px;
-    min-height: 550px; /* Ensure the form maintains a static height */
-
+    height: 450px;
     @media (max-width: 768px) {
         padding: 20px;
         min-height: auto;
@@ -321,9 +320,9 @@ const StepCaption = styled.div`
 `;
 
 const AvailabilityText = styled.span`
-    ${tw` text-xl ml-2 mb-4 font-medium`}
+    ${tw` text-base ml-2 mb-4 font-medium`}
     margin-left: 15px;
-    color: rgb(255, 255, 255);
+    color: rgba(255, 255, 255, 0.8); /* Белый цвет с прозрачностью 0.8 */
     @media (max-width: 768px) {
         margin-left: auto;
         margin-top: -42px;
@@ -1261,7 +1260,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [promocodeMsg, setPromocodeMsg] = useState(null)
     const [currentStep, setCurrentStep] = useState(1);
     const [isStandardFormVisible, setIsStandardFormVisible] = useState(true);
-
+    const [localRublesToPay, setLocalRublesToPay] = useState('');
+    const [localRobuxesCount, setLocalRobuxesCount] = useState('');
 
     let location = useLocation();
     let state = location.state
@@ -1305,13 +1305,14 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         if (id === 'rublesToPay') {
             const rubles = parseFloat(value) || 0;
             setRublesToPay(rubles);
-            setRobuxesCount(Math.round(rubles / course));
+            setRobuxesCount(Math.floor(rubles / course)); // округление до целого числа
         } else if (id === 'robuxesCount') {
             const robuxes = parseInt(value, 10) || 0;
             setRobuxesCount(robuxes);
-            setRublesToPay(robuxes * course);
+            setRublesToPay((robuxes * course).toFixed(2)); // округление до двух знаков
         }
     };
+
 
 
     const handlePromocode = async () => {
@@ -1562,11 +1563,15 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             setIsLoading(false)
         }
     }
-
     const handleButtonClick = (amount) => {
-        setRublesToPay(amount);
-        setRobuxesCount(Math.round(amount / 0.74)); // пересчёт Robux
+        setLocalRublesToPay(amount);
+        setRublesToPay(amount); // Обновляем основное состояние
+        const robuxes = Math.floor(amount / course); // Округляем до целого числа
+        setRobuxesCount(robuxes);
     };
+
+
+
 
     const handleBuyClick = () => {
         setOpenBuyMenu(true);
@@ -1584,35 +1589,38 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             setCurrentStep(currentStep - 1); // Возврат на предыдущий шаг
         }
     };
-
     const handleRublesChange = (e) => {
-        const rubles = e.target.value;
-
-        // Если поле пустое, просто обновляем значение
-        if (rubles === '') {
-            setRublesToPay('');
-            setRobuxesCount('');
-            return;
-        }
-
-        // Проверяем, что введено число
-        const numericValue = parseFloat(rubles);
-        if (!isNaN(numericValue) && numericValue >= 0) {
-            setRublesToPay(numericValue);
-            setRobuxesCount(Math.round(numericValue / 0.74)); // Обновляем связанное поле
+        const rubles = parseFloat(e.target.value);
+        setLocalRublesToPay(e.target.value);  // Обновляем вводимые рубли
+        if (!isNaN(rubles)) {
+            setRobuxesCount(Math.floor(rubles / course)); // Конвертируем рубли в целое количество робуксов
         }
     };
+
 
     const handleRobuxChange = (e) => {
-        const robuxes = e.target.value;
-        setRobuxesCount(robuxes); // обновляем поле сразу
-
-        if (!isNaN(robuxes) && robuxes >= 0) {
-            const rubles = robuxes * 0.74; // конвертация
-            setRublesToPay(rubles);
+        setLocalRobuxesCount(e.target.value);
+        const numericRobuxes = parseInt(e.target.value, 10);
+        if (!isNaN(numericRobuxes)) {
+            setRublesToPay(numericRobuxes * course);
         }
     };
 
+    const handleRublesBlur = () => {
+        const numericRubles = parseFloat(localRublesToPay);
+        if (!isNaN(numericRubles)) {
+            setRublesToPay(numericRubles);
+            setRobuxesCount(Math.round(numericRubles / course));
+        }
+    };
+
+    const handleRobuxBlur = () => {
+        const numericRobuxes = parseInt(localRobuxesCount, 10);
+        if (!isNaN(numericRobuxes)) {
+            setRobuxesCount(numericRobuxes);
+            setRublesToPay(numericRobuxes * course);
+        }
+    };
     const renderStandardForm = () => (
         <>
         <div style={{height: '500px'}}>
@@ -1633,10 +1641,14 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                 <InputBlock>
                                     <StyledInput
                                         type="number"
-                                        value={rublesToPay}
+                                        min="0"
+                                        step="0.01" // Позволяет вводить значения с точностью до двух знаков после запятой
+                                        value={localRublesToPay}
                                         onChange={handleRublesChange}
+                                        onBlur={handleRublesBlur}
                                         placeholder="Введите сумму в рублях"
                                     />
+
                                     <IconWrapper>
                                         <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg"
                                                    viewBox="0 0 512 512">
@@ -1666,12 +1678,13 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                     <InputBlock>
 
                                         <StyledInput
-                                            id="robuxesCount"
-                                            placeholder="Получите R$"
                                             type="number"
                                             value={robuxesCount}
                                             onChange={handleRobuxChange}
+                                            onBlur={handleRobuxBlur}
+                                            placeholder="Введите количество робуксов"
                                         />
+
                                         <IconWrapper>
                                             <RubleIcon style={{paddingBottom: "10px"}}
                                                        xmlns="http://www.w3.org/2000/svg"
