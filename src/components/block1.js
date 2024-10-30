@@ -325,7 +325,7 @@ const AvailabilityText = styled.span`
     color: rgba(255, 255, 255, 0.8); /* Белый цвет с прозрачностью 0.8 */
     @media (max-width: 768px) {
         margin-left: auto;
-        margin-top: -42px;
+        margin-top: -30px;
     }
 `;
 
@@ -340,14 +340,14 @@ const BuyForm = styled.div`
 `;
 
 const StyledLabel = styled.label`
-    ${tw`text-white  text-2xl font-semibold mb-3`}
+    ${tw`text-white text-2xl font-semibold mb-3`};
     font-size: 1.1em;
-
     @media (max-width: 768px) {
-        font-size: 18px;
-     
+        margin-bottom: 1px; // Уменьшение отступа снизу только для мобильных
     }
 `;
+
+
 
 const SecondStyledLabel = styled.label`
     ${tw`font-semibold mb-4`}
@@ -450,9 +450,12 @@ const RubleIcon = styled.svg`
 const ButtonGroup = styled.div`
     display: flex;
     gap: 10px;
-    margin-bottom: -5px; /* Уменьшил отступ снизу */
+    margin-bottom: -5px;
+    @media (max-width: 768px) {
+        gap: 2px; // Уменьшено расстояние между кнопками на мобильных
+        margin-bottom: 0; // Убираем дополнительный отступ снизу
+    }
 `;
-
 const StyledButtonForMoney = styled.button`
     display: flex;
     align-items: center;
@@ -476,9 +479,10 @@ const StyledButtonForMoney = styled.button`
         outline: none;
     }
 
-    @media (max-width: 450px) {
-        width: 70px;
-        margin-right: auto;
+    @media (max-width: 768px) {
+        padding: 8px 10px; // Уменьшение внутренних отступов для мобильных
+        font-size: 16px; // Уменьшение размера шрифта для мобильных
+        width: 60px; // Ширина кнопки на мобильных
     }
 
     @keyframes pulse {
@@ -493,6 +497,7 @@ const StyledButtonForMoney = styled.button`
         }
     }
 `;
+
 
 
 
@@ -633,23 +638,31 @@ const BackButtonText = styled.span`
     font-size: 14px;
 }
 `;
-
 const BuyButton = styled.button`
-    ${tw`bg-purple-500 text-white rounded py-3 rounded`}
+    ${tw`bg-purple-500 text-white rounded py-3`}
     font-size: 1.1em;
     border: none;
     background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     border-radius: 12px;
-    cursor: pointer; 
-    &:disabled {
+    cursor: pointer;
 
+    &:disabled {
         cursor: not-allowed;
     }
 
     &:hover {
         background: linear-gradient(to right, rgb(108, 99, 163), rgba(59, 130, 246, 0.5));
     }
+
+    @media (max-width: 768px) {
+        margin-top: -15px; /* Увеличьте значение, чтобы подвинуть кнопку выше */
+        margin-bottom: -10px; /* Убираем отступ снизу */
+        font-size: 14px; /* Уменьшаем размер шрифта для кнопки */
+        padding: 8px 0; /* Уменьшаем внутренние отступы */
+    }
 `;
+
+
 const StyledPlace = styled.div`
     ${tw`flex items-center p-4 rounded-lg bg-[#2A263B] cursor-pointer transition-colors m-2`}
     &:hover {
@@ -671,13 +684,14 @@ const PlaceTitle = styled.div`
 
 const PromoLink = styled.a`
     ${tw`mt-2 text-white text-center cursor-pointer`}
-    font-size: 1.1em;
+    font-size: 1em;
 
     @media (max-width: 768px) {
-        font-size: 14px;
-        margin-top: 10px;
+        font-size: 12px;
+        margin-top: 5px; /* Уменьшаем отступ сверху */
     }
 `;
+
 
 const PurpleLineContainer = styled.div`
     ${tw`mx-auto my-4 cursor-pointer`}
@@ -707,7 +721,7 @@ const TelegramLink = styled.a`
     opacity: ${({ isVisible }) => (isVisible ? '1' : '0')};
     transition: opacity 0.5s ease-in-out;
     text-decoration: none;
-
+    margin-bottom: -10px;
     @media (max-width: 768px) {
         font-size: 14px;
         margin-top: 10px;
@@ -717,11 +731,15 @@ const TelegramLink = styled.a`
 const MinRobuxText = styled.p`
     ${tw`text-white`}
     font-size: 0.9em;
-
+    position: relative;
+    margin-bottom: -20px;
     @media (max-width: 768px) {
-        font-size: 12px;
+        font-size: 13px;
+        top: -35px; /* Поднимите еще выше */
+        margin-bottom: 0px; /* Убираем отступ */
     }
 `;
+
 
 const RobuxMini = styled.img`
     display: inline-block; /* Картинка будет отображаться на одной строке с текстом */
