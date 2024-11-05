@@ -690,14 +690,19 @@ const PlaceTitle = styled.div`
 `;
 
 const PromoLink = styled.a`
-    ${tw`mt-2 text-white text-center cursor-pointer`}
+    ${tw`mt-2 text-white cursor-pointer`}
     font-size: 1em;
+    display: flex;
+    justify-content: center; // Центрирует текст по горизонтали
+    text-align: center;
 
     @media (max-width: 768px) {
         font-size: 12px;
-        margin-top:120px; /* Уменьшаем отступ сверху */
+        margin-top: 120px;
+        align-items: center; // Центрирует текст по вертикали, если будет необходимо
     }
 `;
+
 
 
 const PurpleLineContainer = styled.div`
@@ -739,9 +744,12 @@ const MinRobuxText = styled.p`
     ${tw`text-white`}
     font-size: 0.9em;
     position: relative;
+
     margin-bottom: -20px;
     @media (max-width: 768px) {
         font-size: 13px;
+        justify-content: center; // Центрирует текст по горизонтали
+        text-align: center;
         top: -35px; /* Поднимите еще выше */
         margin-bottom: 0px; /* Убираем отступ */
     }
