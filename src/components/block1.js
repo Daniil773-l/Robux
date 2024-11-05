@@ -1624,33 +1624,26 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         }
     };
     const handleRublesChange = (e) => {
-        const inputRubles = e.target.value;
-
-        if (!inputRubles || /^\d*\.?\d*$/.test(inputRubles)) { // Допускаем только числа и десятичные значения
-            setRublesToPay(inputRubles);
-
-            if (inputRubles) {
-                const calculatedRobuxes = Math.floor(parseFloat(inputRubles) / course);
-                setRobuxesCount(calculatedRobuxes.toString());
-            } else {
-                setRobuxesCount(''); // Очищаем поле "Получу", если "Заплатишь" пусто
-            }
+        const rubles = e.target.value;
+        // Если поле пустое, просто обновляем значение
+        if (rubles === '') {
+            setRublesToPay('');
+            setRobuxesCount('');
+            return;
+        }
+        // Проверяем, что введено число
+        const numericValue = parseFloat(rubles);
+        if (!isNaN(numericValue) && numericValue >= 0) {
+            setRublesToPay(numericValue);
+            setRobuxesCount(Math.round(numericValue / 0.74)); // Обновляем связанное поле
         }
     };
-
-    // Обработчик изменения для поля "Получу" (робуксы)
     const handleRobuxChange = (e) => {
-        const inputRobuxes = e.target.value;
-
-        if (!inputRobuxes || /^\d*$/.test(inputRobuxes)) { // Допускаем только целые числа
-            setRobuxesCount(inputRobuxes);
-
-            if (inputRobuxes) {
-                const calculatedRubles = (parseInt(inputRobuxes, 10) * course).toFixed(2);
-                setRublesToPay(calculatedRubles);
-            } else {
-                setRublesToPay(''); // Очищаем поле "Заплатишь", если "Получу" пусто
-            }
+        const robuxes = e.target.value;
+        setRobuxesCount(robuxes); // обновляем поле сразу
+        if (!isNaN(robuxes) && robuxes >= 0) {
+            const rubles = robuxes * 0.74; // конвертация
+            setRublesToPay(rubles);
         }
     };
 
@@ -1673,12 +1666,13 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             <InputBlockContainer>
                                 <InputBlock>
                                     <StyledInput
+
+                                        id="rublesToPay"
                                         type="number"
                                         value={rublesToPay}
+                                        readOnly
                                         onChange={handleRublesChange}
                                         placeholder="Введите сумму в рублях"
-                                        step="0.01"
-                                        min="0"
                                     />
                                     <IconWrapper>
                                         <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg"
@@ -1709,12 +1703,14 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                     <InputBlock>
 
                                         <StyledInput
+                                            // id="robuxesCount"
+                                            // type="number"
+                                            id="robuxesCount"
+                                            placeholder="Получите R$"
                                             type="number"
                                             value={robuxesCount}
+                                            onChange={handleChange}
                                             onChange={handleRobuxChange}
-                                            placeholder="Введите количество робуксов"
-                                            step="1"
-                                            min="0"
                                         />
                                         <IconWrapper>
                                             <RubleIcon style={{paddingBottom: "10px"}}

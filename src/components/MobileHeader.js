@@ -14,7 +14,7 @@ import AtomicSpinner from 'atomic-spinner';
 import Exit from "../assets/img/Exit.svg";
 
 const HeaderContainer = styled.header`
-    background-color: #1a1a1a; // Черный цвет фона для Header
+    background-color: #1a1a1a;
     ${tw`py-2 top-0 w-full z-50`}
 `;
 
@@ -22,13 +22,11 @@ const HeaderContainer = styled.header`
 const HeaderWrapper = styled.div`
     ${tw`container mx-auto flex items-center justify-between`}
     padding-left: 1rem;
-    background-color: #1a1a1a; // Черный цвет фона для Wrapper
     padding-right: 1rem;
     @media (max-width: 768px) {
-        ${tw`px-2 flex-row items-center justify-between`}
+        ${tw`px-4 flex-row items-center justify-between`}
     }
 `;
-
 const StyledLink = styled(RouterLink)`
     ${tw`text-lg`}
     color: white; // Белый цвет для ссылок
@@ -87,20 +85,18 @@ const LoginButton = styled.button`
 `;
 
 const Sidebar = styled.div`
-    ${tw`z-50 bg-transparent`}
+    ${tw`z-50`}
     position: fixed;
     top: 0;
     right: ${({ show }) => (show ? '0' : '-100%')};
-    width: 250px;
+    width: 80%;
     height: 100vh;
-    overflow: hidden;
     backdrop-filter: blur(7px);
-    background-color: #1a1a1a; // Черный фон с прозрачностью для Sidebar
-    display: flex;
-    flex-direction: column;
-    padding: 40px 30px;
+    background-color: rgba(26, 26, 26, 0.95); /* Улучшаем вид фона */
+    padding: 40px 20px;
     transition: right 0.3s ease-in-out;
 `;
+
 
 const CloseButton = styled.span`
     font-size: 24px;
