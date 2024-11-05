@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import tw from 'twin.macro';
@@ -454,8 +455,9 @@ const ButtonGroup = styled.div`
     gap: 10px;
     margin-bottom: -5px;
     @media (max-width: 768px) {
-        gap: 2px; // Уменьшено расстояние между кнопками на мобильных
-        margin-bottom: 0; // Убираем дополнительный отступ снизу
+        gap: 8px; // Уменьшено расстояние между кнопками на мобильных
+        margin-bottom: 0;
+        margin-top: -30px ;// Убираем дополнительный отступ снизу
     }
 `;
 const StyledButtonForMoney = styled.button`
@@ -482,9 +484,10 @@ const StyledButtonForMoney = styled.button`
     }
 
     @media (max-width: 768px) {
-        padding: 8px 10px; // Уменьшение внутренних отступов для мобильных
+        padding: 8px 16px;// Уменьшение внутренних отступов для мобильных
         font-size: 16px; // Уменьшение размера шрифта для мобильных
-        width: 60px; // Ширина кнопки на мобильных
+        width: 60px;
+        margin-top: -20px ;// Ширина кнопки на мобильных
     }
 
     @keyframes pulse {
@@ -658,7 +661,7 @@ const BuyButton = styled.button`
 
     @media (max-width: 768px) {
         position: absolute;
-        top: 300px; /* Расположите кнопку на нужной высоте */
+        top: 280px; /* Расположите кнопку на нужной высоте */
         left: 50%;
         transform: translateX(-50%);
         width: 90%; /* Задайте ширину кнопки для мобильных */
@@ -692,7 +695,7 @@ const PromoLink = styled.a`
 
     @media (max-width: 768px) {
         font-size: 12px;
-        margin-top: 5px; /* Уменьшаем отступ сверху */
+        margin-top:120px; /* Уменьшаем отступ сверху */
     }
 `;
 
@@ -1276,7 +1279,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [availabilityChecked, setChekcked] = useState(false); 
     const [agreement, setAgreement] = useState(false); 
     const [promocodeMenu, setPromocodeMenu] = useState(false)
-    const [course, setCourse] = useState(courseRobuxToRubles)
+    const [ setCourse] = useState(courseRobuxToRubles)
     const [bonusBalance, setBonusBalance] = useState(0);
     const [promocode, setPromocode] = useState('')
     const [promocodeMsg, setPromocodeMsg] = useState(null)
@@ -1285,6 +1288,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [localRublesToPay, setLocalRublesToPay] = useState('');
     const [localRobuxesCount, setLocalRobuxesCount] = useState('');
 
+    const course = 0.74;
     let location = useLocation();
     let state = location.state
 
@@ -1612,37 +1616,36 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         }
     };
     const handleRublesChange = (e) => {
-        const rubles = parseFloat(e.target.value);
-        setLocalRublesToPay(e.target.value);  // Обновляем вводимые рубли
-        if (!isNaN(rubles)) {
-            setRobuxesCount(Math.floor(rubles / course)); // Конвертируем рубли в целое количество робуксов
+        const inputRubles = e.target.value;
+
+        if (!inputRubles || /^\d*\.?\d*$/.test(inputRubles)) { // Допускаем только числа и десятичные значения
+            setRublesToPay(inputRubles);
+
+            if (inputRubles) {
+                const calculatedRobuxes = Math.floor(parseFloat(inputRubles) / course);
+                setRobuxesCount(calculatedRobuxes.toString());
+            } else {
+                setRobuxesCount(''); // Очищаем поле "Получу", если "Заплатишь" пусто
+            }
         }
     };
 
-
+    // Обработчик изменения для поля "Получу" (робуксы)
     const handleRobuxChange = (e) => {
-        setLocalRobuxesCount(e.target.value);
-        const numericRobuxes = parseInt(e.target.value, 10);
-        if (!isNaN(numericRobuxes)) {
-            setRublesToPay(numericRobuxes * course);
+        const inputRobuxes = e.target.value;
+
+        if (!inputRobuxes || /^\d*$/.test(inputRobuxes)) { // Допускаем только целые числа
+            setRobuxesCount(inputRobuxes);
+
+            if (inputRobuxes) {
+                const calculatedRubles = (parseInt(inputRobuxes, 10) * course).toFixed(2);
+                setRublesToPay(calculatedRubles);
+            } else {
+                setRublesToPay(''); // Очищаем поле "Заплатишь", если "Получу" пусто
+            }
         }
     };
 
-    const handleRublesBlur = () => {
-        const numericRubles = parseFloat(localRublesToPay);
-        if (!isNaN(numericRubles)) {
-            setRublesToPay(numericRubles);
-            setRobuxesCount(Math.round(numericRubles / course));
-        }
-    };
-
-    const handleRobuxBlur = () => {
-        const numericRobuxes = parseInt(localRobuxesCount, 10);
-        if (!isNaN(numericRobuxes)) {
-            setRobuxesCount(numericRobuxes);
-            setRublesToPay(numericRobuxes * course);
-        }
-    };
     const renderStandardForm = () => (
         <>
         <div style={{height: '500px'}}>
@@ -1663,14 +1666,12 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                 <InputBlock>
                                     <StyledInput
                                         type="number"
-                                        min="0"
-                                        step="0.01" // Позволяет вводить значения с точностью до двух знаков после запятой
-                                        value={localRublesToPay}
+                                        value={rublesToPay}
                                         onChange={handleRublesChange}
-                                        onBlur={handleRublesBlur}
                                         placeholder="Введите сумму в рублях"
+                                        step="0.01"
+                                        min="0"
                                     />
-
                                     <IconWrapper>
                                         <RubleIcon style={{paddingBottom: "10px"}} xmlns="http://www.w3.org/2000/svg"
                                                    viewBox="0 0 512 512">
@@ -1703,10 +1704,10 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                             type="number"
                                             value={robuxesCount}
                                             onChange={handleRobuxChange}
-                                            onBlur={handleRobuxBlur}
                                             placeholder="Введите количество робуксов"
+                                            step="1"
+                                            min="0"
                                         />
-
                                         <IconWrapper>
                                             <RubleIcon style={{paddingBottom: "10px"}}
                                                        xmlns="http://www.w3.org/2000/svg"

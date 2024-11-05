@@ -14,15 +14,15 @@ import AtomicSpinner from 'atomic-spinner';
 import Exit from "../assets/img/Exit.svg";
 
 const HeaderContainer = styled.header`
-    background-color: #151515; // Измените цвет фона здесь
+    background-color: #1a1a1a; // Черный цвет фона для Header
     ${tw`py-2 top-0 w-full z-50`}
-    overflow-x: hidden;
 `;
 
 
 const HeaderWrapper = styled.div`
     ${tw`container mx-auto flex items-center justify-between`}
     padding-left: 1rem;
+    background-color: #1a1a1a; // Черный цвет фона для Wrapper
     padding-right: 1rem;
     @media (max-width: 768px) {
         ${tw`px-2 flex-row items-center justify-between`}
@@ -30,11 +30,12 @@ const HeaderWrapper = styled.div`
 `;
 
 const StyledLink = styled(RouterLink)`
-    ${tw`text-lg`} // You can add tw utility classes here if necessary
-    color: white; // Set the default color for the link
-    text-decoration: none; // Remove the underline
+    ${tw`text-lg`}
+    color: white; // Белый цвет для ссылок
+    text-decoration: none;
+
     &:hover {
-        color: #4caf50; // Set the hover color to a different shade
+        color: #ffffff; // Цвет при наведении
     }
 `;
 
@@ -92,14 +93,14 @@ const Sidebar = styled.div`
     right: ${({ show }) => (show ? '0' : '-100%')};
     width: 250px;
     height: 100vh;
-    overflow: hidden; 
+    overflow: hidden;
     backdrop-filter: blur(7px);
+    background-color: rgba(0, 0, 0, 0.85); // Черный фон с прозрачностью для Sidebar
     display: flex;
     flex-direction: column;
     padding: 40px 30px;
     transition: right 0.3s ease-in-out;
 `;
-
 
 const CloseButton = styled.span`
     font-size: 24px;
@@ -121,7 +122,7 @@ const NavItem = styled.li`
 const NavLink = styled.div`
     ${tw`flex justify-between items-center w-full text-lg py-2`}
     &:hover {
-        color: #4caf50;
+        color: #ffffff;
     }
 `;
 
