@@ -295,18 +295,20 @@ const SaleContainer = styled.div`
 `;
 
 const PricingArea = styled.div`
-    ${tw` p-6 rounded-lg shadow-lg bg-[rgb(1, 92, 43)] `}
-    background-color: #333; // Change this to your desired color
-
-
+    ${tw`p-6 rounded-lg shadow-lg`}
+    background-color: #333;
     border: none;
     border-radius: 24px;
     height: 450px;
+    position: relative; /* Добавьте позиционирование */
+
     @media (max-width: 768px) {
         padding: 20px;
         min-height: auto;
+        max-height: 380px;
     }
 `;
+
 
 const StepCaption = styled.div`
     ${tw`mt-3 text-white flex items-center`}
@@ -655,12 +657,14 @@ const BuyButton = styled.button`
     }
 
     @media (max-width: 768px) {
-        margin-top: -15px; /* Увеличьте значение, чтобы подвинуть кнопку выше */
-        margin-bottom: -10px; /* Убираем отступ снизу */
-        font-size: 14px; /* Уменьшаем размер шрифта для кнопки */
-        padding: 8px 0; /* Уменьшаем внутренние отступы */
+        position: absolute;
+        top: 300px; /* Расположите кнопку на нужной высоте */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%; /* Задайте ширину кнопки для мобильных */
     }
 `;
+
 
 
 const StyledPlace = styled.div`
