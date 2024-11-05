@@ -1287,7 +1287,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [availabilityChecked, setChekcked] = useState(false); 
     const [agreement, setAgreement] = useState(false); 
     const [promocodeMenu, setPromocodeMenu] = useState(false)
-    const [ setCourse] = useState(courseRobuxToRubles)
+    const [course, setCourse] = useState(courseRobuxToRubles)
     const [bonusBalance, setBonusBalance] = useState(0);
     const [promocode, setPromocode] = useState('')
     const [promocodeMsg, setPromocodeMsg] = useState(null)
@@ -1296,7 +1296,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [localRublesToPay, setLocalRublesToPay] = useState('');
     const [localRobuxesCount, setLocalRobuxesCount] = useState('');
 
-    const course = 0.74;
     let location = useLocation();
     let state = location.state
 
@@ -1494,6 +1493,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                 if (response.status !== 200) { 
                     setError("Получение робуксов не работает")
                     setBotRobux(0)
+                    return 
                 }
                 
                 let data = await response.json()    
@@ -1654,7 +1654,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                 <>
                     <div  style={{ display: isStandardFormVisible ? 'block' : 'none' }}>
                         <StepCaption style={{justifyContent: "space-between"}}>
-                            <StyledLabel htmlFor="robuxesCount">Заплатишь <span style={{ color: '#ffffff' }}>(R$)</span></StyledLabel>
+                            <StyledLabel htmlFor="robuxesCount">Заплатишь <span style={{ color: '#ffffff' }}>(₽)</span></StyledLabel>
                             <AvailabilityText id="instockGamePass">
                                 В наличии {botRobuxAmount}
                                 <img src={Robuxmini} alt="Robux Mini Icon" style={{ marginLeft: '8px' }} />
@@ -1710,7 +1710,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                             type="number"
                                             value={robuxesCount}
                                             onChange={handleChange}
-                                            onChange={handleRobuxChange}
                                         />
                                         <IconWrapper>
                                             <RubleIcon style={{paddingBottom: "10px"}}
