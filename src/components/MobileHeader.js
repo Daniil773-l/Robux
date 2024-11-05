@@ -95,7 +95,7 @@ const Sidebar = styled.div`
     height: 100vh;
     overflow: hidden;
     backdrop-filter: blur(7px);
-    background-color: rgba(0, 0, 0, 0.85); // Черный фон с прозрачностью для Sidebar
+    background-color: #1a1a1a; // Черный фон с прозрачностью для Sidebar
     display: flex;
     flex-direction: column;
     padding: 40px 30px;
