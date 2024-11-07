@@ -1603,7 +1603,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     }
     const handleButtonClick = (amount) => {
         setLocalRublesToPay(amount);
-        setRublesToPay(amount); // Обновляем основное состояние
+        setRublesToPay(amount.toFixed(2)); // Обновляем основное состояние
         const robuxes = Math.floor(amount / course); // Округляем до целого числа
         setRobuxesCount(robuxes);
     };
@@ -1631,7 +1631,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         // Проверяем, что введено число
         const numericValue = parseFloat(rubles);
         if (!isNaN(numericValue) && numericValue >= 210) {
-            setRublesToPay(numericValue);
+            setRublesToPay(numericValue.toFixed(2));
             setRobuxesCount(Math.round(numericValue / 0.74)); // Обновляем связанное поле
         }
     };
@@ -1643,7 +1643,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         setRobuxesCount(robuxes); // обновляем поле сразу
         if (!isNaN(robuxes) && robuxes >= 210) {
             const rubles = robuxes * 0.74; // конвертация
-            setRublesToPay(rubles);
+            setRublesToPay(rubles.toFixed(2));
         }
     };
 
