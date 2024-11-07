@@ -1621,7 +1621,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         }
         // Проверяем, что введено число
         const numericValue = parseFloat(rubles);
-        if (!isNaN(numericValue) && numericValue >= 0) {
+        if (!isNaN(numericValue) && numericValue >= 210) {
             setRublesToPay(numericValue);
             setRobuxesCount(Math.round(numericValue / 0.74)); // Обновляем связанное поле
         }
@@ -1658,8 +1658,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                         id="rublesToPay"
                                         type="number"
                                         value={rublesToPay}
-                                        readOnly
-                                        onChange={handleRublesChange}
+                                        onChange={(e) => {handleButtonClick(e.target.value)}}
                                         placeholder="Введите сумму в рублях"
                                     />
                                     <IconWrapper>
