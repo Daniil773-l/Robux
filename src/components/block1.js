@@ -1631,7 +1631,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         // Проверяем, что введено число
         const numericValue = parseFloat(rubles);
         if (!isNaN(numericValue) && numericValue >= 210) {
-            setRublesToPay(numericValue.toFixed(2));
+            setRublesToPay(numericValue);
             setRobuxesCount(Math.round(numericValue / 0.74)); // Обновляем связанное поле
         }
     };
