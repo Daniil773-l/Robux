@@ -20,7 +20,10 @@ const SectionContainer = styled.div`
     padding: 60px 20px;
     background: #151515;
     color: #fff;
-
+    /* Изолируем box-sizing для всех дочерних элементов */
+    *, *::before, *::after {
+        box-sizing: content-box;
+    }
     @media (max-width: 768px) {
         padding: 40px 10px;
         max-width: 70%;

@@ -13,11 +13,11 @@ import Purchase from "../assets/img/MyPurchasesIcon.svg";
 import AtomicSpinner from 'atomic-spinner';
 import Exit from "../assets/img/Exit.svg";
 
+
 const HeaderContainer = styled.header`
     background-color: #1a1a1a;
     ${tw`py-2 top-0 w-full z-50`}
 `;
-
 
 const HeaderWrapper = styled.div`
     ${tw`container mx-auto flex items-center justify-between`}
