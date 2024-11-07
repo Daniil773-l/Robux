@@ -1603,7 +1603,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     }
     const handleButtonClick = (amount) => {
         setLocalRublesToPay(amount);
-        setRublesToPay(amount.toFixed(2)); // Обновляем основное состояние
+        setRublesToPay(amount.toFixed(0)); // Обновляем основное состояние
         const robuxes = Math.floor(amount / course); // Округляем до целого числа
         setRobuxesCount(robuxes);
     };
