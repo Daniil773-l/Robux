@@ -1643,7 +1643,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         setRobuxesCount(robuxes); // обновляем поле сразу
         if (!isNaN(robuxes) && robuxes >= 210) {
             const rubles = robuxes * 0.74; // конвертация
-            setRublesToPay(rubles.toFixed(2));
+            setRublesToPay(rubles.toFixed(0));
         }
     };
 
