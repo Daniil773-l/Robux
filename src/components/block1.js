@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import tw from 'twin.macro';
+
 // import DragonImage from '../assets/img/char2.png';
 import Robux from '../assets/img/RobuxIcon.svg';
 import Sign from '../assets/img/Sign.svg';
@@ -18,6 +19,8 @@ import { FaLock } from 'react-icons/fa';
 import AtomicSpinner from "atomic-spinner";
 import { useLocation, useParams } from 'react-router-dom';
 // Define keyframes for the fade-in and move-up animation
+
+
 const fadeInUp = keyframes`
     0% {
         opacity: 0;
@@ -300,13 +303,13 @@ const PricingArea = styled.div`
     background-color: #333;
     border: none;
     border-radius: 24px;
-    height: 450px;
+    height: 500px;
     position: relative; /* Добавьте позиционирование */
 
     @media (max-width: 768px) {
         padding: 20px;
         min-height: auto;
-        max-height: 380px;
+        max-height: 400px;
     }
 `;
 
@@ -1744,10 +1747,12 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                             <ModalTitle>Активация промокода</ModalTitle>
                             <LabelText>Введите промокод</LabelText>
                             <ModalInput
-                                type="number"
-                                value={robuxesCount}
-                                onChange={handleRobuxChange}
-                                placeholder="Введите количество робуксов"
+                                type="text"
+                                placeholder="Введите промокод"
+                                value={promocode}
+                                onChange={(e)=>setPromocode(e.target.value)}
+
+
                             />
 
                             {isLoading && (
