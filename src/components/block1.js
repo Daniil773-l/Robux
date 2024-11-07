@@ -1294,7 +1294,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const [currentStep, setCurrentStep] = useState(1);
     const [isStandardFormVisible, setIsStandardFormVisible] = useState(true);
     const [localRublesToPay, setLocalRublesToPay] = useState('');
-    const [localRobuxesCount, setLocalRobuxesCount] = useState('');
 
     let location = useLocation();
     let state = location.state
@@ -1338,11 +1337,15 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         if (id === 'rublesToPay') {
             const rubles = parseFloat(value) || 0;
             setRublesToPay(rubles);
-            setRobuxesCount(Math.floor(rubles / course)); // округление до целого числа
+            setRobuxesCount(Math.floor(rubles / course)); 
         } else if (id === 'robuxesCount') {
             const robuxes = parseInt(value, 10) || 0;
             setRobuxesCount(robuxes);
-            setRublesToPay((robuxes * course).toFixed(2)); // округление до двух знаков
+            if (parseInt(robuxesCount) >= 210) {
+                setRublesToPay((robuxes * course).toFixed(2)); // округление до двух знаков
+            } else { 
+                setRublesToPay(""); 
+            }
         }
     };
 
@@ -1390,16 +1393,8 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
             setIsLoading(false);
         }
     };
-
-    const handleLogin = (user) => {
-        setLoggedInUser(user);
-        setShowLogin(false);
-
-
-        // Сохраняем информацию о пользователе в localStorage
-        localStorage.setItem('loggedInUser', JSON.stringify(user));
-    };
-    useEffect(() => {
+    
+    /* useEffect(() => {
         if (rublesToPay !== '') {
             const numericRubles = parseFloat(rublesToPay);
             if (!isNaN(numericRubles)) {
@@ -1420,7 +1415,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         } else {
             setRublesToPay('');
         }
-    }, [robuxesCount]);
+    }, [robuxesCount]); */
 
 
     const sendCheck = async () => { 
@@ -1511,14 +1506,14 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         fetchGames();
     }, [currentUser]); // Empty dependency array ensures it runs only once on mount
 
-    useEffect(() => {
+     /* useEffect(() => {
         console.log("multiplying robuxes to rubles");
-        if (parseInt(robuxesCount) >= 210) {
+
             setRublesToPay(String(Math.round(robuxesCount * course))); // Используем Math.round для округления
         } else {
             setRublesToPay("");
         }
-    }, [robuxesCount]);
+    }, [robuxesCount]); */
 
 
     useEffect(() => {
@@ -1604,14 +1599,6 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         setRobuxesCount(robuxes);
     };
 
-
-
-
-    const handleBuyClick = () => {
-        setOpenBuyMenu(true);
-        setCurrentStep(1); // Переход на первый шаг (ввод никнейма)
-    };
-
     const handleNextStep = (game) => {
         if (currentStep < 5) {
             setCurrentStep(currentStep + 1); // Переход на следующий шаг
@@ -1626,6 +1613,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const handleRublesChange = (e) => {
         const rubles = e.target.value;
         // Если поле пустое, просто обновляем значение
+        
         if (rubles === '') {
             setRublesToPay('');
             setRobuxesCount('');
@@ -1641,7 +1629,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
     const handleRobuxChange = (e) => {
         const robuxes = e.target.value;
         setRobuxesCount(robuxes); // обновляем поле сразу
-        if (!isNaN(robuxes) && robuxes >= 0) {
+        if (!isNaN(robuxes) && robuxes >= 210) {
             const rubles = robuxes * 0.74; // конвертация
             setRublesToPay(rubles);
         }
@@ -1709,7 +1697,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                             placeholder="Получите R$"
                                             type="number"
                                             value={robuxesCount}
-                                            onChange={handleChange}
+                                            onChange={(e) => {handleChange(e); handleRobuxChange(e)}}
                                         />
                                         <IconWrapper>
                                             <RubleIcon style={{paddingBottom: "10px"}}
