@@ -1333,6 +1333,9 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
     const handleChange = (e) => {
         const { id, value } = e.target;
+        if (value.startsWith("0")) { 
+            value = value.slice(1, value.length)
+        }
 
         if (id === 'rublesToPay') {
             const rubles = parseFloat(value) || 0;
