@@ -1333,8 +1333,14 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
 
     const handleChange = (e) => {
         const { id, value } = e.target;
-        if (value.startsWith("0")) { 
-            value = value.slice(1, value.length)
+        
+        if (value === "") { 
+            setRublesToPay("")
+            setRobuxesCount("")
+        }
+
+        if (value.startsWith('0')) { 
+            return 
         }
 
         if (id === 'rublesToPay') {
@@ -1630,6 +1636,9 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
         }
     };
     const handleRobuxChange = (e) => {
+        if (e.target.value.startsWith('0')) { 
+            return
+        }
         const robuxes = e.target.value;
         setRobuxesCount(robuxes); // обновляем поле сразу
         if (!isNaN(robuxes) && robuxes >= 210) {
@@ -1661,7 +1670,7 @@ const PurchaseComponent = ({ loggedInUser, setLoggedInUser }) => {
                                         id="rublesToPay"
                                         type="number"
                                         value={rublesToPay}
-                                        onChange={(e) => {handleButtonClick(e.target.value)}}
+                                        onChange={(e) => {handleChange(e); handleRublesChange(e)}}
                                         placeholder="Введите сумму в рублях"
                                     />
                                     <IconWrapper>
